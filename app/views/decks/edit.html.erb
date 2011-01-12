@@ -1,0 +1,93 @@
+<% content_for :head do %>
+    <title>Deck Editor</title>
+    <%= javascript_include_tag 'jquery-1.4.min', 'ba-debug.min', 'command_parser', 'editor/creation', 'editor/init' %>
+    <%= stylesheet_link_tag 'editor', 'deck' %>
+<% end %>
+
+<% cols = 5 %>
+
+<div id="deck_name_container" class="title_block">
+  <span class="title" id="deck_name_show"><%= @deck.name %></span>
+  <input id="deck_name_field" style="display: none;" />
+  <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
+</div>
+
+<div class="yui-gb">
+  <div class="yui-u first">
+      <div id="deck_list">
+        <table>
+          <tr id="decklist_header">
+            <td>Type</td>
+            <td>#</td>
+            <td>Name</td>
+            <td>CC</td>
+            <td>CMC</td>
+          </tr>
+
+          <tr id="land_header" class="hrule">
+            <td>Lands</td>
+          </tr>
+          <%= render :partial => "edit_run",
+                :locals => {:runs => @deck.maindeck.lands, :classes => ['maindeck'] } %>
+          <tr id="blank_land_row" />
+
+          <tr id="creature_header" class="hrule">
+            <td>Creatures</td>
+          </tr>
+          <%= render :partial => "edit_run",
+                :locals => {:runs => @deck.maindeck.creatures, :classes => ['maindeck', 'nonland'] } %>
+          <tr id="blank_creature_row" />
+
+          <tr id="spell_header" class="hrule">
+            <td>Spells</td>
+          </tr>
+          <%= render :partial => "edit_run",
+                :locals => {:runs => @deck.maindeck.spells, :classes => ['maindeck', 'nonland'] } %>
+          <tr id="blank_spell_row" />
+
+          <tr class="hrule">
+              <td>Total</td>
+              <td id="maindeck_count" class="total_cards"><%= @deck.maindeck.count %></td>
+	      <td colspan="<%= cols-2 %>">&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+  </div>
+
+  <div class="yui-u">
+    <div id="input_entry">
+      <input id="card_entry" size="34" />
+      <button id="add_card_button" name="add_card">+</button>
+      <p><span style="font-weight: bold">examples:</span></p>
+      <ul style="margin-left: 18px">
+        <li>island</li>
+        <li>4 llanowar elves</li>
+        <li>4x shock</li>
+        <li>-2 dark ritual</li>
+      </ul>
+    </div>
+
+
+    <table id="pending_cards" class="center_col">
+      <tr id="pending_header">
+        <td colspan="<%=cols%>">Pending</td>
+      </tr>
+      <tr id="blank_pending_row" />
+    </table>
+
+    <table class="center_col">
+      <tr id="unknown_header" style="visibility: hidden">
+        <td colspan="<%=cols%>">Couldn't resolve, you may as well delete these</td>
+      </tr>
+      <%= render :partial => "unknown_run_rows", :locals => {:runs => @deck.maindeck.unknown } %>
+      <tr id="blank_unknown_row" />
+    </table>
+  </div>
+
+  <div class="yui-u">
+    <div id="deck_stats">
+      <img id="mana_curve" alt="mana curve chart" />
+    </div>
+  </div>
+
+</div>

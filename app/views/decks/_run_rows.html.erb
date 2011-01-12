@@ -1,0 +1,11 @@
+<% runs.each do |run| %>
+<tr id="run<%= run.id%>" class="<%= classes.join(' ') %>">
+  <td>&nbsp;</td>
+  <td class="run_count"><%= run.count %></td>
+  <td class="card_name"><a href="<%= Gatherer.baseurl %><%= run.mtg_id %>">
+    <%= run.name %></a></td>
+  <td class="cc"><%= run.cc %></td>
+  <td class="cmc"><%= run.cmc %></td>
+  <td><span class='delete_run' href=''>X</span></td>
+</tr>
+<% end %>

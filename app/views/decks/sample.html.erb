@@ -1,0 +1,43 @@
+
+<% content_for :head do %>
+<title><%= @deck.name %></title>
+<%= javascript_include_tag 'jquery-1.4.min', 'ba-debug.min', 'sample_hand' %>
+<%= stylesheet_link_tag 'reset-fonts', 'sample_hand' %>
+<% end %>
+
+<div id="headerarea" class="headerarea">
+  <div id="deckheading" class="deckheading">
+  </div>
+</div>
+<br clear="all" />
+
+
+<div id="rightcolumn" class="rightcolumn">
+  <div id="previewcard" class="previewcard">
+    <table cellpadding='0' cellspacing='0' border='0'><tr><td><img src='/images/magic/console/cardborder_nw.jpg' width='19' height='13' border='0' alt=''></td><td bgcolor='black'><img src='/images/spacer_1_1.gif' border='0' alt='' height='1' width='1'></td><td><img src='/images/magic/console/cardborder_ne.jpg' width='13' height='13' border='0' alt=''></td></tr>
+      <tr><td><img src='/images/magic/console/cardborder_w.jpg' width='19' height='285' border='0' alt=''></td><td bgcolor='black'><img src='/global/images/magic/general/magic_the_gathering.jpg' border='0' alt='Mouse over a card on the left to display the card here' id='bigcard' name='bigcard' width='200' height='285'/></td><td bgcolor='black'><img src='/images/spacer_1_1.gif' border='0' alt='' height='1' width='1'></td></tr>
+      <tr><td><img src='/images/magic/console/cardborder_sw.jpg' width='19' height='22' border='0' alt=''></td><td><img src='/images/magic/console/cardborder_s.jpg' width='200' height='22' border='0' alt=''></td><td><img src='/images/magic/console/cardborder_se.jpg' width='13' height='22' border='0' alt=''></td></tr>
+    </table>
+    <i>Mouse over small card images<br/> to preview here</i>
+  </div>
+
+
+  <div align="center">
+    <input type="image" id="button_newhand" src="/images/magic/samplehand_newhand.jpg" alt="New Hand" onclick="javascript:new_hand();"><input type="image" id="button_mulligan" src="/images/magic/samplehand_mulligan.jpg" alt="Mulligan" onclick="javascript:mulligan();"><input type="image" id="button_draw" src="/images/magic/samplehand_drawcard.jpg" alt="Draw a Card" onclick="javascript:draw_card();" />
+  </div>
+
+  <div id="decklist" class="decklist"></div>
+
+  <div align="center">
+    <input type="image" id="button_size60" src="/images/magic/cardback_sm_off.jpg" alt="Small Cards" onclick="javascript:card_size(60, 86);">
+      <input type="image" id="button_size120" src="/images/magic/cardback_med.jpg" alt="Medium Cards" onclick="javascript:card_size(120, 171);">
+	<input type="image" id="button_size200" src="/images/magic/cardback_lg_off.jpg" alt="Large Cards" onclick="javascript:card_size(200, 285);">
+	  <br/>
+	  <span class="small"><i>Click to change card size</i></span>
+  </div>
+
+</div>
+
+<div id="hand" style="hand">
+
+  <div id="card_template" class="carddiv" style="display: none;visible: false;"><a href="javascript:void(0);" id="link1"><img id="image1" src="/global/images/magic/general/magic_the_gathering.jpg" width="120" height="171" class="cardimage"/></a></div>

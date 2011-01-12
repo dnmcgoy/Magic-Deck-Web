@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%=h @card.name %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%=h @card.cardtype %>
+</p>
+
+<p>
+  <b>Mtg:</b>
+  <%=h @card.mtg_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_card_path(@card) %> |
+<%= link_to 'Back', cards_path %>

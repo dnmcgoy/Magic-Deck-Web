@@ -1,0 +1,20 @@
+.carddiv {
+    margin:3px; float:left;
+    background-image:url('/magic/images/samplehand_cardborder_med.jpg');
+}
+
+.cardimage { border-width:0px; margin:7px; }
+
+.cardcaption { font-size:8pt; background-color:#FFFFFF; width:60px; }
+
+.decklist { font-size:8pt; background-color:#FBF2E1; padding:3px; width:235; height:270; overflow:auto; border-color:#000000; border-style:solid; border-width:1px; }
+
+.rightcolumn { float:right; width:500; height:650; }
+
+.decklistheader { font-size:8pt; text-align:right; font-weight:bold; border-top: 1px solid #000000; }
+
+.hand { float:left; width:77%; }
+
+.previewcard { float:left; width:230; height:380; margin:10px; font-size:8pt; text-align:center; }
+
+.clearall { clear:both; }

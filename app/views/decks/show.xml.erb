@@ -1,0 +1,28 @@
+<mtgdecklist style="sideboard">
+  <heading>
+    Mark Glenister
+  </heading>
+  <subhead>
+    <%= @deck.name %>
+  </subhead>
+  <land>
+    <% @deck.maindeck.lands.each do |land| %>
+    <card quantity="<%= land.count %>" cardname="<%= land.name %>" />
+    <% end %> 
+  </land>
+  <creatures>
+    <% @deck.maindeck.creatures.each do |creature| %>
+    <card quantity="<%= creature.count %>" cardname="<%= creature.name %>" />
+    <% end %> 
+  </creatures>
+  <spells>
+    <% @deck.maindeck.spells.each do |spell| %>
+    <card quantity="<%= spell.count %>" cardname="<%= spell.name %>" />
+    <% end %> 
+  </spells>
+  <sideboard>
+    <% @deck.sideboard.runs.each do |sb| %>
+    <card quantity="<%= sb.count %>" cardname="<%= sb.name %>" />
+    <% end %> 
+  </sideboard>
+</mtgdecklist>

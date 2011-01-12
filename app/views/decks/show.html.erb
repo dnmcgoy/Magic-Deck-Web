@@ -1,0 +1,86 @@
+<% content_for :head do %>
+    <title><%= @deck.name %></title>
+    <%= javascript_include_tag 'jquery-1.3.2', 'ba-debug.min' %>
+    <%= stylesheet_link_tag 'reset-fonts', 'layout', 'deck' %>
+<% end %>
+
+<% cols = 6 %>
+
+<% content_for :content do %>
+  <div class="yui-g">
+    <div class="yui-u first">
+
+      <div id="deck_list">
+        <table>
+          <tr id="decklist_header">
+            <td>Type</td>
+            <td>#</td>
+            <td>Name</td>
+            <td>CC</td>
+            <td>CMC</td>
+            <td>&nbsp;</td>
+          </tr>
+
+          <tr id="land_header" class="hrule">
+            <td colspan="<%= cols %>">Lands</td>
+          </tr>
+          <%= render :partial => "show_run",
+                     :locals => {:runs => @deck.maindeck.lands, :classes => ['maindeck'] } %>
+          <tr id="blank_land_row" />
+
+          <tr id="creature_header" class="hrule">
+            <td colspan="<%= cols %>">Creatures</td>
+          </tr>
+          <%= render :partial => "show_run",
+                     :locals => {:runs => @deck.maindeck.creatures,
+	                         :classes => ['maindeck', 'nonland'] } %>
+          <tr id="blank_creature_row" />
+
+          <tr id="spell_header" class="hrule">
+            <td colspan="<%= cols %>">Spells</td>
+          </tr>
+          <%= render :partial => "show_run",
+                     :locals => {:runs => @deck.maindeck.spells,
+	                         :classes => ['maindeck', 'nonland'] } %>
+          <tr id="blank_spell_row" />
+          
+          <tr class="hrule">
+            <td>Total</td>
+            <td class="total_cards"><%= @deck.maindeck.count %></td>
+	    <td colspan="<%= cols-2 %>">&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+
+      <% if @is_owner %>
+      <br /><br />
+
+      <%= link_to 'edit deck', edit_deck_url(@deck) %>
+      <%= link_to 'sample hand', sample_deck_url(@deck) %>
+
+      <br /><br />
+
+      <div id="deck_formats" >
+	Copy/Paste formats
+	<ul>
+	  <li>Autocard/wiki</li>
+	</ul>
+
+	Downloadable formats
+	<ul>
+	  <li><a href=""><%= @deck.name %>.xml</a></li>
+	  <li><a href=""><%= @deck.name %>.dec</a></li>
+	</ul>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="yui-u">
+      <div id="deck_stats" class="section">
+        <img id="mana_curve" alt="mana curve chart" src="<%= @deck.mana_curve_chart %>" />
+      </div>
+    </div>
+
+  </div>
+<% end %>
+

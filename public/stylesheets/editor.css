@@ -1,0 +1,57 @@
+#deck_entry {
+    width: 268px;
+    margin: auto;
+}
+
+#deck_entry table {
+    margin-top: 45px;
+}
+
+#input_entry {
+    width: 280px;
+    margin: 15px auto;
+    text-align: left;
+    color: #999999;
+}
+
+#deck_list table {
+    width: 100%
+}
+
+#pending_cards {
+    margin-top: 50px;
+}
+
+.center_col {
+    width: 280px;
+    margin: 35px auto;
+}
+
+td {
+    text-align: left;
+    padding: 2px;
+    font-size: 120%;
+}
+
+.title {
+    font-size: 200%;
+}
+.title_block {
+    text-align: center;
+}
+
+.delete_run {
+    color: #FF0000;
+}
+
+td .delete_run:hover {
+    cursor: pointer;
+}
+
+#decklist_header {
+    font-weight: bold;
+}
+
+#edit_deck_name {
+    cursor: pointer;
+}

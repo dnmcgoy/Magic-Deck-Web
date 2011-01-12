@@ -1,0 +1,25 @@
+<div class="deck_listing">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Count</th>
+      <th>Colors</th>
+      <th></th> <!-- edit -->
+      <th></th> <!-- delete -->
+    </tr>
+
+    <% @decks.each do |deck| %>
+    <tr>
+      <td><%= link_to deck.name, deck %></td>
+      <td><%=h deck.maindeck.count %></td>
+      <td><%=h deck.colors %></td>
+      <td><%= link_to 'Edit', edit_deck_path(deck) %></td>
+      <td><%= link_to 'Delete', deck, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <%= link_to 'New deck', new_deck_path %>
+</div>

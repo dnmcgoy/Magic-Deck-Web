@@ -1,0 +1,8 @@
+#deck_list table {
+    width: 100%;
+    bacground-color: #FFCCFF;
+}
+
+.hrule {
+    border-top: 1px solid black;
+}

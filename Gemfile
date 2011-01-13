@@ -1,15 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.0'
+gem 'rails', '3.0.3'
 gem 'mongo_mapper'
-gem 'bson_ext'
 gem 'hpricot'
 
 # Use unicorn as the web server
-gem 'unicorn'
-
-# Deploy with Capistrano
-gem 'capistrano'
+# gem 'unicorn'
 
 # To use debugger
 # gem 'ruby-debug'
@@ -19,6 +15,11 @@ gem 'capistrano'
 # and rake tasks are available in development mode:
 group :development, :test do
   #gem 'webrat'
-  gem "rspec-rails", ">= 2.0.0.beta.22"
-  gem "autotest"
+  #gem 'bson_ext'
+
+  # Deploy with Capistrano
+  # gem 'capistrano'
+
+  #gem "rspec-rails", ">= 2.0.0.beta.22"
+  #gem "autotest"
 end

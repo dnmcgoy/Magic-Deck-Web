@@ -3,7 +3,7 @@ class DecksController < ApplicationController
   before_filter :require_login, :except => :show
 
   def mana_curve_chart
-    @deck = @user.decks.find(params[:id])
+    @deck = @user.decks.find(params[:deck_id])
     render :json => {:src => @deck.mana_curve_chart, :alt => "mana curve chart"}.to_json
   end
 

@@ -2,8 +2,14 @@ Tdb::Application.routes.draw do
 
   resources :cards
 
-  resources :decks, :member => { :sample => :get, :count => :get, :rename => :post } do
+  resources :decks do
     resources :runs
+    member do
+      get :sample
+      get :count
+      post :rename
+    end
+    match "mana_curve_chart" => "decks#mana_curve_chart"
   end
 
   #with_options(:controller => 'decks') do |decks|

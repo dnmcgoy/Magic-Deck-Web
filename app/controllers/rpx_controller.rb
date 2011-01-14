@@ -10,11 +10,12 @@ class RpxController < ApplicationController
                        'format' => 'json'})
 
     http = Net::HTTP.new(u.host, u.port)
-    http.use_ssl = true if u.scheme == 'https'
+    http.use_ssl = true
     res = http.request(req)
 
     json_resp = res.body
-    json = JSON.parse(json_resp)
+    json = ActiveSupport::JSON.decode(json_resp)
+    logger.info(json)
 
     if json['stat'] == 'ok'
 

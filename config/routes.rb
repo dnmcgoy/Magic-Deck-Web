@@ -16,6 +16,9 @@ Tdb::Application.routes.draw do
   match "login" => "rpx#index", :as => :login
   match "logout" => "rpx#logout", :as => :logout
 
+  match "tools" => "landing#tools"
+  match "about" => "landing#about"
+
   #map.connect "tools", :controller => :landing, :action => :tools
   #map.connect "about", :controller => :landing, :action => :about
 

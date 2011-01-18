@@ -1,3 +1,10 @@
+production:
+ host: flame.mongohq.com
+ port: 27077
+ database: MagicDeck
+ username: logicbydesign
+ password: zelda1
+
 development:
   host: localhost
   database: tdb

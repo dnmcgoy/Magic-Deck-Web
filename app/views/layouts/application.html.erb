@@ -22,15 +22,32 @@
                href="https://thedeckbuilding.rpxnow.com/openid/v2/signin?token_url=<%= login_url %>">Sign In</a>
 	    <% end %>
 	  </div>
-	  <div id="logo"><a href="/"><%= image_tag 'logo.png' %></a></div>
-	  <nav>
-            <ul id="nav">
-              <li><a href="/" title="Home">Home</a></li>
-              <li><a href="/decks" title="Decks">Decks</a></li>
-              <li><a href="/tools" title="Tools">Tools</a></li>
-              <li><a href="/about" title="About">About</a></li>
-            </ul>
-	  </nav>
+	  <div id="logo">
+	    <div id="headerLeft">
+	      <a href="/"><%= image_tag 'MagicDeckHeaderLeft.png' %></a>
+	    </div>
+	    <div id="headerRight">
+	      <div id="headerTopRight" align="left">
+		<a href="/"><%= image_tag 'MagicDeckHeaderCenter.png' %></a>
+		<a href="/"><%= image_tag 'MagicDeckHeaderRight.png' %></a>
+	      </div>
+	      <div id="navBar">
+		<div id="navLeftGraphic">
+		  <a href="/"><%= image_tag 'MagicDeckHeaderCenterBottom.png' %></a>
+		</div>
+		<div id="navButtons">
+		  <nav>
+		    <ul id="nav">
+		      <li><a href="/" title="Home">Home</a></li>
+		      <li><a href="/decks" title="Decks">Decks</a></li>
+		      <li><a href="/tools" title="Tools">Tools</a></li>
+		      <li><a href="/about" title="About">About</a></li>
+		    </ul>
+		  </nav>
+		</div>
+	      </div>
+	    </div>
+	  </div>
 	</div>
       </div>
 

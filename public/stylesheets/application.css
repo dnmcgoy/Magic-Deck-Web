@@ -3,28 +3,54 @@ html, body {
 }
 
 #doc3 {
-    background-color: #FFFFCC;
+    background-color: #FFFFFF;
 }
 
 #hd {
-    border-bottom: 1px solid black;
+
 }
 
-#bd {
+#Bd {
     padding-top: 15px;
     background-color: #ffffff;
 }
 
 #logo {
+    float: left;
     clear: both;
+}
+
+#headerLeft {
+    float: left;
+}
+
+#headerRight {
+    float: right;
+}
+
+#headerTopRight {
+    height: 78px;
+}
+
+#navBar {
+    float:right;
+}
+
+#navLeftGraphic {
+    float: left;
+}
+
+#navButtons {
+    float:left;
+    border-top: 1px solid black;
 }
 
 #nav {
     float: left;
-    margin-top: -18px;
-    margin-left: 5px;
-    width: 320px;
+    Width: 380px;
+    margin-top: 14px;
     text-align: left;
+    border-bottom: 1px solid black;
 }
 
 #nav li {
@@ -50,7 +76,7 @@ html, body {
 }
 
 .consume_height {
-    background-color: #FFFFCC;
+    background-color: #FFFFFF;
     padding-bottom: 51em;     /* X + padding-bottom */
     margin-bottom: -50em;     /* X */
 }

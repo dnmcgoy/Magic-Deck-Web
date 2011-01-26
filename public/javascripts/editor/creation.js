@@ -1,10 +1,11 @@
 var pendingTracker = 0;
 
-function addCard() {
+function addCard(autocomplete) {
   var entryText = $("#card_entry")[0].value;
   var parsed = parseInput(entryText);
   var count = parsed.count;
   var name = parsed.name;
+  if (autocomplete != null) name = autocomplete;
 
   debug.info("Sending addition of " + count + " " + name);
 

@@ -1,6 +1,10 @@
 Tdb::Application.routes.draw do
 
-  resources :cards
+  resources :cards do
+    collection do
+      get :autocomplete
+    end
+  end
 
   resources :decks do
     resources :runs

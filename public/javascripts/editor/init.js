@@ -52,6 +52,20 @@ $(document).ready(
 	addCard();
       });
 
+    $( "#card_entry" ).autocomplete({
+      source: "/cards/autocomplete",
+      minLength: 2,
+      select: function( event, ui ) {
+	addCard(ui.item.name);
+      }
+    }).data("autocomplete")._renderItem = function( ul, card ) {
+    return $( "<li></li>" )
+      .data( "item.autocomplete", card )
+      .append( "<a>" + card.name + "</a>" )
+      .appendTo( ul );
+    };
+
+
     onCardsChanged();
   }
 );

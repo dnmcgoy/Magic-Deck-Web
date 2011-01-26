@@ -6,7 +6,13 @@ class CardsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @cards }
+      format.json  { render :json => @cards.to_json }
     end
+  end
+
+  def autocomplete
+    term = params[:term]
+    render :json => Card.all.to_json(:only => [:mtgid, :name])
   end
 
   def show

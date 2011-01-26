@@ -23,6 +23,7 @@ class DecksController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml
+      format.json { render :json => @deck.to_json }
     end
   end
 

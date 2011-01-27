@@ -15,11 +15,9 @@ gem 'hpricot'
 # and rake tasks are available in development mode:
 group :development, :test do
   #gem 'webrat'
-  #gem 'bson_ext'
+  gem 'bson_ext'
 
-  # Deploy with Capistrano
-  # gem 'capistrano'
-
-  #gem "rspec-rails", ">= 2.0.0.beta.22"
+  gem "rspec-rails"
+  gem "factory_girl_rails"
   #gem "autotest"
 end

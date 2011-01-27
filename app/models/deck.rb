@@ -76,7 +76,7 @@ class Deck
 
   def self.recently_updated
 
-    mapReduce = OrderedHash.new
+    mapReduce = BSON::OrderedHash.new
     mapReduce['mapreduce'] = 'decks'
     mapReduce['map'] = <<-JS
       function() {
@@ -99,9 +99,9 @@ class Deck
     JS
 
     a = MongoMapper.database.command(mapReduce)
-    res = MongoMapper.database.collection(a["result"]).find().to_a
-    res = res.sort_by { |x| x["value"]["updated_at"] }[0..4]
-    find(res.map { |x| x["_id"] }, :order => "updated_at DSC")
+    results = MongoMapper.database.collection(a["result"]).find().to_a
+    results = res.sort_by { |x| x["value"]["updated_at"] }[0..4]
+    all(results.map { |x| x["_id"] }, :order => "updated_at DSC")
 
     # :all,
     # :conditions => "card_count >= 60",

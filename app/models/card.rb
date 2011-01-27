@@ -15,6 +15,10 @@ class Card
     sync_with_gatherer
   end
 
+  def self.autocomplete(term)
+    all(:name => /^#{term}/i)
+  end
+
   def sync_with_gatherer()
     return self if synced
 

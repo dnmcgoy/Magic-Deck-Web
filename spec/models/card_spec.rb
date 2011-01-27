@@ -2,6 +2,22 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Card do
 
+  describe "autocomplete" do
+    before do
+      Card.destroy_all
+      @c1 = Card.create!({:name => "Daughter of Autumn"})
+      @c2 = Card.create!({:name => "Daunting Defender"})
+      @c3 = Card.create!({:name => "Dauntless Dourbark"})
+      @c4 = Card.create!({:name => "Counterspell"})
+      @c5 = Card.create!({:name => "Flash"})
+    end
+
+    it "should return cards whose name starts with the supplied term" do
+      cards = Card.autocomplete("dau")
+      cards.map(&:name).sort.should == [@c1, @c2, @c3].map(&:name).sort
+    end
+  end
+
   describe "after_create" do
     it "should fail gracefully when sync fails" do
       Gatherer.should_receive("retrieve_gatherer_info").with("forest").and_return({})

@@ -16,6 +16,7 @@ class Card
   end
 
   def self.autocomplete(term)
+    term = term.match(/[A-Za-z][A-Za-z]+.*/)[0]
     all(:name => /^#{term}/i)
   end
 

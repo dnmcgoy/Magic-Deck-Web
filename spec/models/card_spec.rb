@@ -16,6 +16,27 @@ describe Card do
       cards = Card.autocomplete("dau")
       cards.map(&:name).sort.should == [@c1, @c2, @c3].map(&:name).sort
     end
+
+    it "should ignore leading digits" do
+      cards = Card.autocomplete("4 dau")
+      cards.map(&:name).sort.should == [@c1, @c2, @c3].map(&:name).sort
+    end
+
+    it "should ignore leading x[digit]" do
+      cards = Card.autocomplete("x4 dau")
+      cards.map(&:name).sort.should == [@c1, @c2, @c3].map(&:name).sort
+    end
+
+    it "should ignore leading [digit]x" do
+      cards = Card.autocomplete("3x dau")
+      cards.map(&:name).sort.should == [@c1, @c2, @c3].map(&:name).sort
+    end
+
+    it "should ignore ledding -digits" do
+      cards = Card.autocomplete("-2 dau")
+      cards.map(&:name).sort.should == [@c1, @c2, @c3].map(&:name).sort
+    end
+
   end
 
   describe "after_create" do

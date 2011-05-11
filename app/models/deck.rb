@@ -28,7 +28,7 @@ class Deck
 
   def calculated_chart_params
     cmcs = cmc_values
-    x_range = [0, 1, cmcs.length]
+    x_range = [0, 0, cmcs.length-1]
     y_range = [1, 0, cmcs.sort.last.to_i+1]
     scale = [0, cmcs.sort.last.to_i+1]
     ["chd=t:#{cmcs.join(',')}",
@@ -53,7 +53,7 @@ class Deck
       end
     end
     high = dataset.keys.sort.last
-    (1..high).each do |i|
+    (0..high).each do |i|
       if !dataset.has_key?(i)
         dataset[i] = 0
       end

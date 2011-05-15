@@ -3,7 +3,7 @@ production:
  port: 27077
  database: MagicDeck
  username: logicbydesign
- password: evaunit1
+ password: zelda1
 
 development:
   host: flame.mongohq.com

@@ -3,6 +3,8 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.3'
 gem 'mongo_mapper'
 gem 'hpricot'
+gem 'oa-oauth', '0.1.6'
+gem 'omniauth'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -16,8 +18,9 @@ gem 'hpricot'
 group :development, :test do
   #gem 'webrat'
   gem 'bson_ext'
-
+  gem "nifty-generators"
   gem "rspec-rails"
   gem "factory_girl_rails"
   #gem "autotest"
 end
+gem "mocha", :group => :test

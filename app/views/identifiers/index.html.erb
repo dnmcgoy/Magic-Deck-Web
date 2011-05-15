@@ -1,0 +1,30 @@
+<% if @identifiers %>
+  <% unless @identifiers.empty? %>
+    <p><strong>You can sign in to this account using:</strong></p>
+    <div class="identifiers">
+      <% for identifier in @identifiers %>
+        <div class="identifier">
+          <%= image_tag "#{identifier.provider}_32.png", :size => "32x32" %>
+          <div class="provider"><%= identifier.provider.titleize %></div>
+          <div class="uid"><%= identifier.uid %></div>
+          <%= link_to "X", identifier, :confirm => 'Are you sure you want to remove this identifier option?', :method => :delete, :class => "remove" %>
+        </div>
+      <% end %>
+      <div class="clear"></div>
+    </div>
+  <% end %>
+  <p><strong>Add another service to sign in with:</strong></p>
+<% else %>
+  <p><strong>Sign in through one of these services:</strong></p>
+<% end %>
+
+<a href="/auth/twitter" class="auth_provider">
+  <%= image_tag "twitter_64.png", :size => "64x64", :alt => "Twitter" %>
+</a>
+<a href="/auth/facebook" class="auth_provider">
+  <%= image_tag "facebook_64.png", :size => "64x64", :alt => "Facebook" %>
+</a>
+<a href="/auth/google" class="auth_provider">
+  <%= image_tag "google_64.png", :size => "64x64", :alt => "Google" %>
+</a>
+<div class="clear"></div>

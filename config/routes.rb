@@ -16,6 +16,8 @@ Tdb::Application.routes.draw do
     match "mana_curve_chart" => "decks#mana_curve_chart"
   end
 
+  resources :identifiers
+
   #with_options(:controller => 'decks') do |decks|
   #  decks.connect 'decks/:id/mana_curve_chart', :action => 'mana_curve_chart'
   #end
@@ -23,8 +25,8 @@ Tdb::Application.routes.draw do
   #map.login "login", :controller => :rpx, :action => :index
   #map.logout "logout", :controller => :rpx, :action => :logout
 
-  match "login" => "rpx#index", :as => :login
-  match "logout" => "rpx#logout", :as => :logout
+  match "/auth/:provider/callback" => "identifiers#create", :as => :login
+  match "logout" => "identifiers#destroy", :as => :logout
 
   match "tools" => "landing#tools"
   match "about" => "landing#about"

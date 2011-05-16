@@ -1,5 +1,6 @@
 class IdentifiersController < ApplicationController
   def index
+    @identifiers = @user.identifiers if @user
   end
   
   def create

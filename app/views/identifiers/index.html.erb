@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag 'identifiers' %>
 <% if @identifiers %>
   <% unless @identifiers.empty? %>
     <p><strong>You can sign in to this account using:</strong></p>
@@ -6,7 +7,7 @@
         <div class="identifier">
           <%= image_tag "#{identifier.provider}_32.png", :size => "32x32" %>
           <div class="provider"><%= identifier.provider.titleize %></div>
-          <div class="uid"><%= identifier.uid %></div>
+          <div class="ident"><%= identifier.ident %></div>
           <%= link_to "X", identifier, :confirm => 'Are you sure you want to remove this identifier option?', :method => :delete, :class => "remove" %>
         </div>
       <% end %>

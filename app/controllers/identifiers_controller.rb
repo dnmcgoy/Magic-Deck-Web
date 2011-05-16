@@ -21,6 +21,9 @@ class IdentifiersController < ApplicationController
       @user = user_with_identity
     end
 
+    #This is a hack that needs to be ironed out since we want to see friends for all services.
+    @user['facebook_token'] = omniauth['credentials']['token']
+
     if @user.save!
       flash[:notice] = "Signed in successfully."
     else

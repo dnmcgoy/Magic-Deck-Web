@@ -5,6 +5,7 @@ gem 'mongo_mapper'
 gem 'hpricot'
 gem 'oa-oauth', '0.1.6'
 gem 'omniauth'
+gem 'koala'
 
 # Use unicorn as the web server
 # gem 'unicorn'

@@ -1,4 +1,6 @@
 <div class="deck_listing">
+
+  <h1>My Decks:</h1>
   <table>
     <tr>
       <th>Name</th>
@@ -18,6 +20,30 @@
     </tr>
     <% end %>
   </table>
+
+  <h1>Friend Decks:</h1>
+  <% @user_friends.each do |user| %>
+  <h1> <%= user.nick %>'s Decks</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Count</th>
+      <th>Colors</th>
+      <th></th> <!-- edit -->
+      <th></th> <!-- delete -->
+    </tr>
+
+    <% user.decks.all.each do |deck| %>
+    <tr>
+      <td><%= link_to deck.name, deck %></td>
+      <td><%=h deck.maindeck.count %></td>
+      <td><%=h deck.colors %></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <% end %>
+  </table>
+  <% end %>
 
   <br />
 

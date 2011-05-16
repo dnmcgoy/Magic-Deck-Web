@@ -6,6 +6,9 @@ class User
   key :name, String
   key :photo_url, String
 
+  #This expires quickly.. however, it should probably still be on the identifier
+  key :facebook_token, String
+
   many :decks
   many :identifiers
 
@@ -14,6 +17,5 @@ class User
     self.email = omniauth['user_info']['email'] if email.blank?
     identifiers.build(:provider => omniauth['provider'], 
                       :ident => omniauth['uid'])
-  end
-
+  end                   
 end

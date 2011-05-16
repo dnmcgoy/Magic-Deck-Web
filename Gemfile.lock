@@ -48,6 +48,10 @@ GEM
     i18n (0.4.2)
     jnunemaker-validatable (1.8.4)
       activesupport (>= 2.3.4)
+    json (1.5.1)
+    koala (1.0.0)
+      json (~> 1.0)
+      multipart-post (~> 1.0)
     mail (2.2.14)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -156,6 +160,7 @@ DEPENDENCIES
   bson_ext
   factory_girl_rails
   hpricot
+  koala
   mocha
   mongo_mapper
   nifty-generators

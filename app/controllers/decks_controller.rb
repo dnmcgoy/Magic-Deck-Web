@@ -8,7 +8,21 @@ class DecksController < ApplicationController
   end
 
   def index
+
+    #FIXME getting list of friends doesn't belong here. FIX ASAP.
+    if @token = @user['facebook_token'] 
+      @graph = Koala::Facebook::GraphAPI.new(@token) 
+      @friends = @graph.get_connections("me", "friends") 
+    end
+
+    @user_friends = []
+    for friend in @friends
+      magicDeckFriend = User.first({'identifiers.provider' => 'facebook', 'identifiers.ident' => friend['id']})
+      @user_friends << magicDeckFriend if magicDeckFriend
+    end
+
     @decks = @user.decks.all
+    
 
     respond_to do |format|
       format.html { render :layout => 'application' }

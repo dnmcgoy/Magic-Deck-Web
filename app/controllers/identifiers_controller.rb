@@ -5,18 +5,29 @@ class IdentifiersController < ApplicationController
   
   def create
     omniauth = request.env["omniauth.auth"]
-    current_user = User.first({'identifiers.provider' => omniauth['provider'], 'identifiers.ident' => omniauth['uid'].to_s})
-    if !current_user
-      current_user = User.new
-      current_user.apply_omniauth(omniauth)
-      if current_user.save
+    user_with_identity = User.first({'identifiers.provider' => omniauth['provider'], 'identifiers.ident' => omniauth['uid'].to_s})
+    if @user
+      if user_with_identity
         flash[:notice] = "Signed in successfully."
       else
-        session[:omniauth] = omniauth.except('extra')
+        @user.identifiers << Identifier.new(:provider => omniauth['provider'], :ident => omniauth['uid'].to_s)
+        flash[:notice] = "Authentication successful."
       end
-   end
+    else
+      if !user_with_identity
+        user_with_identity = User.new
+        user_with_identity.apply_omniauth(omniauth)
+      end
+      @user = user_with_identity
+    end
 
-    session[:user] = current_user.id
+    if @user.save!
+      flash[:notice] = "Signed in successfully."
+    else
+      session[:omniauth] = omniauth.except('extra')
+    end
+
+    session[:user] = @user.id
     session[:ident] = omniauth['uid']
 
     flash[:notice] = "Signed in successfully."

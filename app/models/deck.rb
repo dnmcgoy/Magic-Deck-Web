@@ -18,7 +18,7 @@ class Deck
   def mana_curve_chart
     google_chart_base_url = "http://chart.apis.google.com/chart?"
     parameters = []
-    parameters << "chs=200x200"
+    parameters << "chs=370x200"
     parameters << "chco=76A4FB"
     parameters << "cht=bvs"
     parameters << "chtt=Mana+Curve"

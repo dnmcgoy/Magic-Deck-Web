@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
   before_filter :set_user
 
   #helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  
+  #FIXME -- Removing temporarily to see if facebook canvas will work properly. 
+  #protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password

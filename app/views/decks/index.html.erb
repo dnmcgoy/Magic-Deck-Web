@@ -30,7 +30,7 @@
           <td><%= link_to deck.name, deck %></td>
           <td><%=h deck.maindeck.count %></td>
           <td><%=h deck.colors %></td>
-          <td><%= button_to 'Edit', edit_deck_path(deck) %></td>
+          <td><%= button_to 'Edit', edit_deck_path(deck) , :method => :get %></td>
           <td><%= button_to 'Delete', deck, :confirm => 'Are you sure?', :method => :delete %></td>
         </tr>
         <% end %>

@@ -14,8 +14,7 @@ class RunsController < ApplicationController
     deck = Deck.find(params[:deck_id])
     count = params[:count].blank? ? 1 : params[:count].to_i
 
-    #Upper case first letter of each word in the card name for a unique name identifier.
-    card = Card.find_or_create_by_name(card_name.gsub!(/^[a-z]|\s+[a-z]/) { |a| a.upcase })
+    card = Card.find_or_create_by_name(card_name)
     card = card.sync_with_gatherer
 
     @run = deck.maindeck.runs.detect { |r| r.card_id == card.id }

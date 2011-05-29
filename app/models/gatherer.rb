@@ -1,6 +1,5 @@
 require 'net/http'
 require 'uri'
-require 'hpricot'
 
 class Gatherer
 
@@ -17,24 +16,24 @@ class Gatherer
       result = Net::HTTP.start(url.host, url.port) { |http|
         http.get("#{url.path}?#{url.query}")
       }
-      parse(result.body)
+      # parse(result.body)
     rescue => error
       Rails.logger.info("Error hitting gatherer\n#{error.inspect}")
     end
   end
 
   def self.parse(docText)
-    doc = Hpricot(docText)
-
-    results = {}
-    results[:mtg_id] = docText.scan(/multiverseid=(\d+)/).flatten.first
-    
-    return {} if results[:mtg_id].nil?
-    
-    results[:cmc] = parse_cmc(doc)
-    results[:cc] = parse_cc(doc)
-    results[:cardtype] = parse_cardtype(doc)
-    results
+#    doc = Hpricot(docText)
+#
+#    results = {}
+#    results[:mtg_id] = docText.scan(/multiverseid=(\d+)/).flatten.first
+#    
+#    return {} if results[:mtg_id].nil?
+#    
+#    results[:cmc] = parse_cmc(doc)
+#    results[:cc] = parse_cc(doc)
+#    results[:cardtype] = parse_cardtype(doc)
+#    results
   end
 
   def self.parse_cardtype(doc)

@@ -3,12 +3,15 @@ class Card
 
   key :name, String
   key :cardtype, String
-  key :mtg_id, String
   key :cc, String
   key :cmc, Integer
+  key :color, String
+  key :power, Integer
+  key :toughness, Integer
   timestamps!
 
   many :runs
+  many :printings
 
   after_create :after_create_callback
   def after_create_callback

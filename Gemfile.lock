@@ -44,7 +44,6 @@ GEM
       addressable (~> 2.2.4)
       multipart-post (~> 1.1.0)
       rack (>= 1.1.0, < 2)
-    hpricot (0.6.164)
     i18n (0.4.2)
     jnunemaker-validatable (1.8.4)
       activesupport (>= 2.3.4)
@@ -68,7 +67,6 @@ GEM
     multi_json (0.0.5)
     multipart-post (1.1.0)
     net-ldap (0.1.1)
-    nifty-generators (0.4.6)
     nokogiri (1.4.4)
     oa-basic (0.1.6)
       multi_json (~> 0.0.2)
@@ -159,11 +157,10 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   factory_girl_rails
-  hpricot
   koala
   mocha
   mongo_mapper
-  nifty-generators
+  nokogiri
   oa-oauth (= 0.1.6)
   omniauth
   rails (= 3.0.3)

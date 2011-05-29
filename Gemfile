@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
 gem 'mongo_mapper'
-gem 'hpricot'
+gem 'nokogiri'
 gem 'oa-oauth', '0.1.6'
 gem 'omniauth'
 gem 'koala'
@@ -19,7 +19,7 @@ gem 'koala'
 group :development, :test do
   #gem 'webrat'
   gem 'bson_ext'
-  gem "nifty-generators"
+  #  gem "nifty-generators"
   gem "rspec-rails"
   gem "factory_girl_rails"
   #gem "autotest"

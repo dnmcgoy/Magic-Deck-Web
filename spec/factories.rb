@@ -1,7 +1,6 @@
 # Cards
 Factory.define :card do |c|
   c.name "Sample Card"
-  c.sequence(:mtg_id) {|n| "magic_id_#{n}" }
 end
 
 Factory.define :land, :parent => :card do |c|

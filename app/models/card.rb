@@ -37,6 +37,6 @@ class Card
   end
 
   def synced
-    return !(mtg_id.nil? || mtg_id == "")
+    return true #!(mtg_id.nil? || mtg_id == "")
   end
 end

@@ -22,7 +22,10 @@ end
 # Decks
 Factory.define :run do |r|
   r.count 0
-  r.card Factory.create(:card)
+  # for some stupid reason, this is being called during
+  # rails initialization, even outside of test
+  # so, disable now for the sake of progress
+  #r.association :card
 end
 
 Factory.define :deck do |d|

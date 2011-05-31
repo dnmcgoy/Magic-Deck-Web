@@ -33,6 +33,7 @@ GEM
     bson (1.2.0)
     bson_ext (1.2.0)
     builder (2.1.2)
+    columnize (0.3.2)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -51,6 +52,7 @@ GEM
     koala (1.0.0)
       json (~> 1.0)
       multipart-post (~> 1.0)
+    linecache (0.43)
     mail (2.2.14)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -142,6 +144,11 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.4.0)
+    ruby-debug (0.10.4)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.4.0)
+    ruby-debug-base (0.10.4)
+      linecache (>= 0.3)
     ruby-openid (2.1.8)
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
@@ -165,3 +172,4 @@ DEPENDENCIES
   omniauth
   rails (= 3.0.3)
   rspec-rails
+  ruby-debug

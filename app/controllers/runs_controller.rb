@@ -10,12 +10,11 @@ class RunsController < ApplicationController
   end
 
   def create
-    card_name = params[:card_name]
+    card_name = params[:card_name].downcase
     deck = Deck.find(params[:deck_id])
     count = params[:count].blank? ? 1 : params[:count].to_i
 
-    card = Card.find_or_create_by_name(card_name)
-    card = card.sync_with_gatherer
+    card = Card.first(:name => /^#{card_name}$/i)
 
     @run = deck.maindeck.runs.detect { |r| r.card_id == card.id }
     if @run.nil?
@@ -33,9 +32,8 @@ class RunsController < ApplicationController
 
     respond_to do |format|
       format.json  {
-        # Huh, this seems like a dirty hack to me...
-        card_attrs = Card.new.attributes.keys.reject{ |k| k.chars.first == '_' }
-        render :json => @run.to_json(:methods =>card_attrs)
+        extra_attrs = [:cardtype, :name, :cc, :mtg_id]
+        render :json => @run.to_json(:methods => extra_attrs)
       }
     end
   end

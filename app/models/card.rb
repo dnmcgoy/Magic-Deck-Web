@@ -1,6 +1,9 @@
 class Card
   include MongoMapper::Document
 
+  CREATURE_REGEX = /^(legendary\s*)?creature/i
+  LAND_REGEX = /^(legendary\s|basic\s)?land/i
+
   key :name, String
   key :cardtype, String
   key :cc, String
@@ -18,9 +21,8 @@ class Card
     sync_with_gatherer
   end
 
-  def self.autocomplete(term)
-    term = term.match(/[A-Za-z][A-Za-z]+.*/)[0]
-    all(:name => /^#{term}/i)
+  def mtg_id
+    printings.first.mtg_id
   end
 
   def sync_with_gatherer()
@@ -39,4 +41,10 @@ class Card
   def synced
     return true #!(mtg_id.nil? || mtg_id == "")
   end
+
+  def self.autocomplete(term)
+    term = term.match(/[A-Za-z][A-Za-z]+.*/)[0]
+    all(:name => /^#{term}/i)
+  end
+
 end

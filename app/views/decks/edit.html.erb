@@ -77,9 +77,7 @@
 
     <table class="center_col">
       <tr id="unknown_header" style="visibility: hidden">
-        <td colspan="<%=cols%>">Couldn't resolve, you may as well delete these</td>
       </tr>
-      <%= render :partial => "unknown_run_rows", :locals => {:runs => @deck.maindeck.unknown } %>
       <tr id="blank_unknown_row" />
     </table>
   </div>

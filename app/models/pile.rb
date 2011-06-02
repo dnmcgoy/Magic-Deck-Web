@@ -10,23 +10,21 @@ class Pile
   end
 
   def nonlands
-    self.runs.select { |r| r.cardtype != 'land' }
+    self.runs.reject { |r| r.cardtype =~ Card::LAND_REGEX }
   end
 
   def lands
-    self.runs.select { |r| r.cardtype == 'land' }
+    self.runs.select { |r| r.cardtype =~ Card::LAND_REGEX }
   end
 
   def creatures
-    self.runs.select { |r| r.cardtype == 'creature' }
+    self.runs.select { |r| r.cardtype =~ Card::CREATURE_REGEX }
   end
 
   def spells
-    self.runs.select { |r| r.cardtype == 'spell' }
-  end
-
-  def unknown
-    self.runs.select { |r| r.cardtype.blank? }
+    self.runs.reject do |r|
+      r.cardtype =~ Card::CREATURE_REGEX || r.cardtype =~ Card::LAND_REGEX
+    end
   end
 
   def count

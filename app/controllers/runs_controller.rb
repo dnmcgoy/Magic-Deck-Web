@@ -15,7 +15,7 @@ class RunsController < ApplicationController
     count = params[:count].blank? ? 1 : params[:count].to_i
 
     card = Card.first(:name => /^#{card_name}$/i)
-
+    puts "CARD: #{card.inspect}"
     @run = deck.maindeck.runs.detect { |r| r.card_id == card.id }
     if @run.nil?
       @run = Run.new(:card => card, :count => 0)
@@ -32,7 +32,7 @@ class RunsController < ApplicationController
 
     respond_to do |format|
       format.json  {
-        extra_attrs = [:cardtype, :name, :cc, :mtg_id]
+        extra_attrs = [:category, :name, :cc, :cmc, :mtg_id]
         render :json => @run.to_json(:methods => extra_attrs)
       }
     end

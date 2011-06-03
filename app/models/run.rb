@@ -8,4 +8,15 @@ class Run
 
   delegate :cardtype, :name, :cmc, :cc, :mtg_id, :to => :card
 
+  def category
+    case cardtype
+    when Card::LAND_REGEX
+      'land'
+    when Card::CREATURE_REGEX
+      'creature'
+    else
+      'spell'
+    end
+  end
+
 end

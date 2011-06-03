@@ -19,13 +19,12 @@ gem 'koala'
 group :development, :test do
   gem 'bson_ext'
   gem 'ruby-debug'
-  #gem "autotest"
 end
 
 group :test do
-  gem "mocha", :group => :test
+  gem "mocha"
   gem "rspec-rails"
   gem "factory_girl_rails"
-  #gem "autotest"
+  # gem "autotest"
 end
 

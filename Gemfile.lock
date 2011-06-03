@@ -45,6 +45,7 @@ GEM
       addressable (~> 2.2.4)
       multipart-post (~> 1.1.0)
       rack (>= 1.1.0, < 2)
+    hpricot (0.8.4)
     i18n (0.4.2)
     jnunemaker-validatable (1.8.4)
       activesupport (>= 2.3.4)
@@ -164,6 +165,7 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   factory_girl_rails
+  hpricot
   koala
   mocha
   mongo_mapper

@@ -22,7 +22,11 @@ class Card
   end
 
   def mtg_id
-    printings.first.mtg_id
+    if(printings.size > 0)
+      return printings.first.mtg_id
+    else
+      return nil
+    end
   end
 
   def sync_with_gatherer()
@@ -30,7 +34,11 @@ class Card
 
     Rails.logger.info { "Attempting to sync #{name}" }
     gatherer_info = Gatherer.retrieve_gatherer_info(name.gsub(" ", "%20"))
-    self.mtg_id = gatherer_info[:mtg_id]
+    if gatherer_info[:printings]
+      for printing in gatherer_info[:printings]
+        self.printings << Printing.new({:mtg_id => printing})
+      end
+    end
     self.cc = gatherer_info[:cc]
     self.cmc = gatherer_info[:cmc]
     self.cardtype = gatherer_info[:cardtype]
@@ -39,7 +47,7 @@ class Card
   end
 
   def synced
-    return true #!(mtg_id.nil? || mtg_id == "")
+    return !(mtg_id.nil? || mtg_id == "")
   end
 
   def self.autocomplete(term)

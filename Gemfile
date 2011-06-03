@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.3'
 gem 'mongo_mapper'
 gem 'nokogiri'
+gem 'hpricot'
 gem 'oa-oauth', '0.1.6'
 gem 'omniauth'
 gem 'koala'
@@ -21,7 +22,7 @@ group :development, :test do
   #gem "autotest"
 end
 
-group :development, :test do
+group :test do
   gem "mocha", :group => :test
   gem "rspec-rails"
   gem "factory_girl_rails"

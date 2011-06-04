@@ -43,6 +43,7 @@ $(document).ready(
     $("#card_entry").keypress(
       function(e) {
 	if (e.which == 13) {
+          $("#card_entry").autocomplete("close");
 	  addCard();
 	}
       });
@@ -56,14 +57,19 @@ $(document).ready(
       source: "/cards/autocomplete",
       minLength: 2,
       select: function( event, ui ) {
-	addCard(ui.item.name);
+        addCard(ui.item.value);
+        return false;
+      },
+      focus: function( event, ui ) {
+        var match = $("#card_entry").val().match(/^(-?[0-9]*).*/);
+        if (match) {
+           var prefixNumber = match[1];
+           $("card_entry").val(prefixNumber + " " + ui.label);
+         }
+         $("#preview_image").attr("src", "http://www.logic-by-design.com/magic_images/hi_res/" + ui.item.mtgid + ".jpg");
+        return false;
       }
-    }).data("autocomplete")._renderItem = function( ul, card ) {
-    return $( "<li></li>" )
-      .data( "item.autocomplete", card )
-      .append( "<a>" + card.name + "</a>" )
-      .appendTo( ul );
-    };
+    });
 
 
     onCardsChanged();

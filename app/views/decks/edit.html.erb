@@ -1,6 +1,6 @@
 <% content_for :head do %>
     <title>Deck Editor</title>
-    <%= javascript_include_tag 'jquery-1.4.min', 'jquery-ui-1.8.9.custom.min', 'ba-debug.min', 'command_parser', 'editor/creation', 'editor/init' %>
+    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'editor/creation', 'editor/init' %>
     <%= stylesheet_link_tag 'ui-lightness/jquery-ui-1.8.9.custom', 'editor', 'deck' %>
 <% end %>
 
@@ -86,6 +86,7 @@
     <div id="deck_stats">
       <img id="mana_curve" alt="mana curve chart" />
     </div>
+    <img id="preview_image" src="http://www.logic-by-design.com/magic_images/hi_res/900.jpg" width="240" height="320"></img>
   </div>
 
 </div>

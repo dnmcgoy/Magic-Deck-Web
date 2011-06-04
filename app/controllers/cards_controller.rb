@@ -12,7 +12,11 @@ class CardsController < ApplicationController
 
   def autocomplete
     term = params[:term]
-    render :json => Card.autocomplete(term).to_json(:only => [:mtgid, :name])
+    cardListing = []
+    for card in Card.autocomplete(term)
+      cardListing << {:value => card.name, :label => card.name, :mtgid => card.mtg_id }
+    end
+    render :json => cardListing.to_json()
   end
 
   def show

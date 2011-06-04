@@ -66,7 +66,7 @@ class Deck
   def colors
     maindeck.runs.map do |run|
       next if run.cc.blank?
-      run.cc.downcase.scan(/[a-z]/)
+      run.cc.downcase.scan(/[wubrg]/)
     end.flatten.compact.uniq.to_s.upcase
   end
 

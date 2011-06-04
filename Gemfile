@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
+gem 'rake', '0.8.7'
 gem 'mongo_mapper'
 gem 'nokogiri'
 gem 'hpricot'
@@ -22,9 +23,9 @@ group :development, :test do
 end
 
 group :test do
-  gem "mocha"
-  gem "rspec-rails"
-  gem "factory_girl_rails"
-  # gem "autotest"
+  gem 'mocha'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  # gem 'autotest'
 end
 

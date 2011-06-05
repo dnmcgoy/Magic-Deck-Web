@@ -91,7 +91,7 @@ function createMaindeckRow(slotSelector, rowId, count, card) {
 
     $(slotSelector).after(
 	"<tr id=\"" + rowId + "\" class=\"dynamic\"><td>" +
-	    "</td><td>"+ count +
+	    "</td><td class=\"run_count\">"+ count +
 	    "</td><td>"+ nameDisplay +
 	    "</td><td>"+ card.cc +
 	    "</td><td>"+ card.cmc +

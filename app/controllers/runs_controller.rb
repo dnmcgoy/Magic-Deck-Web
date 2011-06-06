@@ -24,6 +24,7 @@ class RunsController < ApplicationController
 
     if(!@run.nil? && @run.count + count == 0)
       deck.maindeck.runs.delete(@run)
+      @run.count = 0
     elsif(@run.count + count > 0)
       @run.count += count
     end

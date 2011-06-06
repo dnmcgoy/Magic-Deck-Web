@@ -65,7 +65,11 @@ function rowExists(rowId) {
 }
 
 function appendRow(runId, card) {
-    $("tr#" + runId + " td.run_count").html( card.count );
+    if (card.count == 0) {
+	$("tr#" + runId).remove();
+    } else {
+	$("tr#" + runId + " td.run_count").html( card.count );
+    }
 }
 
 function addNewRow(run) {

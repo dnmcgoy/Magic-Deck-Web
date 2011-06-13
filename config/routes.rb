@@ -7,10 +7,14 @@ Tdb::Application.routes.draw do
   end
 
   resources :decks do
+    collection do
+      post :import
+    end
     resources :runs
     member do
       get :sample
       get :count
+      get :export
       post :rename
     end
     match "mana_curve_chart" => "decks#mana_curve_chart"

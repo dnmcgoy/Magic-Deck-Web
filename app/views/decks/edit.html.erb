@@ -4,6 +4,37 @@
     <%= stylesheet_link_tag 'ui-lightness/jquery-ui-1.8.9.custom', 'editor', 'deck' %>
 <% end %>
 
+<style>
+  .column { width: 500px; float: left;}
+  .portlet { margin: 0 1em 1em 0; }
+  .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+  .portlet-header .ui-icon { float: right; }
+  .portlet-content { padding: 0.4em; }
+  .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+  .ui-sortable-placeholder * { visibility: hidden; }
+</style>
+<script>
+  $(function() {
+  $( ".column" ).sortable({
+     connectWith: ".column"
+  });
+  
+  $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+     .find( ".portlet-header" )
+     .addClass( "ui-widget-header ui-corner-all" )
+     .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
+     .end()
+     .find( ".portlet-content" );
+  
+  $( ".portlet-header .ui-icon" ).click(function() {
+    $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+    $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
+  });
+  
+  $( ".column" ).disableSelection();
+  });
+</script>
+
 <% cols = 5 %>
 
 <div id="deck_name_container" class="title_block">
@@ -12,47 +43,61 @@
   <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
 </div>
 
-<div class="yui-gb">
-  <div class="yui-u first">
-      <div id="deck_list">
-        <table>
-          <tr id="decklist_header">
-            <td>Type</td>
-            <td>#</td>
-            <td>Name</td>
-            <td>CC</td>
-            <td>CMC</td>
-          </tr>
-
-          <tr id="land_header" class="hrule">
-            <td>Lands</td>
-          </tr>
-          <%= render :partial => "edit_run",
-                :locals => {:runs => @deck.maindeck.lands, :classes => ['maindeck'] } %>
-          <tr id="blank_land_row" />
-
-          <tr id="creature_header" class="hrule">
-            <td>Creatures</td>
-          </tr>
-          <%= render :partial => "edit_run",
-                :locals => {:runs => @deck.maindeck.creatures, :classes => ['maindeck', 'nonland'] } %>
-          <tr id="blank_creature_row" />
-
-          <tr id="spell_header" class="hrule">
-            <td>Spells</td>
-          </tr>
-          <%= render :partial => "edit_run",
-                :locals => {:runs => @deck.maindeck.spells, :classes => ['maindeck', 'nonland'] } %>
-          <tr id="blank_spell_row" />
-
-          <tr class="hrule">
-              <td>Total</td>
-              <td id="maindeck_count" class="total_cards"><%= @deck.maindeck.count %></td>
-	      <td colspan="<%= cols-2 %>">&nbsp;</td>
-          </tr>
-        </table>
+<div class="column">
+  <div class="portlet">
+    <div class="portlet-header">Main Deck</div>
+    <div class="portlet-content">
+      
+      <div class="yui-gb">
+        <div class="yui-u first">
+          <div id="deck_list">
+            <table>
+              <tr id="decklist_header">
+                <td>Type</td>
+                <td>#</td>
+                <td>Name</td>
+                <td>CC</td>
+                <td>CMC</td>
+              </tr>
+              
+              <tr id="land_header" class="hrule">
+                <td>Lands</td>
+              </tr>
+              <%= render :partial => "edit_run",
+              :locals => {:runs => @deck.maindeck.lands, :classes => ['maindeck'] } %>
+              <tr id="blank_land_row" />
+              
+              <tr id="creature_header" class="hrule">
+                <td>Creatures</td>
+              </tr>
+              <%= render :partial => "edit_run",
+              :locals => {:runs => @deck.maindeck.creatures, :classes => ['maindeck', 'nonland'] } %>
+              <tr id="blank_creature_row" />
+              
+              <tr id="spell_header" class="hrule">
+                <td>Spells</td>
+              </tr>
+              <%= render :partial => "edit_run",
+              :locals => {:runs => @deck.maindeck.spells, :classes => ['maindeck', 'nonland'] } %>
+              <tr id="blank_spell_row" />
+              
+              <tr class="hrule">
+                <td>Total</td>
+                <td id="maindeck_count" class="total_cards"><%= @deck.maindeck.count %></td>
+                <td colspan="<%= cols-2 %>">&nbsp;</td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
+  
+  <div class="portlet">
+    <div class="portlet-header">Sideboard</div>
+    <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+  </div>
+</div>
 
   <div class="yui-u">
     <div id="input_entry">

@@ -1,3 +1,5 @@
+require 'csv'
+
 class DecksController < ApplicationController
 
   before_filter :require_login, :except => :show
@@ -50,6 +52,39 @@ class DecksController < ApplicationController
     render :json => @deck.count.to_json
   end
 
+  def import
+    outputStuff = params[:dump][:file].read
+    @deck = @user.decks.build()
+    if params[:dump][:file].original_filename =~ /(.*)\.dec/
+      @deck.name = $1
+    else
+      @deck.name = "New Deck"
+    end
+    @deck.init_piles
+    for line in outputStuff
+      if line =~ /^ *([0-9]+x?) (.*)/
+        count = $1
+        card_name = $2
+        card = Card.first(:name => /^#{card_name}$/i)
+        if (card)
+          run = Run.new(:card => card, :count => count)
+          @deck.maindeck << run
+        end
+      end
+    end
+    if @deck.save
+      redirect_to edit_deck_path(@deck)
+    end
+  end
+
+  def export
+    @deck = Deck.find(params[:id])
+    deckdata = ""
+    for run in @deck.maindeck.runs
+      deckdata += run.count.to_s + " " + run.name.to_s + "\n"
+    end
+    send_data deckdata, {:filename => @deck.name + ".dec"}
+  end
 
   def new
     @deck = @user.decks.create(:name => "New Deck")
@@ -66,7 +101,7 @@ class DecksController < ApplicationController
     respond_to do |format|
       if @deck.save
         flash[:notice] = 'Deck was successfully created.'
-        format.html { redirect_to(@deck) }
+        format.html { redirect_to edit_deck_path(@deck) }
         format.xml  { render :xml => @deck, :status => :created, :location => @deck }
       else
         format.html { render :action => "new" }

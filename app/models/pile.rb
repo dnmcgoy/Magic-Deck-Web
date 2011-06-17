@@ -1,12 +1,19 @@
 class Pile
   include MongoMapper::EmbeddedDocument
 
+  MAINDECK = 'maindeck'
+
   key :name, String
   many :runs
 
   def <<(run)
     runs = [] if runs.nil?
     self.runs << run
+  end
+
+  def destroy
+    raise 'Cannot delete maindeck' if name == MAINDECK
+    Deck.pull(_parent_document.id, :piles => {:_id => id})
   end
 
   def nonlands

@@ -16,6 +16,8 @@ class Card
   many :runs
   many :printings
 
+  ensure_index(:name)
+
   after_create :after_create_callback
   def after_create_callback
     sync_with_gatherer

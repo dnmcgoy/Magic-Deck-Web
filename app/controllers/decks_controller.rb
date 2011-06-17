@@ -60,6 +60,11 @@ class DecksController < ApplicationController
     @deck = @user.decks.find(params[:id])
   end
 
+  def chris_edit
+    @deck = @user.decks.find(params[:id])
+    render :layout => 'chris_layout'
+  end
+
   def create
     @deck = @user.decks.build(params[:deck])
 

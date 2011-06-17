@@ -2,17 +2,18 @@ class Deck
   include MongoMapper::Document
 
   key :name, String
-  key :maindeck, Pile
-  key :sideboard, Pile
   timestamps!
 
   belongs_to :user
 
-  before_save :init_piles
+  many :piles
 
-  def init_piles
-    @maindeck ||= Pile.new(:name => 'maindeck')
-    @sideboard ||= Pile.new(:name => 'sideboard')    
+  def initialize(params={})
+    super params.merge(:piles => [Pile.new(:name => Pile::MAINDECK)])
+  end
+
+  def maindeck
+    piles.detect { |pile| pile.name == Pile::MAINDECK }
   end
 
   def mana_curve_chart

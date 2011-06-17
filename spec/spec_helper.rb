@@ -16,4 +16,12 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
   config.mock_with :rspec
+
+  config.after(:each) do
+    MongoMapper.database.collections.each do |collection|
+      unless collection.name.match(/^system\./)
+        collection.remove
+      end
+    end
+  end
 end

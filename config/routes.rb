@@ -8,9 +8,11 @@ Tdb::Application.routes.draw do
 
   resources :decks do
     resources :runs
+    resources :piles
     member do
       get :sample
       get :count
+      get :chris_edit
       post :rename
     end
     match "mana_curve_chart" => "decks#mana_curve_chart"

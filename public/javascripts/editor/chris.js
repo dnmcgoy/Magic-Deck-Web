@@ -1,10 +1,13 @@
 var basepath = "";
-var pendingTracker = 0;
 var deckNameEditable = false;
 var activePile = null;
+var pileTemplate = null;
 
 $(document).ready(
     function() {
+
+	pileTemplate = $('#pile_template .pile').first();
+	debug.info(pileTemplate);
 
 	var pathname = document.location.pathname;
 	basepath = pathname.substring(0, pathname.lastIndexOf('/')+1);
@@ -14,6 +17,15 @@ $(document).ready(
 	debug.info("Initial pile maindeck, id: " + activePile);
 
 	focusEntry();
+
+	$( ".column" ).sortable({
+	    connectWith: ".column",
+	    receive: onRunReceive
+	});
+
+	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
+
+	$( ".column" ).disableSelection();
 
 	$( "#new_pile_form" ).dialog({
 	    autoOpen: false,
@@ -46,7 +58,7 @@ $(document).ready(
 		    url: path,
 		    success: function(msg){
 			debug.info("pile " + pileId + " was deleted");
-			$("#pile_" + pileId).remove();
+			$("#" + pileId).remove();
 			if (pileId == activePile) {
 			    switchPile( maindeck() );
 			}
@@ -82,6 +94,8 @@ $(document).ready(
 		debug.info("Pile selected: " + pileName);
 		if (pileName == 'newpile') {
 		    $( "#new_pile_form" ).dialog( "open" );
+		} else if(pileName == 'mergepile') {
+		    // prompt and then have them click?
 		} else {
 		    changePile(pileName);
 		}
@@ -138,7 +152,18 @@ $(document).ready(
     }
 );
 
+// Handle a run being dragged from one pile to another
+function onRunReceive(event, ui) {
+    debug.info("onRunReceive");
+    var newPile = event.target.id;
+    var oldPile = ui.sender.context.id;
+    var name = $(ui.item.context).find(".card_name").text();
+    var count = $(ui.item.context).find(".run_count").text();
 
+    var noop = function(data) {};
+    sendCreateRun(count, name, newPile, noop);
+    sendCreateRun('-'+count, name, oldPile, noop);
+}
 
 function focusEntry() {
     $("#card_entry").focus();
@@ -151,7 +176,7 @@ function onCardsChanged() {
 }
 
 function maindeck() {
-    return $("#pile_title_maindeck").parent().attr("id").substr(5);
+    return $("#pile_title_maindeck").parent().attr("id");
 }
 
 function changePile(pileName) {
@@ -180,6 +205,17 @@ function addPile(pileName) {
 function createPile(pile_response) {
     var pile = pile_response[0];
     // some stuff
+    var newPile = pileTemplate.clone().insertBefore('#pile_template');
+    debug.info(newPile);
+
+    newPile.attr('id', pile.id);
+    var title = newPile.children('.pile_title').first();
+    title.attr('id', title.attr('id') + pile.name.toLowerCase());
+    title.prepend(pile.name);
+    title.find('span').text(pile.id);
+
+    newPile.sortable({ connectWith: ".column" });
+
     debug.info("In create pile");
     debug.info(pile);
     switchPile(pile.id);
@@ -188,7 +224,7 @@ function createPile(pile_response) {
 function switchPile(pileId) {
     debug.info("switching to pile " + pileId);
     $(".pile").removeClass("active_pile");
-    $("#pile_" + pileId).addClass("active_pile");
+    $("#" + pileId).addClass("active_pile");
     activePile = pileId;
 }
 
@@ -239,8 +275,6 @@ function makeNameUneditable() {
     focusEntry();
 }
 
-var pendingTracker = 0;
-
 function addCard(autocomplete) {
     var entryText = $("#card_entry")[0].value;
     if (entryText == "") {
@@ -252,19 +286,18 @@ function addCard(autocomplete) {
     var name = parsed.name;
     if (autocomplete != null) name = autocomplete;
 
-    debug.info("Sending addition of " + count + " " + name + " to pile " + activePile);
+    sendCreateRun(count, name, activePile, onCardAdded);
+}
 
-    pendingTracker += 1;
-    var pendingId = "pending" + pendingTracker;
-
-    createPendingRow("#blank_pending_row", pendingId, count, name);
+function sendCreateRun(count, name, pile, callback) {
+    debug.info("Sending addition of " + count + " " + name + " to pile " + pile);
 
     var url = basepath + "runs";
     $.post(
 	url,
-	{count: count, card_name: name, pile_id: activePile},
+	{count: count, card_name: name, pile_id: pile},
 	function(data) {
-	    onCardAdded(data, pendingId);
+	    callback(data);
 	},
 	'json'
     );
@@ -273,81 +306,6 @@ function addCard(autocomplete) {
     $("#card_entry").focus();
 }
 
-function createPendingRow(slotSelector, rowId, count, name) {
-    $(slotSelector).after(
-	"<tr id=\"" + rowId + "\"><td>" +
-	    "</td><td>"+ count +
-	    "</td><td>"+ name +
-	    "<td></td></tr>"
-    );
-}
-
-function onCardAdded(run, pendingId) {
+function onCardAdded(run) {
     debug.info("in onCardAdded with " + run);
-    $("#" + pendingId).remove();
-    var runId = "run" + run.id;
-    if (rowExists(runId)) {
-	appendRow(runId, run);
-    } else {
-	addNewRow(run);
-    }
-    onCardsChanged();
-}
-
-function rowExists(rowId) {
-    debug.info("checking existance of row " + rowId);
-    if ($("tr#" + rowId).size() > 0) {
-	return true;
-    } else if ($(".dynamic").filter(function() { return ($(this)[0].id == rowId); }).size() > 0) {
-	return true;
-    } else {
-	return false;
-    }
-}
-
-function appendRow(runId, card) {
-    if (card.count == 0) {
-	$("tr#" + runId).remove();
-    } else {
-	$("tr#" + runId + " td.run_count").html( card.count );
-    }
-}
-
-function addNewRow(run) {
-    var cardtype = run.category;
-    if (cardtype == null) cardtype = "unknown";
-    debug.info("Card type: " + cardtype);
-
-    var blankRowId = "#blank_" + cardtype + "_row";
-    createRow(blankRowId, "run" + run.id, run.count, cardtype, run);
-}
-
-function createRow(slotSelector, rowId, count, cardtype, run) {
-    if (cardtype == "unknown") createUnknownRow(slotSelector, rowId, count, run);
-    else createMaindeckRow(slotSelector, rowId, count, run);
-}
-
-function createMaindeckRow(slotSelector, rowId, count, card) {
-    var nameDisplay = "<a href=\"http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=" +
-	card.mtg_id +
-	"\" target=\"_blank\" >" +
-	card.name +
-	"</a>";
-
-    $(slotSelector).after(
-	"<tr id=\"" + rowId + "\" class=\"dynamic\"><td>" +
-	    "</td><td class=\"run_count\">"+ count +
-	    "</td><td>"+ nameDisplay +
-	    "</td><td>"+ card.cc +
-	    "</td><td>"+ card.cmc +
-	    "<td><span class='delete_run' href=''>X</span></td></tr>"
-    );
-}
-
-function createUnknownRow(slotSelector, rowId, count, card) {
-    $(slotSelector).after(
-	"<tr id=\"" + rowId + "\" class=\"unknown dynamic\">" +
-	    "<td class=\"run_count\">"+ count + "</td><td>"+ card.name +
-	    "</td><td><span class='delete_run' href=''>X</span></td></tr>"
-    );
 }

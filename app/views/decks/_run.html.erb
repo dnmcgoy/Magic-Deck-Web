@@ -1,4 +1,10 @@
-<div id="run<%= run.id%>" class="portlet">
+<%
+  # This seems like quite a hack, but still better than the others that
+  # come to mind for getting a template needed by the javascript
+  run = Struct.new("FakeRun", :id, :count, :name, :cmc, :cc).new if run.nil?
+%>
+
+<div id="<%= run.id %>" class="portlet">
   <div style="float: left" class="run_count"><%= run.count %></div>
   <div style="float: left" class="card_name"><%= run.name %></div>
 

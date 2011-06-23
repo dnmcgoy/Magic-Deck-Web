@@ -2,8 +2,9 @@ class Pile
   include MongoMapper::EmbeddedDocument
 
   MAINDECK = 'maindeck'
+  SIDEBOARD = 'sideboard'
 
-  key :name, String
+  key :name, String, :default => ''
   many :runs
 
   def <<(run)

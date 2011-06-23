@@ -1,6 +1,6 @@
-<div id="pile_<%= pile.id %>" class="column pile">
+<div id="<%= pile.id %>" class="column pile">
   <div id="pile_title_<%= pile.name %>" class="pile_title">
-    <%= pile.name.capitalize %>
+    <%= pile.name.titleize %>
 
     <div class="delete_pile"><span class="ui-icon ui-icon-closethick"><%= pile.id %></span></div>
   </div>

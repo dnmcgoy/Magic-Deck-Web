@@ -37,7 +37,7 @@ Factory.define :full_deck, :parent => :deck do |d|
   d.association :maindeck, :factory => :full_pile
 end
 
-Factory.define :pile do |p|
+Factory.define :pile, :default_strategy => :build do |p|
   p.runs []
 end
 

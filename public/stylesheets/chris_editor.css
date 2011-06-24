@@ -1,0 +1,99 @@
+body {
+    font-family: Verdana, Arial, sans-serif;
+}
+
+#deck_entry {
+    width: 268px;
+    margin: auto;
+}
+
+#deck_entry table {
+    margin-top: 45px;
+}
+
+#input_entry, #example_text {
+    margin: 15px auto;
+    text-align: center;
+    color: #999999;
+}
+
+#example_text {
+    margin-top: -10px;
+    margin-left: 31%;
+    text-align: left;
+    font-size: .7em;
+}
+
+#example_text {
+    width: 300px;
+}
+#example_text p, #example_text ul, #example_text li {
+    margin: 0 0 0 15px;
+    padding: 0;
+}
+#example_text li {
+    list-style-type: none;
+}
+
+
+.column { width: 300px; float: left; padding-bottom: 10px; }
+.portlet { margin: 5px 2px 0 2px; }
+.portlet div {
+    display: inline;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 20px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+
+.invis {
+    visibility: hidden;
+    display: none;
+}
+
+.pile {
+    border: 1px solid #999999;
+    border-radius: 10px;
+    color: #999999;
+    margin-left: 5px;
+    font-size: .8em;
+}
+
+.pile_title {
+    font-size: 1.5em;
+    padding: 5px;
+    border-bottom: 1px solid #999999;
+    text-align: left;
+}
+
+.active_pile {
+    border: 1px solid #000000;    
+    color: #000000;
+    background-color: #FFFFEA;
+}
+
+.title {
+    font-size: 200%;
+}
+.title_block {
+    text-align: center;
+}
+
+.delete_pile {
+    float: right;
+}
+.delete_run, .delete_pile {
+    color: #FF0000;
+}
+
+td .delete_run:hover {
+    cursor: pointer;
+}
+
+#decklist_header {
+    font-weight: bold;
+}
+
+#edit_deck_name {
+    cursor: pointer;
+}

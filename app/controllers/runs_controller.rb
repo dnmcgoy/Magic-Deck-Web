@@ -9,21 +9,27 @@ class RunsController < ApplicationController
     end
   end
 
+  # this needs to make sure the deck belongs to the user
   def create
     card_name = params[:card_name].downcase
-    deck = Deck.find(params[:deck_id])
+    deck = Deck.first(params[:deck_id])
     count = params[:count].blank? ? 1 : params[:count].to_i
+
+    # use the maindeck if pile isn't given, or doesn't exist
+    pile_id = params[:pile_id]
+    pile = deck.piles.detect { |p| p.id == BSON::ObjectId(pile_id) }
+    pile ||= deck.maindeck
 
     card = Card.first(:name => /^#{card_name}$/i)
     puts "CARD: #{card.inspect}"
-    @run = deck.maindeck.runs.detect { |r| r.card_id == card.id }
+    @run = pile.runs.detect { |r| r.card_id == card.id }
     if @run.nil?
       @run = Run.new(:card => card, :count => 0)
-      deck.maindeck.runs << @run
+      pile.runs << @run
     end
 
     if(!@run.nil? && @run.count + count == 0)
-      deck.maindeck.runs.delete(@run)
+      pile.runs.delete(@run)
       @run.count = 0
     elsif(@run.count + count > 0)
       @run.count += count

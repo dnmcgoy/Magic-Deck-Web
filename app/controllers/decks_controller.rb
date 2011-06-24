@@ -95,6 +95,13 @@ class DecksController < ApplicationController
     @deck = @user.decks.find(params[:id])
   end
 
+  def chris_edit
+    @deck = @user.decks.find(params[:id])
+    names = [Pile::MAINDECK, Pile::SIDEBOARD] + @deck.piles.map(&:name)
+    @pile_names = names.uniq
+    render :layout => 'chris_layout'
+  end
+
   def create
     @deck = @user.decks.build(params[:deck])
 

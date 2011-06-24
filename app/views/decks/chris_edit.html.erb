@@ -1,0 +1,59 @@
+<% content_for :head do %>
+    <title>Deck Editor</title>
+    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'editor/chris' %>
+    <%= stylesheet_link_tag 'chris_editor' %>
+
+	<script>
+	$(function() {
+	});
+	</script>
+<% end %>
+
+<div id="new_pile_form" title="Create new pile">
+  <form>
+    <fieldset>
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
+  </form>
+</div>
+
+<div id="deck_name_container" class="title_block">
+  <span class="title" id="deck_name_show"><%= @deck.name %></span>
+  <input id="deck_name_field" style="display: none;" />
+  <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
+</div>
+
+<div id="input_entry">
+  I would like
+  <input id="card_entry" size="34" />
+  <button id="add_card_button" name="add_card">added</button>
+  to the
+  <select id="pile_select">
+    <optgroup label="Current Piles">
+      <% @pile_names.each do |name| %>
+        <option value="<%=name%>"><%=name.titleize%></option>
+      <% end %>
+    </optgroup>
+    <optgroup label="Pile Options">
+      <option value="newpile">New Pile</option>
+      <option value="mergepiles">Merge Piles</option>
+    </optgroup>
+  </select>
+  pile.
+</div>
+<div id="example_text" class="centered">
+  <p><span style="font-weight: bold">examples:</span></p>
+  <ul>
+    <li>4 llanowar elves</li>
+    <li>island</li>
+    <li>-2 dark ritual</li>
+  </ul>
+</div>
+
+<%= render :partial => "pile", :collection => @deck.piles %>
+
+<div id="templates" class="invis">
+  <%= render :partial => "pile", :collection => [Pile.new] %>
+  <%= render :partial => "run" %>
+</div>

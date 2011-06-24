@@ -4,7 +4,7 @@
   run = Struct.new("FakeRun", :id, :count, :name, :cmc, :cc).new if run.nil?
 %>
 
-<div id="<%= run.id %>" class="portlet">
+<div id="<%= run.id %>" class="portlet run">
   <div style="float: left" class="run_count"><%= run.count %></div>
   <div style="float: left" class="card_name"><%= run.name %></div>
 

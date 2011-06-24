@@ -2,12 +2,13 @@ var basepath = "";
 var deckNameEditable = false;
 var activePile = null;
 var pileTemplate = null;
+var runTemplate = null;
 
 $(document).ready(
     function() {
 
-	pileTemplate = $('#pile_template .pile').first();
-	debug.info(pileTemplate);
+	pileTemplate = $('#templates .pile').first();
+	runTemplate = $('#templates .run').first();
 
 	var pathname = document.location.pathname;
 	basepath = pathname.substring(0, pathname.lastIndexOf('/')+1);
@@ -307,5 +308,31 @@ function sendCreateRun(count, name, pile, callback) {
 }
 
 function onCardAdded(run) {
-    debug.info("in onCardAdded with " + run);
+    debug.info("in onCardAdded with");
+    debug.info(run);
+
+    if ($("#"+run.id).length == 0) {
+	createRun(run);
+    } else {
+	updateRun(run);
+    }
+}
+
+function createRun(run) {
+    debug.info("In craete run");
+    var newRun = runTemplate.clone();
+    newRun.attr('id', run.id);
+    newRun.find(".run_count").text(run.count);
+    newRun.find(".card_name").text(run.name);
+    newRun.find(".cc").text(run.cc);
+    newRun.find(".cmc").text(run.cmc);
+    $("#"+activePile).append(newRun);
+}
+
+function updateRun(run) {
+    if (run.count == 0) {
+	$('#'+run.id).remove();
+    } else {
+	$('#'+run.id).find(".run_count").text(run.count);
+    }
 }

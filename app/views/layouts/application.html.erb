@@ -7,50 +7,48 @@
     <meta name="google-site-verification" content="f9_EInulAw-5lm0JxtyBJIMMASOIbfnEWnO4qdzSQOo" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
-    <%= stylesheet_link_tag 'reset-fonts-grids', 'application' %>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <%= stylesheet_link_tag 'NewHorizon' %>
     <%= yield :head %>
   </head>
   <body>
     
-    <div id="doc3">
-      <div id="hd">
-        <div id="header">
-          <div id="login_container">
-            <% if @user %>
-            Welcome, <%= @user.nick %>
-            |
-            <a href='/logout'>logout</a>
-            <% else %>
-            <a href="/identifiers">Sign In</a>
-            <% end %>
-          </div>
-          
-          <div id="navButtons">
-            <nav>
-              <ul id="nav">
-                <li><a href="/" title="Home">Home</a></li>
-                <li><a href="/decks" title="Decks">Decks</a></li>
-                <li><a href="/tools" title="Tools">Tools</a></li>
-                <li><a href="/identifiers" title="Accounts">Accounts</a></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+    <div id="header">
+      <div id="nav">
+        <ul float="right">
+          <li><img src="/images/HeaderLogo.png"></img></li>
+          <li>Magic Deck.net</li>
+        </ul>
+        <ul float="right">
+          <li><a href="/" title="Home">Collection</a></li>
+          <li><a href="/decks" title="Decks">Decks</a></li>
+          <li><a href="/" title="Decks">Events</a></li>
+          <li><a href="/identifiers" title="Accounts">Accounts</a></li>
+        </ul>
       </div>
-        
-      <div id="bd" class="consume_height">
-	<%= yield %>
-      </div> 
+      <div id="login_container">
+        <% if @user %>
+        Welcome, <%= @user.nick %>
+        |
+        <a href='/logout'>logout</a>
+        <% else %>
+        <a href="/identifiers">Sign In</a>
+        <% end %>
+      </div>
+    </div>
+    
+    <div id="content-wrap">
+      <%= yield %>
+    </div>
 
-      <div id="ft">
-	<div id="footer">This [Web site] is not affiliated with, endorsed, sponsored,
-	  or specifically approved by Wizards of the Coast LLC. This [Web site] may use the
-	  trademarks and other intellectual property of Wizards of the Coast LLC, which is
-	  permitted under Wizards' Fan Site Policy [link]. For example, MAGIC: THE GATHERING
-	  is a trademark[s] of Wizards of the Coast. For more information about
-	  Wizards of the Coast or any of Wizards' trademarks or other intellectual property,
-	  please visit their website at (www.wizards.com).</div>
-      </div>
+    <div id="footer-wrap">
+      This [Web site] is not affiliated with, endorsed, sponsored,
+      or specifically approved by Wizards of the Coast LLC. This [Web site] may use the
+      trademarks and other intellectual property of Wizards of the Coast LLC, which is
+      permitted under Wizards' Fan Site Policy [link]. For example, MAGIC: THE GATHERING
+      is a trademark[s] of Wizards of the Coast. For more information about
+      Wizards of the Coast or any of Wizards' trademarks or other intellectual property,
+      please visit their website at (www.wizards.com).
     </div>
   </body>
 </html>

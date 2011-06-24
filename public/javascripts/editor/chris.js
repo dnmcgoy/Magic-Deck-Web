@@ -185,10 +185,7 @@ function changePile(pileName) {
     if ($("#pile_title_" + pileName).length == 0) {
 	addPile(pileName);
     } else {
-	debug.info($("#pile_title_" + pileName));
-	debug.info($("#pile_title_" + pileName).parent());
-	debug.info($("#pile_title_" + pileName).parent().attr("id"));
-	switchPile($("#pile_title_" + pileName).parent().attr("id").substr(5));
+	switchPile($("#pile_title_" + pileName).parent().attr("id"));
     };
 }
 

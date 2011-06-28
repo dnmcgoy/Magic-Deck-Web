@@ -1,7 +1,12 @@
 <% content_for :head do %>
     <title>Deck Editor</title>
-    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'editor/creation', 'editor/init' %>
-    <%= stylesheet_link_tag 'ui-lightness/jquery-ui-1.8.9.custom', 'editor', 'deck' %>
+    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'editor/chris' %>
+    <%= stylesheet_link_tag 'chris_editor' %>
+
+	<script>
+	$(function() {
+	});
+	</script>
 <% end %>
 
 <style>
@@ -37,101 +42,52 @@
 
 <% cols = 5 %>
 
+<div id="new_pile_form" title="Create new pile">
+  <form>
+    <fieldset>
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
+  </form>
+</div>
+
+
 <div id="deck_name_container" class="title_block">
   <span class="title" id="deck_name_show"><%= @deck.name %></span>
   <input id="deck_name_field" style="display: none;" />
   <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
 </div>
 
-<div class="column">
-  <div class="portlet">
-    <div class="portlet-header">Main Deck</div>
-    <div class="portlet-content">
-      
-      <div class="yui-gb">
-        <div class="yui-u first">
-          <div id="deck_list">
-            <table>
-              <tr id="decklist_header">
-                <td>Type</td>
-                <td>#</td>
-                <td>Name</td>
-                <td>CC</td>
-                <td>CMC</td>
-              </tr>
-              
-              <tr id="land_header" class="hrule">
-                <td>Lands</td>
-              </tr>
-              <%= render :partial => "edit_run",
-              :locals => {:runs => @deck.maindeck.lands, :classes => ['maindeck'] } %>
-              <tr id="blank_land_row" />
-              
-              <tr id="creature_header" class="hrule">
-                <td>Creatures</td>
-              </tr>
-              <%= render :partial => "edit_run",
-              :locals => {:runs => @deck.maindeck.creatures, :classes => ['maindeck', 'nonland'] } %>
-              <tr id="blank_creature_row" />
-              
-              <tr id="spell_header" class="hrule">
-                <td>Spells</td>
-              </tr>
-              <%= render :partial => "edit_run",
-              :locals => {:runs => @deck.maindeck.spells, :classes => ['maindeck', 'nonland'] } %>
-              <tr id="blank_spell_row" />
-              
-              <tr class="hrule">
-                <td>Total</td>
-                <td id="maindeck_count" class="total_cards"><%= @deck.maindeck.count %></td>
-                <td colspan="<%= cols-2 %>">&nbsp;</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="portlet">
-    <div class="portlet-header">Sideboard</div>
-    <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-  </div>
+<div id="input_entry">
+  I would like
+  <input id="card_entry" size="34" />
+  <button id="add_card_button" name="add_card">added</button>
+  to the
+  <select id="pile_select">
+    <optgroup label="Current Piles">
+      <% @pile_names.each do |name| %>
+        <option value="<%=name%>"><%=name.titleize%></option>
+      <% end %>
+    </optgroup>
+    <optgroup label="Pile Options">
+      <option value="newpile">New Pile</option>
+      <option value="mergepiles">Merge Piles</option>
+    </optgroup>
+  </select>
+  pile.
+</div>
+<div id="example_text" class="centered">
+  <p><span style="font-weight: bold">examples:</span></p>
+  <ul>
+    <li>4 llanowar elves</li>
+    <li>island</li>
+    <li>-2 dark ritual</li>
+  </ul>
 </div>
 
-  <div class="yui-u">
-    <div id="input_entry">
-      <input id="card_entry" size="34" />
-      <button id="add_card_button" name="add_card">+</button>
-      <p><span style="font-weight: bold">examples:</span></p>
-      <ul style="margin-left: 18px">
-        <li>island</li>
-        <li>4 llanowar elves</li>
-        <li>4x shock</li>
-        <li>-2 dark ritual</li>
-      </ul>
-    </div>
+<%= render :partial => "pile", :collection => @deck.piles %>
 
-
-    <table id="pending_cards" class="center_col">
-      <tr id="pending_header">
-        <td colspan="<%=cols%>">Pending</td>
-      </tr>
-      <tr id="blank_pending_row" />
-    </table>
-
-    <table class="center_col">
-      <tr id="unknown_header" style="visibility: hidden">
-      </tr>
-      <tr id="blank_unknown_row" />
-    </table>
-  </div>
-
-  <div class="yui-u">
-    <div id="deck_stats">
-      <img id="mana_curve" alt="mana curve chart" />
-    </div>
-    <img id="preview_image" src="http://www.logic-by-design.com/magic_images/hi_res/900.jpg" width="240" height="320"></img>
-  </div>
-
+<div id="templates" class="invis">
+  <%= render :partial => "pile", :collection => [Pile.new] %>
+  <%= render :partial => "run" %>
 </div>

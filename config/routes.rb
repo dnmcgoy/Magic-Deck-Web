@@ -37,6 +37,8 @@ Tdb::Application.routes.draw do
   match "tools" => "landing#tools"
   match "about" => "landing#about"
 
+  match "search" => "cards#search"
+
   #map.connect "tools", :controller => :landing, :action => :tools
   #map.connect "about", :controller => :landing, :action => :about
 

@@ -21,7 +21,8 @@ $(document).ready(
 
 	$( ".column" ).sortable({
 	    connectWith: ".column",
-	    receive: onRunReceive
+	    receive: onRunReceive,
+            items: ".run"
 	});
 
 	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
@@ -72,8 +73,7 @@ $(document).ready(
 	$("span.delete_run").live(
 	    "click",
 	    function(e){
-		var rowId = $(e.target).parent().parent().attr("id");
-		var runId = rowId.substring(3);
+		var runId = $(e.target).parent().parent().attr("id");
 		debug.info("deleting run " + runId);
 		var path = basepath + "runs/" + runId;
 		$.ajax({
@@ -81,7 +81,7 @@ $(document).ready(
 		    url: path,
 		    success: function(msg){
 			debug.info("run " + runId + " was deleted");
-			$("#" + rowId).remove();
+			$("#" + runId).remove();
 			onCardsChanged();
 		    }
 		});
@@ -148,6 +148,9 @@ $(document).ready(
 	    }
 	});
 
+        $(".pile_title").live("click", function(e){
+            switchPile($(e.target).parent().attr("id"));
+        });
 
 	onCardsChanged();
     }

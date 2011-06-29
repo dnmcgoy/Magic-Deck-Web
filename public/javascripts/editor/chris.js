@@ -203,7 +203,7 @@ function addPile(pileName) {
 function createPile(pile_response) {
     var pile = pile_response[0];
     // some stuff
-    var newPile = pileTemplate.clone().insertBefore('#pile_template');
+    var newPile = pileTemplate.clone().insertBefore('#templates');
     debug.info(newPile);
 
     newPile.attr('id', pile.id);

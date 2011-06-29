@@ -20,7 +20,7 @@ body {
 	margin: 10px 0 0 0; 	padding: 0;
 	font: normal 13px/1.6em  verdana, tahoma, sans-serif;	 
 	text-align: center;
-	background: #111111 url(images/bg.jpg) repeat-x;
+	background: #111111;
 	color: #8F8F8E; 	
 }
 
@@ -102,7 +102,7 @@ blockquote {
 	clear: both;
 	position: relative;
 	margin: 0 auto; padding: 0;
-	background: transparent url(images/header-image.jpg) no-repeat right top;
+	background: transparent right top;
 	height: 60px;
 	text-align: left;	
 }
@@ -184,8 +184,7 @@ blockquote {
 }
 #sidebar ul.sidemenu li {
 	padding: 0; 
-	background: url(images/bullet.jpg) no-repeat .5em .6em;
-	border-bottom: 1px solid #211E20; 
+        border-bottom: 1px solid #211E20; 
 	list-style:none;
 }
 

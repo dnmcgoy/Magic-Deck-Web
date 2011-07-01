@@ -60,7 +60,7 @@
       $("#advanced_search_button").click(function () {
         $("#results").toggle("blind", { direction: "vertical" }, 300);
         $(".resultsList").css("height", (590 - $("#accordion").height()) + "px");
-        $("#exampleText").hide();
+        $("#exampleText").toggle();
       });
 
       $(".floatleft").click(function () {
@@ -75,7 +75,7 @@
 <div class="searchField" id="button">
    <div id="input_entry">
      I would like
-     <input id="card_entry" size="30" />
+     <input id="card_entry" size="20" />
      <button id="advanced_search_button">Advanced</button>
      <div id="exampleText">
        <p><span style="font-weight: bold">examples:</span></p>

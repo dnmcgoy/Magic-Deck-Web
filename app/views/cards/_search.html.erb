@@ -1,0 +1,150 @@
+<style type="text/css">
+  .searchField { margin: 0px; width: 320px; height: 25px; background: #333333; position: relative; }
+  .advanced { margin: 0px; width: 320px; height: 290px; position: relative; }
+  .resultsList { margin: 0px; width: 320px; height: 300px;  border: 1px solid black; position: relative; overflow: auto; }
+  .floatleft
+  {
+      letter-spacing: 0px;
+      text-align: center;
+      display: inline-block;
+      width: 75px;
+      height: 65px;
+      vertical-align: middle;
+  }
+
+  #table1 {
+      width: 100%;
+  }
+
+  .resultsList div:nth-child(odd) {
+      width: 305px;
+      height: 60px;
+      background-color: rgba(0, 0, 0, 0.1); /* red, 30% alpha */
+  }
+
+  .resultsList div:nth-child(even) {
+      width: 305px;
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.3); /* red, 30% alpha */
+  }
+</style>
+
+<script>
+   $(document).ready(function() {
+     $(function() {
+        $( "#accordion" ).accordion({
+           fillSpace:"true",
+           collapsible:"true"
+        });
+     });
+     
+     $("#accordion").bind('accordionchange', function() {
+         $(".resultsList").css("height", (590 - $("#accordion").height()) + "px"); 
+     });
+
+     $( "#card_entry" ).autocomplete({
+      source: "/cards/autocomplete",
+      minLength: 2,
+ 
+      focus: function( event, ui ) {
+        var match = $("#card_entry").val().match(/^(-?[0-9]*).*/);
+        if (match) {
+           var prefixNumber = match[1];
+           $("card_entry").val(prefixNumber + " " + ui.label);
+         }
+         $("#preview_image").attr("src", "http://www.logic-by-design.com/magic_images/hi_res/" + ui.item.mtgid + ".jpg");
+        return false;
+      }
+      });
+
+      $("#advanced_search_button").click(function () {
+        $("#results").toggle("blind", { direction: "vertical" }, 300);
+        $(".resultsList").css("height", (590 - $("#accordion").height()) + "px");
+        $("#exampleText").hide();
+      });
+
+      $(".floatleft").click(function () {
+         $(this).css("background-color", "lightblue");
+      });
+
+      $("#results").hide();
+   });
+</script>
+
+
+<div class="searchField" id="button">
+   <div id="input_entry">
+     I would like
+     <input id="card_entry" size="30" />
+     <button id="advanced_search_button">Advanced</button>
+     <div id="exampleText">
+       <p><span style="font-weight: bold">examples:</span></p>
+       <ul style="margin-left: 18px">
+         <li>island</li>
+         <li>4 llanowar elves</li>
+         <li>4x shock</li>
+         <li>-2 dark ritual</li>
+       </ul>
+       added to the
+       <select id="pile_select">
+         <optgroup label="Current Piles">
+           <% @pile_names.each do |name| %>
+           <option value="<%=name%>"><%=name.titleize%></option>
+           <% end %>
+         </optgroup>
+         <optgroup label="Pile Options">
+           <option value="newpile">New Pile</option>
+           <option value="mergepiles">Merge Piles</option>
+         </optgroup>
+       </select>
+       pile.
+     </div>
+   </div>
+ </div>
+
+<div class="advanced" id="results">
+  <div class="criteria" id="accordion">
+    <h3><a href="#">Select Sets/Formats</a></h3>
+    <div>
+      <% MagicSet.all.each do |set| %>
+      <div class="floatleft">
+        <% if set.short_name.eql?("V09") or set.short_name.eql?("V10") %>
+           <img src= <%= set.imageUrl("small", "M") %> />
+        <% else %>
+           <img src= <%= set.imageUrl("small", "C") %> />
+        <% end %>
+        <br/>
+        <font size="1"><%= set.name %></font>
+      </div>
+      <% end %>
+    </div>
+    <h3><a href="#">Card Play Attributes</a></h3>
+    <div>
+      <p>
+        Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+        purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
+        velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
+        suscipit faucibus urna.
+      </p>
+    </div>
+    <h3><a href="#">Card Non-play Attributes</a></h3>
+    <div>
+      <p>
+        Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+        Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+        ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+        lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+      </p>
+    </div>
+  </div>
+
+
+  <div class="resultsList">
+    <% for i in (1..32) %>
+    <div>
+      Row: <%= i %>
+    </div>
+    <% end %>
+  </div>
+</div>
+

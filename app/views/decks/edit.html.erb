@@ -10,13 +10,16 @@
 <% end %>
 
 <style>
-  .column { width: 500px; float: left;}
+  .column { width: 300px; float: left;}
   .portlet { margin: 0 1em 1em 0; }
   .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
   .portlet-header .ui-icon { float: right; }
   .portlet-content { padding: 0.4em; }
   .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
   .ui-sortable-placeholder * { visibility: hidden; }
+  .deckEditor {display:inline; height:620px; width:1200px; position:absolute;}
+  .deckWorkspace {display:inline; height:620px; width:880px; position:relative; float:left;}
+  .searchWidget  {display:inline; height:620px; width:320px; position:relative; float:left;}
 </style>
 <script>
   $(function() {
@@ -58,34 +61,14 @@
   <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
 </div>
 
-<div id="input_entry">
-  I would like
-  <input id="card_entry" size="34" />
-  <button id="add_card_button" name="add_card">added</button>
-  to the
-  <select id="pile_select">
-    <optgroup label="Current Piles">
-      <% @pile_names.each do |name| %>
-        <option value="<%=name%>"><%=name.titleize%></option>
-      <% end %>
-    </optgroup>
-    <optgroup label="Pile Options">
-      <option value="newpile">New Pile</option>
-      <option value="mergepiles">Merge Piles</option>
-    </optgroup>
-  </select>
-  pile.
+<div class="deckEditor">
+  <div class="searchWidget">
+    <%= render :partial => "cards/search" %>
+  </div>
+  <div class="deckWorkspace">
+    <%= render :partial => "pile", :collection => @deck.piles %>
+  </div>
 </div>
-<div id="example_text" class="centered">
-  <p><span style="font-weight: bold">examples:</span></p>
-  <ul>
-    <li>4 llanowar elves</li>
-    <li>island</li>
-    <li>-2 dark ritual</li>
-  </ul>
-</div>
-
-<%= render :partial => "pile", :collection => @deck.piles %>
 
 <div id="templates" class="invis">
   <%= render :partial => "pile", :collection => [Pile.new] %>

@@ -12,8 +12,7 @@ body {
 }
 
 #input_entry, #example_text {
-    margin: 15px auto;
-    text-align: center;
+    text-align: left;
     color: #999999;
 }
 
@@ -77,6 +76,7 @@ body {
 }
 .title_block {
     text-align: center;
+    background-color: #333333;
 }
 
 .delete_pile {

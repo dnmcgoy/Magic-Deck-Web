@@ -12,13 +12,18 @@ class RunsController < ApplicationController
   # this needs to make sure the deck belongs to the user
   def create
     card_name = params[:card_name].downcase
-    deck = Deck.first(params[:deck_id])
+    deck = Deck.find(params[:deck_id])
+
+    puts deck.id
+
     count = params[:count].blank? ? 1 : params[:count].to_i
 
     # use the maindeck if pile isn't given, or doesn't exist
     pile_id = params[:pile_id]
     pile = deck.piles.detect { |p| p.id == BSON::ObjectId(pile_id) }
     pile ||= deck.maindeck
+
+    puts pile.id
 
     card = Card.first(:name => /^#{card_name}$/i)
     puts "CARD: #{card.inspect}"

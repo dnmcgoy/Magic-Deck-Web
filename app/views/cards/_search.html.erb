@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag 'segmented-control' %>
 <style type="text/css">
   .searchField { margin: 0px; width: 320px; height: 25px; background: #333333; position: relative; }
   .advanced { margin: 0px; width: 320px; height: 290px; position: relative; }
@@ -26,6 +27,11 @@
       width: 305px;
       height: 60px;
       background-color: rgba(255, 255, 255, 0.3); /* red, 30% alpha */
+  }
+
+  .ui-accordion .ui-accordion-content {
+      padding: 0.25em;
+      text-align:center;
   }
 </style>
 
@@ -60,7 +66,7 @@
       $("#advanced_search_button").click(function () {
         $("#results").toggle("blind", { direction: "vertical" }, 300);
         $(".resultsList").css("height", (590 - $("#accordion").height()) + "px");
-        $("#exampleText").toggle();
+        $("#simpleSearchDetail").toggle();
       });
 
       $(".floatleft").click(function () {
@@ -77,14 +83,16 @@
      I would like
      <input id="card_entry" size="20" />
      <button id="advanced_search_button">Advanced</button>
-     <div id="exampleText">
-       <p><span style="font-weight: bold">examples:</span></p>
-       <ul style="margin-left: 18px">
-         <li>island</li>
-         <li>4 llanowar elves</li>
-         <li>4x shock</li>
-         <li>-2 dark ritual</li>
-       </ul>
+     <div id="simpleSearchDetail">
+       <div id="exampleText">
+         <span style="font-weight: bold; margin-left: 100px">examples:</span>
+         <ul style="margin-left: 100px">
+           <li>island</li>
+           <li>4 llanowar elves</li>
+           <li>4x shock</li>
+           <li>-2 dark ritual</li>
+         </ul>
+       </div>
        added to the
        <select id="pile_select">
          <optgroup label="Current Piles">
@@ -120,21 +128,76 @@
     </div>
     <h3><a href="#">Card Play Attributes</a></h3>
     <div>
-      <p>
-        Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-        purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-        velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-        suscipit faucibus urna.
-      </p>
+      Converted Mana Cost:<br/>
+      <div class="segmented_control">
+            <button type="button" class="left_section">0</button>
+            <button type="button" class="middle_section">1</button>
+            <button type="button" class="middle_section">2</button>
+            <button type="button" class="middle_section">3</button>
+            <button type="button" class="middle_section">4</button>
+            <button type="button" class="middle_section">5</button>
+            <button type="button" class="middle_section">6</button>
+            <button type="button" class="right_section">7+</button>
+        </div>
+        <br/>
+        <br/>
+        Color:
+        <br/>
+        <div class="segmented_control">
+            <button type="button" class="left_section"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=B&type=symbol"/></button>
+            <button type="button" class="middle_section"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=R&type=symbol"/></button>
+            <button type="button" class="middle_section"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=U&type=symbol"/></button>
+            <button type="button" class="middle_section"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=G&type=symbol"/></button>
+            <button type="button" class="middle_section"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=W&type=symbol"/></button>
+            <button type="button" class="right_section"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=W&type=symbol"/></button>
+        </div>
+        <br/>
+        <br/>
+        <div id="type_selection">
+          <div id="basictype_selection">
+            Type:
+            <br/>
+            <select>
+              <option>All</option>
+              <option>Artifact</option>
+              <option>Basic</option>
+              <option>Creature</option>
+              <option>Enchantment</option>
+              <option>Instant</option>
+              <option>Land</option>
+              <option>Legendary</option>
+              <option>Ongoing</option>
+              <option>Plane</option>
+              <option>Planeswalker</option>
+              <option>Scheme</option>
+              <option>Snow</option>
+              <option>Sorcery</option>
+              <option>Tribal</option>
+              <option>Vanguard</option>
+              <option>World</option>              
+            </select>
+          </div>
+          <div id="subtype">
+            Subtype:
+            <br/>
+            <input id="subtype_entry" size="20"/>
+          </div>
+        </div>
     </div>
     <h3><a href="#">Card Non-play Attributes</a></h3>
     <div>
-      <p>
-        Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-        Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
-        ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-        lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-      </p>
+      Rarity:<br/>
+      <div class="segmented_control">
+        <button type="button" class="left_section">Common</button>
+        <button type="button" class="middle_section">Uncommon</button>
+        <button type="button" class="middle_section">Rare</button>
+        <button type="button" class="right_section">Mythic</button>
+      </div>
+      <div id="artist">
+            Artist:
+            <br/>
+            <input id="artist_entry" size="20"/>
+          </div>
     </div>
   </div>
 

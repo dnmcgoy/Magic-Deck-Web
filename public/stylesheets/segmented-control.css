@@ -1,0 +1,67 @@
+.segmented_control {
+    display: inline-block;
+    -webkit-box-shadow: 0 1px 0 #fff;
+    -moz-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 #fff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.segmented_control button {
+    margin: 0;
+    padding: 4px 12px;
+    border: 1px solid #777;
+    text-shadow: 0 1px 0 #fff;
+    font-size: 12px;
+    background: #eee;
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#fff), to(#ddd)
+    );
+    background: -moz-linear-gradient(top, #fff, #ddd);
+}
+
+.segmented_control button.left_section {
+    border-right: 0;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+    -webkit-background-clip: padding-box;
+}
+
+.segmented_control button.middle_section {
+    margin-left: -5px;
+    border-right: 0;
+}
+
+.segmented_control button.right_section {
+    margin-left: -5px;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+    -webkit-background-clip: padding-box;
+}
+
+.segmented_control button:active {
+    background: #ccc;
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ddd), to(#bbb)
+    );
+    background: -moz-linear-gradient(top, #ddd, #bbb);
+    text-shadow: 0 1px 0 #eee;
+    -webkit-box-shadow: inset 0 1px 4px #000;
+    -moz-box-shadow: inset 0 1px 4px #000;
+    box-shadow: inset 0 1px 4px #000;
+}
+
+.segmented_control button::-moz-focus-inner {
+    border: 0;
+} 
+
+.segmented_control button:focus {     
+    outline: none; 
+}

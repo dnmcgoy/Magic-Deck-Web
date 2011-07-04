@@ -11,6 +11,7 @@ class Card
   key :color, String
   key :power, Integer
   key :toughness, Integer
+  key :oracle_text, String
   timestamps!
 
   many :runs

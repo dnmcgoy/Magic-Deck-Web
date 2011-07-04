@@ -6,7 +6,7 @@ class Run
 
   belongs_to :card
 
-  delegate :cardtype, :name, :cmc, :cc, :mtg_id, :to => :card
+  delegate :cardtype, :name, :cmc, :cc, :mtg_id, :oracle_text, :to => :card
 
   def category
     case cardtype

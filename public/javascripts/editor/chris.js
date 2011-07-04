@@ -26,8 +26,20 @@ $(document).ready(
 	});
 
 	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
+        $( ".portlet" ).hoverIntent(function() {
+          $(this).children(".oracle_text").show();
+          $(this).animate({
+            height: '100px'
+          },400);
+        },function() {
+          $(this).children(".oracle_text").hide();
+          $(this).animate({
+            height: '20px'
+          }, 400);
+        });
+        $(".oracle_text").hide();
 
-	$( ".column" ).disableSelection();
+        $( ".column" ).disableSelection();
 
 	$( "#new_pile_form" ).dialog({
 	    autoOpen: false,

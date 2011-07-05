@@ -1,0 +1,22 @@
+<% content_for :head do %>
+    <title>Deck Editor</title>
+    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'jquery.hoverIntent.minified', 'editor/chris'%>
+    <%= stylesheet_link_tag 'chris_editor' %>
+
+    <script>
+      $(function() {
+      });
+    </script>
+<% end %>
+
+
+<div id="<%= @pile.id %>" class="column pile">
+  <div id="pile_title_<%= @pile.name %>" class="pile_title">
+    <%= @pile.name.titleize %>
+    <span class="pile_count"> (<%= @pile.count %>)</span>
+    <div class="delete_pile"><span class="ui-icon ui-icon-closethick"><%= @pile.id %></span></div>
+  </div>
+
+  <%= render :partial => "decks/run", :collection => @pile.runs %>
+
+</div>

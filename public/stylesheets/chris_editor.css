@@ -101,3 +101,14 @@ td .delete_run:hover {
 #edit_deck_name {
     cursor: pointer;
 }
+
+.column { width: 300px; float: left;}
+.portlet { margin: 0 1em 1em 0; }
+.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+.portlet-header .ui-icon { float: right; }
+.portlet-content { padding: 0.4em; }
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+.deckEditor {display:inline; height:620px; width:1200px; position:absolute;}
+.deckWorkspace {display:inline; height:620px; width:880px; position:relative; text-align: center;}
+.searchWidget  {display:inline; background: #333333; height:620px; width:320px; position:relative; float:left;}

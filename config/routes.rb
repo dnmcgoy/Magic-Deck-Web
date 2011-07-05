@@ -6,6 +6,8 @@ Tdb::Application.routes.draw do
     end
   end
 
+  resources :piles, :only => :show
+
   resources :decks do
     collection do
       post :import

@@ -27,7 +27,7 @@ class DecksController < ApplicationController
     
 
     respond_to do |format|
-      format.html { render :layout => 'application' }
+      format.html { }
       format.xml  { render :xml => @decks }
     end
   end
@@ -95,7 +95,6 @@ class DecksController < ApplicationController
     @deck = @user.decks.find(params[:id])
     names = [Pile::MAINDECK, Pile::SIDEBOARD] + @deck.piles.map(&:name)
     @pile_names = names.uniq
-    render :layout => 'application'
   end
 
   def create

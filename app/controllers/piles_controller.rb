@@ -1,5 +1,12 @@
 class PilesController < ApplicationController
-  layout nil
+
+  #layout nil
+
+  def show
+    pile_id = params[:id]
+    deck = Deck.first("piles._id" => BSON::ObjectId(pile_id))
+    @pile = deck.piles.detect { |p| p.id == BSON::ObjectId(pile_id) }
+  end
 
   def create
     pile_name = params[:name].downcase

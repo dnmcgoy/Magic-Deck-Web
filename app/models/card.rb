@@ -19,10 +19,10 @@ class Card
 
   ensure_index(:name)
 
-  after_create :after_create_callback
-  def after_create_callback
-    sync_with_gatherer
-  end
+  # after_create :after_create_callback
+  # def after_create_callback
+  #   sync_with_gatherer
+  # end
 
   def mtg_id
     if(printings.size > 0)

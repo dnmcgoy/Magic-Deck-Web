@@ -45,17 +45,17 @@ $(document).ready(
 	});
 
 	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
-        $( ".portlet" ).hoverIntent(function() {
-          $(this).children(".oracle_text").show();
-          $(this).animate({
-            height: '100px'
-          },400);
-        },function() {
-          $(this).children(".oracle_text").hide();
-          $(this).animate({
-            height: '20px'
-          }, 400);
-        });
+        // $( ".portlet" ).hoverIntent(function() {
+//           $(this).children(".oracle_text").show();
+//           $(this).animate({
+//             height: '100px'
+//           },400);
+//         },function() {
+//           $(this).children(".oracle_text").hide();
+//           $(this).animate({
+//             height: '20px'
+//           }, 400);
+//         });
         $(".oracle_text").hide();
 
         $( ".column" ).disableSelection();
@@ -184,6 +184,8 @@ $(document).ready(
         });
 
 	onCardsChanged();
+
+        $(".run").tooltip({position:"center-right"});
     }
 );
 

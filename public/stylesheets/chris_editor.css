@@ -35,8 +35,23 @@ body {
 }
 
 .oracle_text {
-    font-size:8px;
+    font-size:9px;
     text-align:left;
+    line-height:98%;
+}
+
+.tooltip {
+	display:none;
+	background:transparent url(/images/black_arrow_big.png);
+	font-size:12px;
+	height:245px;
+	width:180px;
+	padding-top:15px;
+        padding-left:25px;
+        padding-right:15px;
+        padding-bottom:15px;
+	color:#fff;
+        position:center-right;
 }
 
 .column { width: 300px; float: left; padding-bottom: 10px; }

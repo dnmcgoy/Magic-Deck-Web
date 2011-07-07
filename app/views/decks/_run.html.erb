@@ -1,7 +1,7 @@
 <%
   # This seems like quite a hack, but still better than the others that
   # come to mind for getting a template needed by the javascript
-  run = Struct.new("FakeRun", :id, :count, :name, :cmc, :cc, :cardtype, :oracle_text).new if run.nil?
+  run = Struct.new("FakeRun", :id, :count, :name, :cmc, :cc, :cardtype, :oracle_text, :mtg_id).new if run.nil?
 %>
 
 <div id="<%= run.id %>" class="portlet run">
@@ -11,6 +11,7 @@
   <div style="float: right"><span class='delete_run' href=''>X</span></div>
   <div style="float: right" class="cmc"><%= run.cmc %></div>
   <div style="float: right" class="cc"><%= run.cc %></div>
-  <div style="float: left" class="cardtype"><%= run.cardtype %></div>
-  <div style="float: left" class="oracle_text"><%= run.oracle_text %></div>
+</div>
+<div class="tooltip">
+  <img width="150" height="225" src="http://www.logic-by-design.com/magic_images/hi_res/<%= run.mtg_id %>.jpg"/>
 </div>

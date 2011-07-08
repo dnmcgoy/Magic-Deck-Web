@@ -7,26 +7,18 @@ var runTemplate = null;
 $(document).ready(
     function() {
 
-	$( ".column" ).sortable({
-	    connectWith: ".column"
+	$( ".pile_runs" ).sortable({
+	    connectWith: ".pile_runs",
+	    receive: onRunReceive,
+            items: ".run"
 	});
   
-	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-	    .find( ".portlet-header" )
-	    .addClass( "ui-widget-header ui-corner-all" )
-	    .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
-	    .end()
-	    .find( ".portlet-content" );
+	$( ".run" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
   
-	$( ".portlet-header .ui-icon" ).click(function() {
-	    $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
-	    $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
-	});
-  
-	$( ".column" ).disableSelection();
+	$( ".pile_runs" ).disableSelection();
 
 
-	pileTemplate = $('#templates .pile').first();
+	pileTemplate = $('#templates .pile_runs').first();
 	runTemplate = $('#templates .run').first();
         tooltipTemplate = $('#templates .tooltip').first();
 
@@ -39,17 +31,9 @@ $(document).ready(
 
 	focusEntry();
 
-	$( ".column" ).sortable({
-	    connectWith: ".column",
-	    receive: onRunReceive,
-            items: ".run"
-	});
-
-	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
 
         $(".oracle_text").hide();
 
-        $( ".column" ).disableSelection();
 
 	$( "#new_pile_form" ).dialog({
 	    autoOpen: false,
@@ -171,24 +155,27 @@ $(document).ready(
 	    }
 	});
 
-        $(".pile_title").live("click", function(e){
+        $(".pile_header").live("click", function(e){
             switchPile($(e.target).parent().attr("id"));
         });
 
 	onCardsChanged();
 
-        $(".run").tooltip({position:"center-right"});
+        // $(".run").tooltip({position:"center-right"});
     }
 );
 
 // Handle a run being dragged from one pile to another
 function onRunReceive(event, ui) {
     debug.info("onRunReceive");
-    var newPile = event.target.id;
-    var oldPile = ui.sender.context.id;
+    var newPile = $(event.target).parent()[0].id;
+    var oldPile = $(ui.sender.context).parent()[0].id;
+    debug.info(newPile);
+    debug.info(oldPile);
+
     var name = $(ui.item.context).find(".card_name").text();
     var count = $(ui.item.context).find(".run_count").text();
-
+    
     var noop = function(data) {};
     sendCreateRun(count, name, newPile, noop);
     sendCreateRun('-'+count, name, oldPile, noop);
@@ -235,12 +222,12 @@ function createPile(pile_response) {
     debug.info(newPile);
 
     newPile.attr('id', pile.id);
-    var title = newPile.children('.pile_title').first();
+    var title = newPile.children('.pile_header').first();
     title.attr('id', title.attr('id') + pile.name.toLowerCase());
     title.prepend(pile.name);
     title.find('span').text(pile.id);
 
-    newPile.sortable({ connectWith: ".column" });
+    newPile.sortable({ connectWith: ".pile_runs" });
 
     debug.info("In create pile");
     debug.info(pile);
@@ -249,7 +236,7 @@ function createPile(pile_response) {
 
 function switchPile(pileId) {
     debug.info("switching to pile " + pileId);
-    $(".pile").removeClass("active_pile");
+    $(".pile_runs").removeClass("active_pile");
     $("#" + pileId).addClass("active_pile");
     activePile = pileId;
 }
@@ -352,10 +339,10 @@ function createRun(run) {
     newRun.find(".cc").text(run.cc);
     newRun.find(".cmc").text(run.cmc);
     $("#"+activePile).append(newRun);
-    var newTooltip = tooltipTemplate.clone();
-    newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
-    $("#"+activePile).append(newTooltip);
-    newRun.tooltip({position:"center-right"});
+     // var newTooltip = tooltipTemplate.clone();
+     // newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
+     // $("#"+activePile).append(newTooltip);
+     // newRun.tooltip({position:"center-right"});
 }
 
 function updateRun(run) {

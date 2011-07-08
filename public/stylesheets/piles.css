@@ -1,4 +1,5 @@
-.pile_runs {
+.pile_runs, .pile_footer {
+    padding: 3px;
     display: -webkit-box;
     -webkit-box-orient: horizontal;
     -webkit-box-pack: justify;
@@ -7,9 +8,9 @@
 .run {
     display: -webkit-box;
     -webkit-box-orient: horizontal;
-    background-color: #333333;
-    border-radius: 10px;
-    margin: 2px;
+    background-color: #454545;
+    border-radius: 5px;
+    margin-bottom: 2px;
 }
 
 .run > div:nth-child(2) {
@@ -22,21 +23,22 @@
 
 .pile {
     width: 40%;
+    min-width: 400px;
     border: 1px solid #999999;
     border-radius: 10px;
     color: #999999;
-    margin-left: 5px;
-    font-size: .8em;
 }
 
-.pile_title {
+.pile_header {
     font-size: 1.5em;
     padding: 5px;
     border-bottom: 1px solid #999999;
     text-align: left;
-
     display: -webkit-box;
     -webkit-box-orient: horizontal;
+}
+.pile_footer {
+    border-top: 1px solid #999999;
 }
 
 .active_pile {
@@ -50,8 +52,11 @@
     -webkit-box-flex: 1;
 }
 
-.run_type {
-    width: 150px;
+.run_type, .run_type_summary {
+    min-width: 100px;
+    -webkit-box-flex: 1;
+    padding: 2px;
+    margin: 2px;
 }
 
 .invis {

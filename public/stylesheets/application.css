@@ -295,3 +295,17 @@ blockquote {
 .post-footer .readmore {
     padding-left: 20px; margin: 0 3px 0 3px;
 }
+
+.tooltip {
+    display:none;
+    background:transparent url(/images/black_arrow_big.png);
+    font-size:12px;
+    height:245px;
+    width:180px;
+    padding-top:15px;
+    padding-left:25px;
+    padding-right:15px;
+    padding-bottom:15px;
+    color:#fff;
+    position:center-right;
+}

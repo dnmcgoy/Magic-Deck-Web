@@ -28,6 +28,7 @@ $(document).ready(
 
 	pileTemplate = $('#templates .pile').first();
 	runTemplate = $('#templates .run').first();
+        tooltipTemplate = $('#templates .tooltip').first();
 
 	var pathname = document.location.pathname;
 	basepath = pathname.substring(0, pathname.lastIndexOf('/')+1);
@@ -112,6 +113,7 @@ $(document).ready(
 		    url: path,
 		    success: function(msg){
 			debug.info("run " + runId + " was deleted");
+                        $('#'+ runId).next().remove();
 			$("#" + runId).remove();
 			onCardsChanged();
 		    }
@@ -360,10 +362,15 @@ function createRun(run) {
     newRun.find(".cc").text(run.cc);
     newRun.find(".cmc").text(run.cmc);
     $("#"+activePile).append(newRun);
+    var newTooltip = tooltipTemplate.clone();
+    newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
+    $("#"+activePile).append(newTooltip);
+    newRun.tooltip({position:"center-right"});
 }
 
 function updateRun(run) {
     if (run.count == 0) {
+        $('#'+run.id).next().remove();
 	$('#'+run.id).remove();
     } else {
 	$('#'+run.id).find(".run_count").text(run.count);

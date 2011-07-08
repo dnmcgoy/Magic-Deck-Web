@@ -126,7 +126,7 @@
       </div>
       <% end %>
     </div>
-    <h3><a href="#">Card Play Attributes</a></h3>
+    <h3><a href="#">Card Attributes</a></h3>
     <div>
       Converted Mana Cost:<br/>
       <div class="segmented_control">
@@ -183,24 +183,21 @@
             <input id="subtype_entry" size="20"/>
           </div>
         </div>
-    </div>
-    <h3><a href="#">Card Non-play Attributes</a></h3>
-    <div>
-      Rarity:<br/>
-      <div class="segmented_control">
-        <button type="button" class="left_section">Common</button>
-        <button type="button" class="middle_section">Uncommon</button>
-        <button type="button" class="middle_section">Rare</button>
-        <button type="button" class="right_section">Mythic</button>
-      </div>
-      <div id="artist">
-            Artist:
-            <br/>
-            <input id="artist_entry" size="20"/>
-          </div>
+        Rarity:<br/>
+        <div class="segmented_control">
+          <button type="button" class="left_section">Common</button>
+          <button type="button" class="middle_section">Uncommon</button>
+          <button type="button" class="middle_section">Rare</button>
+          <button type="button" class="right_section">Mythic</button>
+        </div>
+        <div id="artist">
+          Artist:
+          <br/>
+          <input id="artist_entry" size="20"/>
+        </div>
     </div>
   </div>
-
+  
 
   <div class="resultsList">
     <% for i in (1..32) %>

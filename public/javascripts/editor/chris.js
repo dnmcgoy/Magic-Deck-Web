@@ -228,7 +228,8 @@ function addPile(pileName) {
 function createPile(pile_response) {
     var pile = pile_response[0];
     // some stuff
-    var newPile = pileTemplate.clone().insertBefore('#templates');
+    var newPile = pileTemplate.clone();
+    $(".deckWorkspace").append(newPile);
     debug.info(newPile);
 
     newPile.attr('id', pile.id);

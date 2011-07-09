@@ -60,7 +60,6 @@ class DecksController < ApplicationController
     else
       @deck.name = "New Deck"
     end
-    @deck.init_piles
     for line in outputStuff
       if line =~ /^ *([0-9]+x?) (.*)/
         count = $1

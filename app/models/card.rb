@@ -1,7 +1,7 @@
 class Card
   include MongoMapper::Document
 
-  CREATURE_REGEX = /^(legendary\s*)?creature/i
+  CREATURE_REGEX = /^(legendary\s*|artifact\s*)?creature/i
   LAND_REGEX = /^(legendary\s|basic\s)?land/i
 
   key :name, String

@@ -7,10 +7,13 @@ var runTemplate = null;
 $(document).ready(
     function() {
 
+        
 	$( ".column" ).sortable({
-	    connectWith: ".column"
+	    connectWith: ".column",
+	    receive: onRunReceive,
+            items: ".run"
 	});
-  
+
 	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
 	    .find( ".portlet-header" )
 	    .addClass( "ui-widget-header ui-corner-all" )
@@ -38,12 +41,6 @@ $(document).ready(
 	debug.info("Initial pile maindeck, id: " + activePile);
 
 	focusEntry();
-
-	$( ".column" ).sortable({
-	    connectWith: ".column",
-	    receive: onRunReceive,
-            items: ".run"
-	});
 
 	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
 
@@ -240,8 +237,11 @@ function createPile(pile_response) {
     title.prepend(pile.name);
     title.find('span').text(pile.id);
 
-    newPile.sortable({ connectWith: ".column" });
-
+    newPile.sortable({
+	connectWith: ".column",
+	receive: onRunReceive,
+        items: ".run"
+    });
     debug.info("In create pile");
     debug.info(pile);
     switchPile(pile.id);

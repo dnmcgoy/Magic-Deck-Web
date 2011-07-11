@@ -7,15 +7,18 @@ var runTemplate = null;
 $(document).ready(
     function() {
 
-	$( ".pile_runs" ).sortable({
-	    connectWith: ".pile_runs",
-	    receive: onRunReceive,
-            items: ".run"
+	var category_classes = [".land", ".creature", ".spell"];
+	$.each(category_classes, function(i, category) {
+	    var stack_class = category+"_stack";
+	    debug.info("setting up drag and drop, category: " + category);
+	    $( stack_class ).sortable({
+		connectWith: stack_class,
+		receive: onRunReceive,
+		items: category
+	    });
+	    $( category ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
+	    $( stack_class ).disableSelection();
 	});
-  
-	$( ".run" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
-  
-	$( ".pile_runs" ).disableSelection();
 
 
 	pileTemplate = $('#templates .pile_runs').first();
@@ -30,10 +33,6 @@ $(document).ready(
 	debug.info("Initial pile maindeck, id: " + activePile);
 
 	focusEntry();
-
-
-        $(".oracle_text").hide();
-
 
 	$( "#new_pile_form" ).dialog({
 	    autoOpen: false,
@@ -168,14 +167,14 @@ $(document).ready(
 // Handle a run being dragged from one pile to another
 function onRunReceive(event, ui) {
     debug.info("onRunReceive");
-    var newPile = $(event.target).parent()[0].id;
-    var oldPile = $(ui.sender.context).parent()[0].id;
+    var newPile = $(event.target).parents(".pile")[0].id;
+    var oldPile = $(ui.sender.context).parents(".pile")[0].id;
     debug.info(newPile);
     debug.info(oldPile);
 
     var name = $(ui.item.context).find(".card_name").text();
     var count = $(ui.item.context).find(".run_count").text();
-    
+
     var noop = function(data) {};
     sendCreateRun(count, name, newPile, noop);
     sendCreateRun('-'+count, name, oldPile, noop);
@@ -331,14 +330,17 @@ function onCardAdded(run) {
 }
 
 function createRun(run) {
-    debug.info("In craete run");
+    debug.info("In create run");
     var newRun = runTemplate.clone();
     newRun.attr('id', run.id);
     newRun.find(".run_count").text(run.count);
     newRun.find(".card_name").text(run.name);
-    newRun.find(".cc").text(run.cc);
-    newRun.find(".cmc").text(run.cmc);
-    $("#"+activePile).append(newRun);
+    debug.info("createRun, type: " + run.category);
+    var stack_class = "." + run.category + "_stack";
+
+    newRun.addClass(run.category);
+    newRun.addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all");
+    $("#"+activePile + " " + stack_class ).append(newRun);
      // var newTooltip = tooltipTemplate.clone();
      // newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
      // $("#"+activePile).append(newTooltip);

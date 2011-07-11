@@ -122,12 +122,6 @@
     text-align: left;
 }
 
-.active_pile {
-    border: 1px solid #000000;    
-    color: #000000;
-    background-color: #FFFFEA;
-}
-
 .title {
     font-size: 200%;
 }

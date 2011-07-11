@@ -8,15 +8,15 @@
   </div>
 
   <div class="pile_runs">
-    <div class="run_type">
+    <div class="run_type land_stack">
       <%= render :partial => "run", :collection => pile.lands %>
     </div>
 
-    <div class="run_type">
+    <div class="run_type creature_stack">
       <%= render :partial => "run", :collection => pile.creatures %>
     </div>
 
-    <div class="run_type">
+    <div class="run_type spell_stack">
       <%= render :partial => "run", :collection => pile.spells %>
     </div>
   </div>

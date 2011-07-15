@@ -263,7 +263,7 @@ blockquote {
 #footer-bottom {
     clear: both;
     margin: 0 auto; 
-    padding: 1em 0 1.5em 0;
+    padding: 1em 0 0.5em 0;
     text-align: center;
     font-size: .85em
 }
@@ -283,18 +283,6 @@ blockquote {
     padding-top: 0;
 }
 
-.post-footer { 
-    text-align: right; 
-    background: transparent;
-    border: 1px solid #211E20; 
-    padding: 5px 10px;
-    margin: 20px 15px 10px 15px;
-}
-.post-footer .date, 
-.post-footer .comments,
-.post-footer .readmore {
-    padding-left: 20px; margin: 0 3px 0 3px;
-}
 
 .tooltip {
     display:none;

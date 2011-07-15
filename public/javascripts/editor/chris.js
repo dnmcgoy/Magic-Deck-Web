@@ -57,7 +57,8 @@ $(document).ready(
 	$(".delete_pile").live(
 	    "click",
 	    function(e){
-		var pileId = $(e.target).text();
+		debug.info(e);
+		var pileId = $(e.currentTarget).children("span").first().text();
                 debug.info("deleting pile " + pileId);
         	var path = basepath + "piles/" + pileId;
 		$.ajax({
@@ -154,9 +155,9 @@ $(document).ready(
 	    }
 	});
 
-        $(".pile_header").live("click", function(e){
-            switchPile($(e.target).parent().attr("id"));
-        });
+        // $(".pile_header").live("click", function(e){
+        //     switchPile($(e.target).parent().attr("id"));
+        // });
 
 	onCardsChanged();
 
@@ -235,7 +236,7 @@ function createPile(pile_response) {
 
 function switchPile(pileId) {
     debug.info("switching to pile " + pileId);
-    $(".pile_runs").removeClass("active_pile");
+    $("#" + activePile).removeClass("active_pile");
     $("#" + pileId).addClass("active_pile");
     activePile = pileId;
 }

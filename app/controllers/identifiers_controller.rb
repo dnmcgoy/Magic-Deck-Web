@@ -1,4 +1,5 @@
 class IdentifiersController < ApplicationController
+
   def index
     @identifiers = @user.identifiers if @user
   end
@@ -34,7 +35,7 @@ class IdentifiersController < ApplicationController
     session[:ident] = omniauth['uid']
 
     flash[:notice] = "Signed in successfully."
-    redirect_to "/"
+    redirect_to "/decks"
   end
   
   def destroy

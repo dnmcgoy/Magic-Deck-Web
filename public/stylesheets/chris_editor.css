@@ -36,6 +36,7 @@
     text-align: left;
     display: -webkit-box;
     -webkit-box-orient: horizontal;
+    -webkit-box-pack: justify;
 }
 .pile_footer {
     border-top: 1px solid #999999;
@@ -49,7 +50,7 @@
 
 .delete_pile {
     text-align: right;
-    -webkit-box-flex: 1;
+    color: #999999;
 }
 
 .run_type, .run_type_summary {
@@ -130,9 +131,6 @@
     background-color: #333333;
 }
 
-.delete_pile {
-    float: right;
-}
 .delete_run, .delete_pile {
     color: #FF0000;
 }

@@ -61,9 +61,17 @@ class RunsController < ApplicationController
 
   def destroy
     deck = Deck.find(params[:deck_id])
-    @run = deck.maindeck.runs.detect { |r| r.id.to_s == params[:id] }
-    puts "about to delete run #{@run.id}"
-    deck.maindeck.runs.delete(@run)
+
+    # TODO this seems terrible...there has to be a better way to
+    # have mongo do this for us
+    deck.piles.each do |pile|
+      @run = pile.runs.detect { |r| r.id.to_s == params[:id] }
+      next if @run.nil?
+
+      puts "about to delete run #{@run.id}"
+      pile.runs.delete(@run)      
+    end
+
     deck.save
     head :ok
   end

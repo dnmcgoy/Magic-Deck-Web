@@ -3,25 +3,14 @@ var deckNameEditable = false;
 var activePile = null;
 var pileTemplate = null;
 var runTemplate = null;
+var category_classes = [".land", ".creature", ".spell"];
 
 $(document).ready(
     function() {
 
-	var category_classes = [".land", ".creature", ".spell"];
-	$.each(category_classes, function(i, category) {
-	    var stack_class = category+"_stack";
-	    debug.info("setting up drag and drop, category: " + category);
-	    $( stack_class ).sortable({
-		connectWith: stack_class,
-		receive: onRunReceive,
-		items: category
-	    });
-	    $( category ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
-	    $( stack_class ).disableSelection();
-	});
+	setupDragging();
 
-
-	pileTemplate = $('#templates .pile_runs').first();
+	pileTemplate = $('#templates .pile').first();
 	runTemplate = $('#templates .run').first();
         tooltipTemplate = $('#templates .tooltip').first();
 
@@ -165,6 +154,20 @@ $(document).ready(
     }
 );
 
+function setupDragging() {
+    $.each(category_classes, function(i, category) {
+	var stack_class = category+"_stack";
+	debug.info("setting up drag and drop, category: " + category);
+	$( stack_class ).sortable({
+	    connectWith: stack_class,
+	    receive: onRunReceive,
+	    items: category
+	});
+	$( category ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
+	$( stack_class ).disableSelection();
+    });
+}
+
 // Handle a run being dragged from one pile to another
 function onRunReceive(event, ui) {
     debug.info("onRunReceive");
@@ -218,16 +221,17 @@ function addPile(pileName) {
 function createPile(pile_response) {
     var pile = pile_response[0];
     // some stuff
-    var newPile = pileTemplate.clone().insertBefore('#templates');
+    debug.info($('.deckWorkspace'));
+    var newPile = pileTemplate.clone().appendTo('.deckWorkspace');
     debug.info(newPile);
 
     newPile.attr('id', pile.id);
     var title = newPile.children('.pile_header').first();
     title.attr('id', title.attr('id') + pile.name.toLowerCase());
     title.prepend(pile.name);
-    title.find('span').text(pile.id);
+    title.find('span.invis').text(pile.id);
 
-    newPile.sortable({ connectWith: ".pile_runs" });
+    setupDragging();
 
     debug.info("In create pile");
     debug.info(pile);

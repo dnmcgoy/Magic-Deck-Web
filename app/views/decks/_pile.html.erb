@@ -24,13 +24,13 @@
 
   <div class="pile_footer">
     <div class="run_type_summary">
-      <%= pile.lands.count %> lands
+      <%= pile.lands.sum(&:count) %> lands
     </div>
     <div class="run_type_summary">
-      <%= pile.creatures.count %> creatures
+      <%= pile.creatures.sum(&:count) %> creatures
     </div>
     <div class="run_type_summary">
-      <%= pile.spells.count %> other spells
+      <%= pile.spells.sum(&:count) %> other spells
     </div>
   </div>
 

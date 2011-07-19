@@ -25,22 +25,23 @@ class RunsController < ApplicationController
 
     puts pile.id
 
-    card = Card.first(:name => /^#{card_name}$/i)
-    puts "CARD: #{card.inspect}"
-    @run = pile.runs.detect { |r| r.card_id == card.id }
-    if @run.nil?
-      @run = Run.new(:card => card, :count => 0)
-      pile.runs << @run
-    end
+    if(card = Card.first(:name => /^#{card_name}$/i))
+      puts "CARD: #{card.inspect}"
+      @run = pile.runs.detect { |r| r.card_id == card.id }
+      if @run.nil?
+        @run = Run.new(:card => card, :count => 0)
+        pile.runs << @run
+      end
+      
+      if(!@run.nil? && @run.count + count == 0)
+        pile.runs.delete(@run)
+        @run.count = 0
+      elsif(@run.count + count > 0)
+        @run.count += count
+      end
 
-    if(!@run.nil? && @run.count + count == 0)
-      pile.runs.delete(@run)
-      @run.count = 0
-    elsif(@run.count + count > 0)
-      @run.count += count
+      deck.save
     end
-
-    deck.save
 
     respond_to do |format|
       format.json  {

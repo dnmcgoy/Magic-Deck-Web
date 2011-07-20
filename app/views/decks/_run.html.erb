@@ -4,7 +4,7 @@
   run = Struct.new("FakeRun", :id, :count, :name, :cmc, :cc, :cardtype, :oracle_text, :mtg_id).new if run.nil?
 %>
 
-<div id="<%= run.id %>" class="portlet run">
+<div id="<%= run.id %>" mtg_id="<%= run.mtg_id %>" class="portlet run">
   <div style="float: left" class="run_count"><%= run.count %></div>
   <div style="float: left" class="card_name"><%= run.name %></div>
 
@@ -13,5 +13,5 @@
   <div style="float: right" class="cc"><%= run.cc %></div>
 </div>
 <div class="tooltip">
-  <img width="150" height="225" src="http://www.logic-by-design.com/magic_images/hi_res/<%= run.mtg_id %>.jpg"/>
+  <img width="150" height="225" src="http://www.logic-by-design.com/magic_images/low_res/900.jpg"/>
 </div>

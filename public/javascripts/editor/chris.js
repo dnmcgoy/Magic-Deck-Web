@@ -7,7 +7,7 @@ var runTemplate = null;
 $(document).ready(
     function() {
 
-        
+
 	$( ".column" ).sortable({
 	    connectWith: ".column",
 	    receive: onRunReceive,
@@ -20,12 +20,12 @@ $(document).ready(
 	    .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
 	    .end()
 	    .find( ".portlet-content" );
-  
+
 	$( ".portlet-header .ui-icon" ).click(function() {
 	    $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
 	    $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
 	});
-  
+
 	$( ".column" ).disableSelection();
 
 
@@ -163,7 +163,7 @@ $(document).ready(
 		    var prefixNumber = match[1];
 		    $("card_entry").val(prefixNumber + " " + ui.label);
 		}
-		$("#preview_image").attr("src", "http://www.logic-by-design.com/magic_images/hi_res/" + ui.item.mtgid + ".jpg");
+		$("#preview_image").attr("src", "http://www.logic-by-design.com/magic_images/low_res/900.jpg");
 		return false;
 	    }
 	});
@@ -174,7 +174,13 @@ $(document).ready(
 
 	onCardsChanged();
 
-        $(".run").tooltip({position:"center-right"});
+        $(".run").tooltip(
+            {position:"center-right",
+             onBeforeShow: function() {
+                 this.getTip().find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' +
+                                              this.getTrigger().attr("mtg_id") + '.jpg');
+             }
+        });
     }
 );
 
@@ -354,9 +360,13 @@ function createRun(run) {
     newRun.find(".cmc").text(run.cmc);
     $("#"+activePile).append(newRun);
     var newTooltip = tooltipTemplate.clone();
-    newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
+    newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/900.jpg');
     $("#"+activePile).append(newTooltip);
-    newRun.tooltip({position:"center-right"});
+    newRun.tooltip({position:"center-right",
+                    // change trigger opacity slowly to 0.8
+                    onBeforeShow: function() {
+                        newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
+                    }});
 }
 
 function updateRun(run) {

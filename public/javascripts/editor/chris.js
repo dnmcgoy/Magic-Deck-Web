@@ -139,20 +139,26 @@ $(document).ready(
 		    var prefixNumber = match[1];
 		    $("card_entry").val(prefixNumber + " " + ui.label);
 		}
-		$("#preview_image").attr("src", "http://www.logic-by-design.com/magic_images/hi_res/" + ui.item.mtgid + ".jpg");
+		$("#preview_image").attr("src", "http://www.logic-by-design.com/magic_images/low_res/900.jpg");
 		return false;
 	    }
 	});
 
-        // $(".pile_header").live("click", function(e){
-        //     switchPile($(e.target).parent().attr("id"));
-        // });
+        $(".pile_header").live("click", function(e){
+             switchPile($(e.target).parent().attr("id"));
+        });
 
 	onCardsChanged();
 
-      $(".run").tooltip({relative:true,
-                         position:'center right',
-                         offset:[-47,-5]});
+        $(".run").tooltip(
+            {relative:true,
+            position:'center right',
+            offset:[-47,-5],
+            onBeforeShow: function() {
+                 this.getTip().find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' +
+                                              this.getTrigger().attr("mtg_id") + '.jpg');
+            }
+        });
     }
 );
 
@@ -223,8 +229,10 @@ function addPile(pileName) {
 function createPile(pile_response) {
     var pile = pile_response[0];
     // some stuff
+
     debug.info($('.deckWorkspace'));
     var newPile = pileTemplate.clone().appendTo('.deckWorkspace');
+
     debug.info(newPile);
 
     newPile.attr('id', pile.id);
@@ -349,11 +357,16 @@ function createRun(run) {
     newRun.addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all");
     $("#"+activePile + " " + stack_class ).append(newRun);
     var newTooltip = tooltipTemplate.clone();
-    newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
+
+    newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/900.jpg');
     $("#"+activePile + " " + stack_class ).append(newTooltip);
     newRun.tooltip({relative:true,
                     position:'center right',
-                    offset:[-47,-5]});
+                    offset:[-47,-5],
+                    // change trigger opacity slowly to 0.8
+                    onBeforeShow: function() {
+                        newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
+                    }});
 }
 
 function updateRun(run) {

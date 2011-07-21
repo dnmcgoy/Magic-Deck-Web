@@ -146,7 +146,6 @@ blockquote {
 /* content */
 #content-wrap {
     background-color: #222222;
-    min-height: 650px;
     width: 100%;
 }
 #content {

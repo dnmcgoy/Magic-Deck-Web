@@ -61,4 +61,11 @@ class Card
     end
   end
 
+  def self.simple_search(params)
+    if match = params[:name].match(/[A-Za-z0-9][A-Za-z0-9]+.*/)
+      all(:name =>/^.*#{match[0]}.*$/i)
+    else
+      []
+    end
+  end
 end

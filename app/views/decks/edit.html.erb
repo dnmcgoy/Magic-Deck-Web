@@ -1,6 +1,6 @@
 <% content_for :head do %>
     <title>Deck Editor</title>
-    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'jquery.hoverIntent.minified', 'editor/chris'%>
+    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'jquery.hoverIntent.minified', 'jquery.flip.min', 'editor/chris'%>
     <%= stylesheet_link_tag 'chris_editor' %>
 
 	<script>
@@ -22,6 +22,7 @@
 
 
 <div id="deck_name_container" class="title_block">
+  <button id="advanced_search_button">Advanced</button>
   <span class="title" id="deck_name_show"><%= @deck.name %></span>
   <input id="deck_name_field" style="display: none;" />
   <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
@@ -39,4 +40,10 @@
 <div id="templates" class="invis">
   <%= render :partial => "pile", :collection => [Pile.new] %>
   <%= render :partial => "run" %>
+  <div class="card_search_result">
+    <div class="result_name">
+    </div>
+    <div class="result_detail">
+    </div>
+  </div>
 </div>

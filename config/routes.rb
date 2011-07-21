@@ -3,6 +3,7 @@ Tdb::Application.routes.draw do
   resources :cards do
     collection do
       get :autocomplete
+      post :simple_search
     end
   end
 

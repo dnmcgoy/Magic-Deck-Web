@@ -4,9 +4,12 @@
   run = Struct.new("FakeRun", :id, :count, :name, :category, :cardtype, :oracle_text, :mtg_id).new if run.nil?
 %>
 
-<div id="<%= run.id %>" class="run <%= run.category %>">
+<div id="<%= run.id %>" mtg_id="<%=run.mtg_id %>" class="run <%= run.category %>">
   <div class="run_count"><%= run.count %></div>
   <div class="card_name"><%= run.name %></div>
 
   <div><span class='delete_run' href=''>X</span></div>
+</div>
+<div class="tooltip">
+  <img width="150" height="225" src="http://www.logic-by-design.com/magic_images/low_res/900.jpg"/>
 </div>

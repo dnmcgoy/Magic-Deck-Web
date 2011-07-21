@@ -150,7 +150,9 @@ $(document).ready(
 
 	onCardsChanged();
 
-        // $(".run").tooltip({position:"center-right"});
+      $(".run").tooltip({relative:true,
+                         position:'center right',
+                         offset:[-47,-5]});
     }
 );
 
@@ -346,10 +348,12 @@ function createRun(run) {
     newRun.addClass(run.category);
     newRun.addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all");
     $("#"+activePile + " " + stack_class ).append(newRun);
-     // var newTooltip = tooltipTemplate.clone();
-     // newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
-     // $("#"+activePile).append(newTooltip);
-     // newRun.tooltip({position:"center-right"});
+    var newTooltip = tooltipTemplate.clone();
+    newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
+    $("#"+activePile + " " + stack_class ).append(newTooltip);
+    newRun.tooltip({relative:true,
+                    position:'center right',
+                    offset:[-47,-5]});
 }
 
 function updateRun(run) {

@@ -289,11 +289,10 @@ blockquote {
     background:transparent url(/images/black_arrow_big.png);
     font-size:12px;
     height:245px;
-    width:180px;
+    width:150px;
     padding-top:15px;
-    padding-left:25px;
+    padding-left:40px;
     padding-right:15px;
     padding-bottom:15px;
     color:#fff;
-    position:center-right;
 }

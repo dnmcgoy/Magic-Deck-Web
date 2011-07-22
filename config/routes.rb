@@ -43,6 +43,6 @@ Tdb::Application.routes.draw do
   #map.connect "tools", :controller => :landing, :action => :tools
   #map.connect "about", :controller => :landing, :action => :about
 
-  root :to => 'landing#index'
+  root :to => 'identifiers#index'
 
 end

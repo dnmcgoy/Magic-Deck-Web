@@ -34,7 +34,7 @@ class IdentifiersController < ApplicationController
     session[:ident] = omniauth['uid']
 
     flash[:notice] = "Signed in successfully."
-    redirect_to "/"
+    redirect_to "/decks"
   end
   
   def destroy

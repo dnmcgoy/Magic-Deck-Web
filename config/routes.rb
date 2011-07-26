@@ -12,6 +12,7 @@ Tdb::Application.routes.draw do
   resources :decks do
     collection do
       post :import
+      post :addFromDeckList
     end
     resources :runs
     resources :piles

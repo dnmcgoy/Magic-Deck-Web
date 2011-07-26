@@ -116,6 +116,16 @@
     <%= f.file_field :file %>
     <%= f.submit "Import Deck" %>
   <% end %>
+
+  <br/>
+  <p>
+    Or copy/paste a decklist
+  </p>
+
+  <%= form_for :dump, :url=>{:action => 'addFromDeckList'}, :html => {:multipart => true} do |f| %>
+     <%= f.text_area :decklist %>
+     <%= f.submit 'Deck From List' %>
+  <% end %>
   
   <br/>
   

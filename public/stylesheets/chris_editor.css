@@ -34,12 +34,6 @@ body {
     list-style-type: none;
 }
 
-.oracle_text {
-    font-size:9px;
-    text-align:left;
-    line-height:98%;
-}
-
 .tooltip {
 	display:none;
 	background:transparent url(/images/black_arrow_big.png);
@@ -51,7 +45,16 @@ body {
         padding-right:15px;
         padding-bottom:15px;
 	color:#fff;
-        position:center-right;
+}
+
+.tooltip.left {
+	background:url(/images/black_arrow_big_left.png);
+        padding-left:5px;
+        padding-right:35px;
+}
+
+.tooltip.bottom {
+	background:url(/images/black_arrow_big_bottom.png);
 }
 
 .column { width: 300px; float: left; padding-bottom: 10px; }

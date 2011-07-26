@@ -19,6 +19,20 @@ class CardsController < ApplicationController
     render :json => cardListing.to_json()
   end
 
+  def simple_search
+    puts "We are searching: "
+    puts params[:name]
+    cardListing = []
+    for card in Card.simple_search(params)
+      puts card.oracle_text
+      cardListing << {:value => card.name, 
+                      :label => card.name,
+                      :mtg_id => card.mtg_id, 
+                      :rules => card.oracle_text }
+    end
+    render :json => cardListing.to_json()
+  end
+
   def show
     @card = Card.find(params[:id])
 

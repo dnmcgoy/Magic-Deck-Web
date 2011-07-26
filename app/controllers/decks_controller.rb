@@ -64,10 +64,39 @@ class DecksController < ApplicationController
       if line =~ /^ *([0-9]+x?) (.*)/
         count = $1
         card_name = $2
-        card = Card.first(:name => /^#{card_name}$/i)
+        card = Card.first(:name => /#{card_name}/i)
         if (card)
           run = Run.new(:card => card, :count => count)
           @deck.maindeck << run
+        end
+      end
+    end
+    if @deck.save
+      redirect_to edit_deck_path(@deck)
+    end
+  end
+
+  def addFromDeckList
+    decklist = params[:dump][:decklist]
+    @deck = @user.decks.build()
+    @deck.name = "New Deck"
+    sideboard = nil
+    for line in decklist
+      if line =~ /^Sideboard/
+        @deck.piles << Pile.new(:name => Pile::SIDEBOARD)
+        sideboard = @deck.piles.detect { |pile| pile.name == Pile::SIDEBOARD }
+      end
+      if line =~ /^ *([0-9]+x?) (.*)$/
+        count = $1
+        card_name = $2.gsub(/\r/m, "")
+        card = Card.first(:name => /^#{card_name}$/i)
+        if (card)
+          run = Run.new(:card => card, :count => count)
+          if(sideboard)
+            sideboard << run
+          else
+            @deck.maindeck << run
+          end
         end
       end
     end

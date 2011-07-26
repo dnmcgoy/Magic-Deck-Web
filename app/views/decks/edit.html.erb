@@ -1,7 +1,7 @@
 <% content_for :head do %>
     <title>Deck Editor</title>
-    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'jquery.hoverIntent.minified', 'editor/chris'%>
-    <%= stylesheet_link_tag 'chris_editor' %>
+    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'jquery.hoverIntent.minified', 'jquery.flip.min', 'editor/chris'%>
+    <%= stylesheet_link_tag 'chris_editor', 'segmented-control' %>
 
 	<script>
 	$(function() {
@@ -21,15 +21,16 @@
 </div>
 
 
-<div id="deck_name_container" class="title_block">
-  <span class="title" id="deck_name_show"><%= @deck.name %></span>
-  <input id="deck_name_field" style="display: none;" />
-  <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
+<div class="searchWidget">
+  <%= render :partial => "cards/search" %>
 </div>
 
+
 <div class="deckEditor">
-  <div class="searchWidget">
-    <%= render :partial => "cards/search" %>
+  <div id="deck_name_container" class="title_block">
+    <span class="title" id="deck_name_show"><%= @deck.name %></span>
+    <input id="deck_name_field" style="display: none;" />
+    <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
   </div>
   <div class="deckWorkspace">
     <%= render :partial => "pile", :collection => @deck.piles %>
@@ -39,4 +40,10 @@
 <div id="templates" class="invis">
   <%= render :partial => "pile", :collection => [Pile.new] %>
   <%= render :partial => "run" %>
+  <div class="card_search_result">
+    <div class="result_name">
+    </div>
+    <div class="result_detail">
+    </div>
+  </div>
 </div>

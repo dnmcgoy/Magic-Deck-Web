@@ -13,13 +13,23 @@
     padding: 4px 12px;
     border: 1px solid #777;
     text-shadow: 0 1px 0 #fff;
-    font-size: 12px;
+    Font-size: 12px;
     background: #eee;
     background: -webkit-gradient(
         linear, left top, left bottom,
-        from(#fff), to(#ddd)
+        from(#eee8d5), to(#586e75)
     );
-    background: -moz-linear-gradient(top, #fff, #ddd);
+    background: -moz-linear-gradient(top, #eee8d5, #586e75);
+}
+
+.segmented_control button.down {
+    text-shadow: 0 -1px 0 #000;
+    color:#fff;
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#586e75), to(#657b83)
+    );
+    background: -moz-linear-gradient(top, #586e75, #657b83);
 }
 
 .segmented_control button.left_section {

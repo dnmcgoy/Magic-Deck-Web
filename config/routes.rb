@@ -3,6 +3,7 @@ Tdb::Application.routes.draw do
   resources :cards do
     collection do
       get :autocomplete
+      post :simple_search
     end
   end
 
@@ -11,6 +12,7 @@ Tdb::Application.routes.draw do
   resources :decks do
     collection do
       post :import
+      post :addFromDeckList
     end
     resources :runs
     resources :piles

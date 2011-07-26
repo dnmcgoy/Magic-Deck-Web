@@ -11,6 +11,7 @@ $(document).ready(
 	$( ".column" ).sortable({
 	    connectWith: ".column",
 	    receive: onRunReceive,
+            start:onRunSortStart,
             items: ".run"
 	});
 
@@ -31,6 +32,7 @@ $(document).ready(
 
 	pileTemplate = $('#templates .pile').first();
 	runTemplate = $('#templates .run').first();
+        resultTemplate = $('#templates .card_search_result').first();
         tooltipTemplate = $('#templates .tooltip').first();
 
 	var pathname = document.location.pathname;
@@ -176,13 +178,27 @@ $(document).ready(
 
         $(".run").tooltip(
             {position:"center-right",
+             events: {def: "mouseenter, mouseleave mousedown"},
              onBeforeShow: function() {
                  this.getTip().find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' +
                                               this.getTrigger().attr("mtg_id") + '.jpg');
              }
-        });
+            }).dynamic({ left: { direction: 'left' },
+                         bottom: {direction: 'down', position:'bottom right', offset:[100,0]}});
     }
 );
+
+//Update the advanced search results list
+function updateSearchResults(data) {
+    $(".results_list").empty();
+    var names = "";
+    for (i in data) {
+        var result = resultTemplate.clone();
+        result.find(".result_name").text(data[i].value);
+        result.find(".result_detail").text(data[i].rules);
+        $(".results_list").append(result);
+    }
+}
 
 // Handle a run being dragged from one pile to another
 function onRunReceive(event, ui) {
@@ -195,6 +211,12 @@ function onRunReceive(event, ui) {
     var noop = function(data) {};
     sendCreateRun(count, name, newPile, noop);
     sendCreateRun('-'+count, name, oldPile, noop);
+}
+
+// Handle a run being dragged from one pile to another
+function onRunSortStart(event, ui) {
+    debug.info("onRunSortStart");
+    var tooltip = $(ui.item).next(".tooltip");
 }
 
 function focusEntry() {
@@ -366,7 +388,7 @@ function createRun(run) {
                     // change trigger opacity slowly to 0.8
                     onBeforeShow: function() {
                         newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
-                    }});
+                    }}).dynamic({ left: { direction: 'left' } });
 }
 
 function updateRun(run) {

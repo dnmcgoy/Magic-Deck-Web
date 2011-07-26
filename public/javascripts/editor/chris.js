@@ -11,6 +11,7 @@ $(document).ready(
 	$( ".column" ).sortable({
 	    connectWith: ".column",
 	    receive: onRunReceive,
+            start:onRunSortStart,
             items: ".run"
 	});
 
@@ -177,6 +178,7 @@ $(document).ready(
 
         $(".run").tooltip(
             {position:"center-right",
+             events: {def: "mouseenter, mouseleave mousedown"},
              onBeforeShow: function() {
                  this.getTip().find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' +
                                               this.getTrigger().attr("mtg_id") + '.jpg');
@@ -209,6 +211,12 @@ function onRunReceive(event, ui) {
     var noop = function(data) {};
     sendCreateRun(count, name, newPile, noop);
     sendCreateRun('-'+count, name, oldPile, noop);
+}
+
+// Handle a run being dragged from one pile to another
+function onRunSortStart(event, ui) {
+    debug.info("onRunSortStart");
+    var tooltip = $(ui.item).next(".tooltip");
 }
 
 function focusEntry() {

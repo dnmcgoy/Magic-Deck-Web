@@ -1,4 +1,4 @@
-<%= stylesheet_link_tag 'segmented-control', 'card-search' %>
+<%= stylesheet_link_tag 'card-search', 'tabs' %>
 
 <script>
    $(document).ready(function() {
@@ -27,14 +27,8 @@
         $(this).toggleClass("down");
       });
 
-      $("#advanced_search_button").click(function () {
-        $(".searchField").toggle();
-        $("#advanced_search").toggle();
-        $("#accordion").accordion("resize");
-      });
-
-      $(".floatleft").click(function () {
-         $(this).css("background-color", "lightblue");
+      $(".set_selector").click(function () {
+         $(this).toggleClass("down");
       });
 
       $("#accordion").bind("accordionchangestart", function(event, ui) {
@@ -45,149 +39,216 @@
 	      url,
 	      {
                 name: $("#card_name_field")[0].value,
-                color: $("#color_select button.down").attr("search_color"),
-                cmc:  $("#cmc_select button.down").text()
+                rules: $("#card_rules_field")[0].value,
+                type: $("#basictype_dropdown")[0].value,
+                subtype: $("#subtype_entry")[0].value,
+                artist: $("#artist_entry")[0].value,
+                color: $("#color_select button.down").map(function(){
+                                                            return $(this).attr("search_color");
+                                                          }).get(),
+                cmc:  $("#cmc_select button.down").map(function(){
+                                                            return $(this).text()
+                                                      }).get(),
+                power:  $("#power_select button.down").map(function(){
+                                                            return $(this).text()
+                                                      }).get(),
+                toughness:  $("#power_select button.down").map(function(){
+                                                                  return $(this).text()
+                                                             }).get(),
+                sets:  $(".set_selector.down").map(function(){
+                                                                  return $(this).attr("short_name")
+                                                             }).get(),
+                rarity:  $("#rarity_select button.down").map(function(){
+                                                                  return $(this).text()
+                                                             }).get()
               },
 	      updateSearchResults,
 	      'json'
             );
          }
       });
-
-      $("#advanced_search").hide();
       
+      // setup ul.tabs to work as tabs for each div directly under div.panes
+      $(".tabs").tabs(".panes > div.pane");
    });
 
 </script>
 
-<div class="searchField">
-  <div id="input_entry">
-    I would like
-    <input id="card_entry"/>
-    <div id="simpleSearchDetail">
-      <div id="exampleText">
-        <span style="font-weight: bold; margin-left: 100px">examples:</span>
-        <ul style="margin-left: 100px">
-          <li>island</li>
-          <li>4 llanowar elves</li>
-          <li>4x shock</li>
-          <li>-2 dark ritual</li>
-        </ul>
-      </div>
-      added to the
-      <select id="pile_select">
-        <optgroup label="Current Piles">
-          <% @pile_names.each do |name| %>
+<ul class="tabs">
+  <li><a href="#">Quick Entry</a></li>
+  <li><a href="#">Full Search</a></li>
+</ul>
+<div class="panes">
+  <div id="quick_entry" class="pane">
+    <div id="input_entry">
+      <br/>
+      <br/>
+      I would like
+      <input id="card_entry"/>
+      <div id="simpleSearchDetail">
+        <div id="exampleText">
+          <span style="font-weight: bold; margin-left: 100px">examples:</span>
+          <ul style="margin-left: 100px">
+            <li>island</li>
+            <li>4 llanowar elves</li>
+            <li>4x shock</li>
+            <li>-2 dark ritual</li>
+          </ul>
+        </div>
+        added to the
+        <select id="pile_select">
+          <optgroup label="Current Piles">
+            <% @pile_names.each do |name| %>
             <option value="<%=name%>"><%=name.titleize%></option>
-           <% end %>
-        </optgroup>
-        <optgroup label="Pile Options">
-          <option value="newpile">New Pile</option>
-          <option value="mergepiles">Merge Piles</option>
-        </optgroup>
-      </select>
-      pile.
+            <% end %>
+          </optgroup>
+          <optgroup label="Pile Options">
+            <option value="newpile">New Pile</option>
+            <option value="mergepiles">Merge Piles</option>
+          </optgroup>
+        </select>
+        pile.
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        Click "Full Search" for a more more detailed card search.
+      </div>
     </div>
   </div>
-</div>
 
-<div id="advanced_search">
- <div class="criteria" id="accordion">
-   <h3><a href="#">Select Sets/Formats</a></h3>
-   <div class="set_criteria">
+  <div id="advanced_search" class="pane">
+    <div class="criteria" id="accordion">
+      <h3><a href="#">Select Sets/Formats</a></h3>
+      <div class="set_criteria">
         <% MagicSet.all.each do |set| %>
-        <div class="floatleft">
-        <% if set.short_name.eql?("V09") or set.short_name.eql?("V10") %>
-           <img src= <%= set.imageUrl("small", "M") %> />
-        <% else %>
-           <img src= <%= set.imageUrl("small", "C") %> />
+          <div class="set_selector" short_name="<%= set.short_name %>">
+            <% if set.short_name.eql?("V09") or set.short_name.eql?("V10") %>
+              <img src= <%= set.imageUrl("small", "M") %> />
+            <% else %>
+              <img src= <%= set.imageUrl("small", "C") %> />
+            <% end %>
+            <br>
+            <font size="1"><%= set.name %></font>
+          </div>
         <% end %>
-           <br>
-           <font size="1"><%= set.name %></font>
-         </div>
-      <% end %>
-   </div>
-   <h3><a href="#">Card Attributes</a></h3>
-   <div class="general_criteria">
-     Converted Mana Cost:<br/>
-     <div id="cmc_select" class="segmented_control">
-       <button type="button" class="left_section">0</button>
-       <button type="button" class="middle_section">1</button>
-       <button type="button" class="middle_section">2</button>
-       <button type="button" class="middle_section">3</button>
-       <button type="button" class="middle_section">4</button>
-       <button type="button" class="middle_section">5</button>
-       <button type="button" class="middle_section">6</button>
-       <button type="button" class="right_section">7+</button>
-     </div>
-     <br/>
-     <br/>
-     Color:
-     <br/>
-     <div id="color_select" class="segmented_control">
-       <button type="button" class="left_section" search_color="B"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=B&type=symbol"/></button>
-       <button type="button" class="middle_section" search_color="R"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=R&type=symbol"/></button>
-       <button type="button" class="middle_section" search_color="U"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=U&type=symbol"/></button>
-       <button type="button" class="middle_section" search_color="G"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=G&type=symbol"/></button>
-       <button type="button" class="middle_section" search_color="W"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=W&type=symbol"/></button>
-       <button type="button" class="right_section" search_color="COLORLESS"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=W&type=symbol"/></button>
-     </div>
-     <br/>
-     <br/>
-     <div id="type_selection">
-       <div id="basictype_selection">
-         Type:
-         <br/>
-         <select>
-           <option>All</option>
-           <option>Artifact</option>
-           <option>Basic</option>
-           <option>Creature</option>
-           <option>Enchantment</option>
-           <option>Instant</option>
-           <option>Land</option>
-           <option>Legendary</option>
-           <option>Ongoing</option>
-           <option>Plane</option>
-           <option>Planeswalker</option>
-           <option>Scheme</option>
-           <option>Snow</option>
-           <option>Sorcery</option>
-           <option>Tribal</option>
-           <option>Vanguard</option>
-           <option>World</option>              
-         </select>
-       </div>
-       <div id="subtype">
-         Subtype:
-         <br/>
-         <input id="subtype_entry" size="20"/>
-       </div>
-     </div>
-     Rarity:<br/>
-     <div class="segmented_control">
-       <button type="button" class="left_section">Common</button>
-       <button type="button" class="middle_section">Uncommon</button>
-       <button type="button" class="middle_section">Rare</button>
-       <button type="button" class="right_section">Mythic</button>
-     </div>
-     <div id="artist">
-       Artist:
-       <input id="artist_entry" size="20"/>
-     </div>
-     <br/>
-     <div id="card_name_search">
-       Card Name:
-       <input id="card_name_field"/>
-     </div>
-   </div>
-   <h3><a href="#">Search Results</a></h3>
-   <div class="results_list">
-     <div class="searchControlBar">
-       Perform search
-     </div>
-     <img src="/images/ajax-loader.gif"/>
-   </div>
- </div>
+      </div>
+      <h3><a href="#">Card Attributes</a></h3>
+      <div class="general_criteria">
+        <div id="card_name_search">
+          Name:
+          <input id="card_name_field"/>
+        </div>
+        <br/>
+        <div id="card_rules_search">
+          Rules:
+          <input id="card_rules_field"/>
+        </div>
+        <br/>
+        Converted Mana Cost:<br/>
+        <div id="cmc_select" class="segmented_control">
+          <button type="button" class="left_section">0</button>
+          <button type="button" class="middle_section">1</button>
+          <button type="button" class="middle_section">2</button>
+          <button type="button" class="middle_section">3</button>
+          <button type="button" class="middle_section">4</button>
+          <button type="button" class="middle_section">5</button>
+          <button type="button" class="middle_section">6</button>
+          <button type="button" class="right_section">7+</button>
+        </div>
+        <br/>
+        <br/>
+        Color:
+        <br/>
+        <div id="color_select" class="segmented_control">
+          <button type="button" class="left_section" search_color="B"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=B&type=symbol"/></button>
+          <button type="button" class="middle_section" search_color="R"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=R&type=symbol"/></button>
+          <button type="button" class="middle_section" search_color="U"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=U&type=symbol"/></button>
+          <button type="button" class="middle_section" search_color="G"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=G&type=symbol"/></button>
+          <button type="button" class="middle_section" search_color="W"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=W&type=symbol"/></button>
+          <button type="button" class="right_section" search_color="COLORLESS"><img src="http://gatherer.wizards.com/handlers/image.ashx?size=small&name=W&type=symbol"/></button>
+        </div>
+        <br/>
+        <br/>
+        Power:<br/>
+        <div id="power_select" class="segmented_control">
+          <button type="button" class="left_section">*</button>
+          <button type="button" class="middle_section">0</button>
+          <button type="button" class="middle_section">1</button>
+          <button type="button" class="middle_section">2</button>
+          <button type="button" class="middle_section">3</button>
+          <button type="button" class="middle_section">4</button>
+          <button type="button" class="middle_section">5</button>
+          <button type="button" class="middle_section">6</button>
+          <button type="button" class="right_section">7+</button>
+        </div>
+        <br/>
+        <br/>
+        Toughness:<br/>
+        <div id="toughness_select" class="segmented_control">
+          <button type="button" class="left_section">*</button>
+          <button type="button" class="middle_section">0</button>
+          <button type="button" class="middle_section">1</button>
+          <button type="button" class="middle_section">2</button>
+          <button type="button" class="middle_section">3</button>
+          <button type="button" class="middle_section">4</button>
+          <button type="button" class="middle_section">5</button>
+          <button type="button" class="middle_section">6</button>
+          <button type="button" class="right_section">7+</button>
+        </div>
+        <div id="type_selection">
+          <br/>
+          <div id="basictype_selection">
+            Type:
+            <select id="basictype_dropdown">
+              <option>All</option>
+              <option>Artifact</option>
+              <option>Basic</option>
+              <option>Creature</option>
+              <option>Enchantment</option>
+              <option>Instant</option>
+              <option>Land</option>
+              <option>Legendary</option>
+              <option>Ongoing</option>
+              <option>Plane</option>
+              <option>Planeswalker</option>
+              <option>Scheme</option>
+              <option>Snow</option>
+              <option>Sorcery</option>
+              <option>Tribal</option>
+              <option>Vanguard</option>
+              <option>World</option>              
+            </select>
+          </div>
+          <br/>
+          <div id="subtype">
+            Subtype:
+            <input id="subtype_entry" size="20"/>
+          </div>
+        </div>
+        <br/>
+        Rarity:<br/>
+        <div id="rarity_select" class="segmented_control">
+          <button type="button" class="left_section">Common</button>
+          <button type="button" class="middle_section">Uncommon</button>
+          <button type="button" class="middle_section">Rare</button>
+          <button type="button" class="right_section">Mythic</button>
+        </div>
+        <br/>
+        <br/>
+        <div id="artist">
+          Artist:
+          <input id="artist_entry" size="20"/>
+        </div>
+      </div>
+      <h3><a href="#">Search Results</a></h3>
+      <div class="results_list">
+        <div class="searchControlBar">
+          Perform search
+        </div>
+        <img src="/images/ajax-loader.gif"/>
+      </div>
+    </div>
+  </div>
 </div>
 

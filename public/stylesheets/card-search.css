@@ -1,0 +1,59 @@
+
+.result_detail {
+    color: #000000;
+    position:relative;
+    font-size:9px;
+    text-align:left;
+    line-height:98%;
+}
+
+.set_selector
+{
+    letter-spacing: 0px;
+    text-align: center;
+    display: inline-block;
+    width: 75px;
+    height: 65px;
+    vertical-align: middle;
+}
+
+.set_selector.down
+{
+    background-color: lightblue;
+}
+
+#table1 {
+    width: 100%;
+}
+
+.results_list .card_search_result:nth-child(odd) {
+    width: 300px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.1); /* red, 30% alpha */
+}
+
+.results_list .card_search_result:nth-child(even) {
+    width: 300px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.3); /* red, 30% alpha */
+}
+
+.ui-accordion .ui-accordion-content {
+    padding: 0.25em;
+    text-align:center;
+}
+
+#quick_entry {
+    top: 200px;
+}
+
+#advanced_search {
+    height: 510px;
+}
+
+.searchControlBar {
+    width: 305px;
+    height: 15px;
+}
+
+

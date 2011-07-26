@@ -34,6 +34,12 @@ body {
     list-style-type: none;
 }
 
+#entry_container {
+    float: left;
+    width: 320px;
+    text-align:center;
+}
+
 .tooltip {
 	display:none;
 	background:transparent url(/images/black_arrow_big.png);
@@ -127,6 +133,7 @@ td .delete_run:hover {
 .portlet-content { padding: 0.4em; }
 .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
 .ui-sortable-placeholder * { visibility: hidden; }
-.deckEditor {display:inline; height:620px; width:1200px; position:absolute;}
+.deckEditor {display:inline; height:620px;}
 .deckWorkspace {display:inline; height:620px; width:880px; position:relative; text-align: center;}
-.searchWidget  {display:inline; background: #333333; height:620px; width:320px; position:relative; float:left;}
+.searchWidget  {display:inline; background: #333333; height:650px; width:320px; position:relative; float:left;}
+.panes {height: 600px;}

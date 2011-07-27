@@ -86,8 +86,8 @@ class DecksController < ApplicationController
         @deck.piles << Pile.new(:name => Pile::SIDEBOARD)
         sideboard = @deck.piles.detect { |pile| pile.name == Pile::SIDEBOARD }
       end
-      if line =~ /^ *([0-9]+x?) (.*)$/
-        count = $1
+      if line =~ /^ *(?:([0-9]+x?) )?(.*)$/
+        count = $1 ? $1 : 1
         card_name = $2.gsub(/\r/m, "")
         card = Card.first(:name => /^#{card_name}$/i)
         if (card)

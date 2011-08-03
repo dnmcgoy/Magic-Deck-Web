@@ -6,13 +6,25 @@ var runTemplate = null;
 
 $(document).ready(
     function() {
-
-
-	$( ".column" ).sortable({
+	$('.column').droppable({
+            accept: ".card_search_result",
+	    drop: function(event, ui) {
+                var thePile = $(event.target).closest('.pile');
+                sendCreateRun("1",
+                             $(ui.draggable.context).find('.result_name').text(),
+                             thePile.context.id,
+                             onCardAdded);
+            }
+        }).sortable({
 	    connectWith: ".column",
 	    receive: onRunReceive,
             start:onRunSortStart,
-            items: ".run"
+            items: ".run",
+            helper: function( event ) {
+                var mtg_id = $(event.target).closest('.run').attr('mtg_id');
+                return  "<div class='draggable-card'><img src='http://www.logic-by-design.com/magic_images/low_res/" +
+                              mtg_id + ".jpg'></img></div>";
+	    }
 	});
 
 	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
@@ -26,9 +38,6 @@ $(document).ready(
 	    $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
 	    $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
 	});
-
-	$( ".column" ).disableSelection();
-
 
 	pileTemplate = $('#templates .pile').first();
 	runTemplate = $('#templates .run').first();
@@ -47,8 +56,6 @@ $(document).ready(
 	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
 
         $(".oracle_text").hide();
-
-        $( ".column" ).disableSelection();
 
 	$( "#new_pile_form" ).dialog({
 	    autoOpen: false,
@@ -94,7 +101,7 @@ $(document).ready(
 	$("span.delete_run").live(
 	    "click",
 	    function(e){
-		var runId = $(e.target).parent().parent().attr("id");
+		var runId = $(e.target).closest(".run").attr("id");
 		debug.info("deleting run " + runId);
 		var path = basepath + "runs/" + runId;
 		$.ajax({
@@ -102,6 +109,7 @@ $(document).ready(
 		    url: path,
 		    success: function(msg){
 			debug.info("run " + runId + " was deleted");
+                        //FIXME HACK Removing the tooltip.
                         $('#'+ runId).next().remove();
 			$("#" + runId).remove();
 			onCardsChanged();
@@ -177,14 +185,19 @@ $(document).ready(
 	onCardsChanged();
 
         $(".run").tooltip(
-            {position:"center-right",
+            {
+             relative:true,
+             predelay:250,
+             position:"center right",
+             offset: [0, 10],
              events: {def: "mouseenter, mouseleave mousedown"},
              onBeforeShow: function() {
-                 this.getTip().find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' +
-                                              this.getTrigger().attr("mtg_id") + '.jpg');
+                 this.getTip().find('img').attr('src', 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' +
+                                                this.getTrigger().attr("mtg_id") + '&type=card');
              }
-            }).dynamic({ left: { direction: 'left' },
-                         bottom: {direction: 'down', position:'bottom right', offset:[100,0]}});
+            }).dynamic();
+
+        $( ".column" ).disableSelection();
     }
 );
 
@@ -196,6 +209,25 @@ function updateSearchResults(data) {
         var result = resultTemplate.clone();
         result.find(".result_name").text(data[i].value);
         result.find(".result_detail").text(data[i].rules);
+        result.attr("mtg_id", data[i].mtg_id);
+
+
+        result.dblclick(function(){
+            sendCreateRun('1', $(this).find(".result_name").text(), activePile, onCardAdded);
+        });
+
+        result.draggable({
+            cursor: "move",
+            scroll: false,
+            containment: 'body',
+            appendTo:'body',
+	    cursorAt: { top: 10, left: 10 },
+	    helper: function( event ) {
+	              return  "<div class='draggable-card'><img src='http://www.logic-by-design.com/magic_images/low_res/" +
+                              $(this).attr('mtg_id') + ".jpg'></img></div>";
+	    }
+        });
+
         $(".results_list").append(result);
     }
 }
@@ -203,20 +235,29 @@ function updateSearchResults(data) {
 // Handle a run being dragged from one pile to another
 function onRunReceive(event, ui) {
     debug.info("onRunReceive");
-    var newPile = event.target.id;
-    var oldPile = ui.sender.context.id;
-    var name = $(ui.item.context).find(".card_name").text();
-    var count = $(ui.item.context).find(".run_count").text();
 
+    var toPile = event.target.id;
+    var fromPile = ui.sender.context.id;
+    var runId = $(ui.item.context).attr("id");
     var noop = function(data) {};
-    sendCreateRun(count, name, newPile, noop);
-    sendCreateRun('-'+count, name, oldPile, noop);
+    var mtg_id = $(ui.item.context).attr("mtg_id");
+
+    //FIXME more hacks with tooltips. Remove the placed item and move it after the tooltip.
+    var nextTooltip = $(ui.item).next('.tooltip');
+    $(ui.item).insertAfter(nextTooltip);
+    var theTooltip = $(ui.sender.context).find('.tooltip[mtg_id="' + mtg_id + '"]');
+    theTooltip.insertAfter(ui.item);
+
+    moveRun(runId, fromPile, toPile, noop);
+}
+
+function onResultDrop(event, ui) {
+    sendCreateRun("1", $(ui.draggable.context).find('.result_name').text(), $('this'), onCardAdded);
 }
 
 // Handle a run being dragged from one pile to another
 function onRunSortStart(event, ui) {
     debug.info("onRunSortStart");
-    var tooltip = $(ui.item).next(".tooltip");
 }
 
 function focusEntry() {
@@ -344,6 +385,23 @@ function addCard(autocomplete) {
     sendCreateRun(count, name, activePile, onCardAdded);
 }
 
+function moveRun(runId, fromPile, toPile, callback) {
+    debug.info("Sending " + name + "from pile" + fromPile + " to pile " + toPile);
+
+    var url = basepath + "move_run";
+    $.post(
+	url,
+        {run_id: runId, from_pile_id: fromPile, to_pile_id: toPile},
+	function(data) {
+	    callback(data);
+	},
+	'json'
+    );
+    $("#card_entry").value = "";
+    $("#card_entry")[0].value = "";
+    $("#card_entry").focus();
+}
+
 function sendCreateRun(count, name, pile, callback) {
     debug.info("Sending addition of " + count + " " + name + " to pile " + pile);
 
@@ -380,15 +438,25 @@ function createRun(run) {
     newRun.find(".card_name").text(run.name);
     newRun.find(".cc").text(run.cc);
     newRun.find(".cmc").text(run.cmc);
+    newRun.attr("mtg_id", run.mtg_id);
     $("#"+activePile).append(newRun);
     var newTooltip = tooltipTemplate.clone();
+    newTooltip.attr("mtg_id", run.mtg_id);
     newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/900.jpg');
     $("#"+activePile).append(newTooltip);
-    newRun.tooltip({position:"center-right",
-                    // change trigger opacity slowly to 0.8
-                    onBeforeShow: function() {
-                        newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/' + run.mtg_id + '.jpg');
-                    }}).dynamic({ left: { direction: 'left' } });
+
+    newRun.tooltip(
+            {
+             relative:true,
+             predelay:250,
+             position:"center right",
+             offset: [0, 10],
+             events: {def: "mouseenter, mouseleave mousedown"},
+             onBeforeShow: function() {
+                 this.getTip().find('img').attr('src', 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' +
+                                                this.getTrigger().attr("mtg_id") + '&type=card');
+             }
+            }).dynamic();
 }
 
 function updateRun(run) {

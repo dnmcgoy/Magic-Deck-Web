@@ -21,6 +21,7 @@ Tdb::Application.routes.draw do
       get :count
       get :export
       post :rename
+      post :move_run
     end
     match "mana_curve_chart" => "decks#mana_curve_chart"
   end

@@ -62,10 +62,23 @@ class Card
   end
 
   def self.simple_search(params)
-    if match = params[:name].match(/[A-Za-z0-9][A-Za-z0-9]+.*/)
-      all(:name =>/^.*#{match[0]}.*$/i)
-    else
-      []
-    end
+    # FIXME there is a matter of security in these lines that needs to be
+    # looked at.  Executable code can be thrown in here.  VERY BAD. Leaving
+    # in main to look for an elegant solution.
+    # if match = params[:name].match(/[A-Za-z0-9][A-Za-z0-9]+.*/)
+#       all(:name =>/^.*#{match[0]}.*$/i)
+#     else
+#       []
+#     end
+    magicSets = MagicSet.where({'short_name' => params[:sets]}).all.map {|magicset| magicset._id}
+    conditions = {}
+    (conditions['color'] = /[#{params[:color].join("")}]/) if params[:color]
+    (conditions['printings.set_id'] =  magicSets) if params[:sets]
+    (conditions['printings.rarity'] = params[:rarity]) if params[:rarity]
+    (conditions['name'] = /#{params[:name]}/i) if not params[:name].empty?
+    (conditions['cardtype'] = /#{params[:type]}/i) if not params[:type].empty?
+    (conditions['cardtype'] = /#{params[:subtype]}/i) if not params[:subtype].empty?
+    (conditions['oracle_text'] = /#{params[:rules]}/i) if not params[:rules].empty?
+    limit(700).all(:conditions => conditions)
   end
 end

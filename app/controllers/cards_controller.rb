@@ -24,7 +24,6 @@ class CardsController < ApplicationController
     puts params[:name]
     cardListing = []
     for card in Card.simple_search(params)
-      puts card.oracle_text
       cardListing << {:value => card.name, 
                       :label => card.name,
                       :mtg_id => card.mtg_id, 

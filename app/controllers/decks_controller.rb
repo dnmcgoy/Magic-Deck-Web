@@ -150,6 +150,18 @@ class DecksController < ApplicationController
     render :json => @deck.to_json
   end
 
+  def move_run
+    @deck = @user.decks.find(params[:id])
+    fromPile = @deck.piles.detect { |p| p.id == BSON::ObjectId(params[:from_pile_id]) }
+    toPile = @deck.piles.detect { |p| p.id == BSON::ObjectId(params[:to_pile_id]) }
+    if(@run = fromPile.runs.detect { |r| r.id == BSON::ObjectId(params[:run_id]) } )
+      toPile << @run
+      fromPile.runs.delete(@run)
+    end
+    @deck.save
+    head :ok
+  end
+
   def update
     @deck = @user.decks.find(params[:id])
 

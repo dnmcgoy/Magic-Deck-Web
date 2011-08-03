@@ -62,9 +62,16 @@ class RunsController < ApplicationController
 
   def destroy
     deck = Deck.find(params[:deck_id])
-    @run = deck.maindeck.runs.detect { |r| r.id.to_s == params[:id] }
+    currentPile = nil
+    for pile in deck.piles
+      if (@run = pile.runs.detect { |r| r.id.to_s == params[:id] })
+        currentPile = pile
+        puts "Got a pile"
+        break
+      end
+    end
     puts "about to delete run #{@run.id}"
-    deck.maindeck.runs.delete(@run)
+    currentPile.runs.delete(@run)
     deck.save
     head :ok
   end

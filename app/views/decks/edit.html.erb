@@ -20,21 +20,22 @@
   </form>
 </div>
 
-
-<div class="searchWidget">
-  <%= render :partial => "cards/search" %>
-</div>
-
-
-<div class="deckEditor">
-  <div id="deck_name_container" class="title_block">
-    <span class="title" id="deck_name_show"><%= @deck.name %></span>
-    <input id="deck_name_field" style="display: none;" />
-    <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
+<div id="editorArea">
+  <div class="searchWidget">
+    <%= render :partial => "cards/search" %>
   </div>
-  <div class="deckWorkspace">
-    <%= render :partial => "pile", :collection => @deck.piles %>
+
+  <div class="deckEditor">
+    <div id="deck_name_container" class="title_block">
+      <span class="title" id="deck_name_show"><%= @deck.name %></span>
+      <input id="deck_name_field" style="display: none;" />
+      <a id="edit_deck_name"><%= image_tag 'pencil.png' %></a>
+    </div>
+    <div class="deckWorkspace">
+      <%= render :partial => "pile", :collection => @deck.piles %>
+    </div>
   </div>
+
 </div>
 
 <div id="templates" class="invis">

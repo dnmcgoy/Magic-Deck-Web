@@ -71,7 +71,35 @@ class Card
 #       []
 #     end
     magicSets = MagicSet.where({'short_name' => params[:sets]}).all.map {|magicset| magicset._id}
+
+    cmcValues = []
+    params[:cmc].each { |i|
+      if i.eql?("7+")
+        cmcValues.concat([7,8,9,10,11,12,13,14,15,16,17,18,19,20])
+      else 
+        cmcValues << i.to_i
+      end
+    } if params[:cmc]
+    powerValues = []
+    params[:power].each { |i|
+      if i.eql?("7+")
+        powerValues.concat([7,8,9,10,11,12,13,14,15,16,17,18,19,20])
+      else 
+        powerValues << i.to_i
+      end
+    } if params[:power]
+    toughnessValues = []
+    params[:toughness].each { |i|
+      if i.eql?("7+")
+        cmcValues.concat([7,8,9,10,11,12,13,14,15,16,17,18,19,20])
+      else 
+        cmcValues << i.to_i
+      end
+    } if params[:toughness]
     conditions = {}
+    (conditions['cmc'] = cmcValues) if params[:cmc]
+    (conditions['power'] = powerValues) if params[:power]
+    (conditions['toughness'] = powerValues) if params[:toughness]
     (conditions['color'] = /[#{params[:color].join("")}]/) if params[:color]
     (conditions['printings.set_id'] =  magicSets) if params[:sets]
     (conditions['printings.rarity'] = params[:rarity]) if params[:rarity]

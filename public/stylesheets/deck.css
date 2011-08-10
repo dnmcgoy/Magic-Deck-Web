@@ -6,3 +6,20 @@
 .hrule {
     border-top: 1px solid black;
 }
+
+.deck_stats {
+    left:650;
+}
+
+.deckinfo {
+    left:50px;
+    top: 25px;
+}
+
+.cardinfo {
+    position: absolute;
+    top: 0px;
+    left: 400px;
+    width: 185px;
+    height: 257px;
+}

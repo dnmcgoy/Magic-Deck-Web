@@ -6,78 +6,98 @@
 
 <% cols = 6 %>
 
-  <div class="yui-g">
-    <div class="yui-u first">
+<script>
+   $(document).ready(function() {
+      $('.nodec').hover(function(){
+         $('.cardpreview').attr("src", 
+                               "http://www.logic-by-design.com/magic_images/low_res/" + 
+                                  $(this).attr("mtg_id") +
+                                  ".jpg");
+      });
+   });
+</script>
 
-      <div id="deck_list">
-        <table>
-          <tr id="decklist_header">
-            <td>Type</td>
-            <td>#</td>
-            <td>Name</td>
-            <td>CC</td>
-            <td>CMC</td>
-            <td>&nbsp;</td>
-          </tr>
+<div class="deckinfo" style="position:relative;">
+  <table class="cardgroup">
+    <tbody>
+      <tr>
+        <td align="center" colspan="2" bgcolor="#330000">
+          <h3><%=@deck.name%></h3>
+          <p class="cardcount"><%= @deck.maindeck.count %> cards</p>
+        </td>
+        <td align="center" valign="top" style="width:230px">
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" width="185" bgcolor="#000000">
+          <% @deck.maindeck.lands.each do |land| %>
+            <%=land.count%> <a class="nodec" mtg_id="<%=land.mtg_id%>" href="javascript:void()"><%=land.name%></a><br>
+          <% end %>
+          <hr size="1" width="50%" align="left" class="decktotals"/>
+          <span class="decktotals"><%=@deck.maindeck.lands.count%> lands</span><br><br>
+        
+          <% @deck.maindeck.creatures.each do |creature| %>
+            <%=creature.count%> <a class="nodec" mtg_id="<%=creature.mtg_id%>" href="javascript:void()"><%=creature.name%></a><br>
+          <% end %>
 
-          <tr id="land_header" class="hrule">
-            <td colspan="<%= cols %>">Lands</td>
-          </tr>
-          <%= render :partial => "show_run",
-                     :locals => {:runs => @deck.maindeck.lands, :classes => ['maindeck'] } %>
-          <tr id="blank_land_row" />
+          <hr size="1" width="50%" align="left" class="decktotals"/>
+          <span class="decktotals"><%=@deck.maindeck.creatures.count%> creatures</span><br><br>
+        </td>
 
-          <tr id="creature_header" class="hrule">
-            <td colspan="<%= cols %>">Creatures</td>
-          </tr>
-          <%= render :partial => "show_run",
-                     :locals => {:runs => @deck.maindeck.creatures,
-	                         :classes => ['maindeck', 'nonland'] } %>
-          <tr id="blank_creature_row" />
+        <td valign="top" width="185" bgcolor="#000000">
 
-          <tr id="spell_header" class="hrule">
-            <td colspan="<%= cols %>">Spells</td>
-          </tr>
-          <%= render :partial => "show_run",
-                     :locals => {:runs => @deck.maindeck.spells,
-	                         :classes => ['maindeck', 'nonland'] } %>
-          <tr id="blank_spell_row" />
-          
-          <tr class="hrule">
-            <td>Total</td>
-            <td class="total_cards"><%= @deck.maindeck.count %></td>
-	    <td colspan="<%= cols-2 %>">&nbsp;</td>
-          </tr>
-        </table>
-      </div>
-
-      <% if @is_owner %>
-      <br /><br />
-
-      <%= link_to 'edit deck', edit_deck_url(@deck) %>
-
-      <br /><br />
-
-      <div id="deck_formats" >
-	Copy/Paste formats
-	<ul>
-	  <li>Autocard/wiki</li>
-	</ul>
-
-	Downloadable formats
-	<ul>
-	  <li><a href=""><%= @deck.name %>.xml</a></li>
-	  <li><a href=""><%= @deck.name %>.dec</a></li>
-	</ul>
-      </div>
-      <% end %>
-    </div>
-
-    <div class="yui-u">
-      <div id="deck_stats" class="section">
-        <img id="mana_curve" alt="mana curve chart" src="<%= @deck.mana_curve_chart %>" />
-      </div>
-    </div>
-
+          <% @deck.maindeck.spells.each do |spell| %>
+            <%=spell.count%> <a class="nodec" mtg_id="<%=spell.mtg_id%>" href="javascript:void()"><%=spell.name%></a><br>
+          <% end %>
+          <hr size="1" width="50%" align="left" class="decktotals"/>
+          <span class="decktotals"><%=@deck.maindeck.spells.count%> other spells</span><br><br>
+          <div class="decktitle" style="padding-bottom:8px;">
+            <b><i>Sideboard</i></b>
+          </div>
+          <br/>
+          <hr size="1" width="50%" align="left" class="decktotals"/>
+          <span class="decktotals">15 sideboard cards</span><br><br>
+        </td>
+        <td valign="top" width:"185">
+          <div style="height:220px;width:185px;">
+            <span>
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="cardinfo">
+    <img class="cardpreview" height="250" src="http://www.logic-by-design.com/magic_images/low_res/900.jpg"/>
   </div>
+  <div class="deck_stats">
+    <img id="mana_curve" alt="mana curve chart" src="<%= @deck.mana_curve_chart %>" />
+  </div>
+</div>
 
+
+<% if @is_owner %>
+<br /><br />
+
+<%= link_to 'edit deck', edit_deck_url(@deck) %>
+
+<br /><br />
+
+<% end %>
+
+<div id="deck_formats" >
+  Copy/Paste formats
+  <ul>
+    <li>Autocard/wiki</li>
+  </ul>
+  
+  Downloadable formats
+  <ul>
+    <li><a href=""><%= @deck.name %>.xml</a></li>
+    <li><a href=""><%= @deck.name %>.dec</a></li>
+  </ul>
+</div>
+
+<div class="yui-u">
+  
+</div>

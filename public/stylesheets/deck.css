@@ -23,3 +23,9 @@
     width: 185px;
     height: 257px;
 }
+
+.deck_links {
+    position: absolute;
+    left: 400px;
+    top: 280px;
+}

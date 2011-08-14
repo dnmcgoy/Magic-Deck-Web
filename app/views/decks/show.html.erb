@@ -34,14 +34,14 @@
             <%=land.count%> <a class="nodec" mtg_id="<%=land.mtg_id%>" href="javascript:void()"><%=land.name%></a><br>
           <% end %>
           <hr size="1" width="50%" align="left" class="decktotals"/>
-          <span class="decktotals"><%=@deck.maindeck.lands.count%> lands</span><br><br>
+          <span class="decktotals"><%=(@deck.maindeck.lands.map {|run| run.count}).inject(:+) %> lands</span><br><br>
         
           <% @deck.maindeck.creatures.each do |creature| %>
             <%=creature.count%> <a class="nodec" mtg_id="<%=creature.mtg_id%>" href="javascript:void()"><%=creature.name%></a><br>
           <% end %>
 
           <hr size="1" width="50%" align="left" class="decktotals"/>
-          <span class="decktotals"><%=@deck.maindeck.creatures.count%> creatures</span><br><br>
+          <span class="decktotals"><%=(@deck.maindeck.creatures.map {|run| run.count}).inject(:+) %> creatures</span><br><br>
         </td>
 
         <td valign="top" width="185" bgcolor="#000000">
@@ -50,7 +50,7 @@
             <%=spell.count%> <a class="nodec" mtg_id="<%=spell.mtg_id%>" href="javascript:void()"><%=spell.name%></a><br>
           <% end %>
           <hr size="1" width="50%" align="left" class="decktotals"/>
-          <span class="decktotals"><%=@deck.maindeck.spells.count%> other spells</span><br><br>
+          <span class="decktotals"><%=(@deck.maindeck.spells.map {|run| run.count}).inject(:+) %> other spells</span><br><br>
           <div class="decktitle" style="padding-bottom:8px;">
             <b><i>Sideboard</i></b>
           </div>
@@ -73,31 +73,17 @@
   <div class="deck_stats">
     <img id="mana_curve" alt="mana curve chart" src="<%= @deck.mana_curve_chart %>" />
   </div>
+
+  <div class="deck_links" >
+  <% if @is_owner %>
+    <%= button_to 'Edit Deck', edit_deck_path(@deck), :method => :get %>
+    <br/>
+  <% end %>
+
+  <%= button_to 'Export Deck', export_deck_path(@deck) , :method => :get %>
+  <br/>
+  <%= button_to 'Buy Deck', "http://www.tcgplayer.com", :method => :get %>
+  </div>
 </div>
 
 
-<% if @is_owner %>
-<br /><br />
-
-<%= link_to 'edit deck', edit_deck_url(@deck) %>
-
-<br /><br />
-
-<% end %>
-
-<div id="deck_formats" >
-  Copy/Paste formats
-  <ul>
-    <li>Autocard/wiki</li>
-  </ul>
-  
-  Downloadable formats
-  <ul>
-    <li><a href=""><%= @deck.name %>.xml</a></li>
-    <li><a href=""><%= @deck.name %>.dec</a></li>
-  </ul>
-</div>
-
-<div class="yui-u">
-  
-</div>

@@ -163,6 +163,7 @@ $(document).ready(
 	$( "#card_entry" ).autocomplete({
 	    source: "/cards/autocomplete",
 	    minLength: 2,
+	    autoFocus: true,
 	    select: function( event, ui ) {
 		addCard(ui.item.value);
 		return false;

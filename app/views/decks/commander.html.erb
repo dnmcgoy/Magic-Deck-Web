@@ -1,0 +1,95 @@
+<% content_for :head do %>
+    <title><%= @deck.name %></title>
+    <%= javascript_include_tag 'jquery-1.3.2', 'ba-debug.min' %>
+    <%= stylesheet_link_tag 'reset-fonts', 'layout', 'commander' %>
+<% end %>
+
+<% cols = 6 %>
+
+<script>
+   $(document).ready(function() {
+      $('.nodec').hover(function(){
+         $('.cardpreview').attr("src", 
+                               "http://www.logic-by-design.com/magic_images/low_res/" + 
+                                  $(this).attr("mtg_id") +
+                                  ".jpg");
+      });
+   });
+</script>
+
+<div class="commander">
+  <img height="250"
+       src="http://www.logic-by-design.com/magic_images/low_res/<%= @commander.mtg_id %>.jpg"/>
+</div>
+
+<div class="cardinfo">
+  <img class="cardpreview" height="250" src="http://www.logic-by-design.com/magic_images/low_res/900.jpg"/>
+</div>
+
+<div class="deckinfo">
+  <table class="cardgroup">
+    <tbody>
+      <tr>
+        <td align="center" colspan="2" bgcolor="#330000">
+          <h3><%=@deck.name%></h3>
+          <p class="cardcount"><%= @deck.maindeck.count %> cards</p>
+        </td>
+        <td align="center" valign="top" style="width:230px">
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" width="185" bgcolor="#000000">
+          <% @deck.maindeck.lands.each do |land| %>
+            <%=land.count%> <a class="nodec" mtg_id="<%=land.mtg_id%>" href="javascript:void()"><%=land.name%></a><br>
+          <% end %>
+          <hr size="1" width="50%" align="left" class="decktotals"/>
+          <span class="decktotals"><%=(@deck.maindeck.lands.map {|run| run.count}).inject(:+) %> lands</span><br><br>
+        
+          <% @deck.maindeck.creatures.each do |creature| %>
+            <%=creature.count%> <a class="nodec" mtg_id="<%=creature.mtg_id%>" href="javascript:void()"><%=creature.name%></a><br>
+          <% end %>
+
+          <hr size="1" width="50%" align="left" class="decktotals"/>
+          <span class="decktotals"><%=(@deck.maindeck.creatures.map {|run| run.count}).inject(:+) %> creatures</span><br><br>
+        </td>
+
+        <td valign="top" width="185" bgcolor="#000000">
+
+          <% @deck.maindeck.spells.each do |spell| %>
+            <%=spell.count%> <a class="nodec" mtg_id="<%=spell.mtg_id%>" href="javascript:void()"><%=spell.name%></a><br>
+          <% end %>
+          <hr size="1" width="50%" align="left" class="decktotals"/>
+          <span class="decktotals"><%=(@deck.maindeck.spells.map {|run| run.count}).inject(:+) %> other spells</span><br><br>
+          <div class="decktitle" style="padding-bottom:8px;">
+            <b><i>Sideboard</i></b>
+          </div>
+          <br/>
+          <hr size="1" width="50%" align="left" class="decktotals"/>
+          <span class="decktotals">0 sideboard cards</span><br><br>
+        </td>
+        <td valign="top" width:"185">
+          <div style="height:220px;width:185px;">
+            <span>
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="deck_stats">
+    <img id="mana_curve" alt="mana curve chart" src="<%= @deck.mana_curve_chart %>" />
+  </div>
+
+  <div class="deck_links" >
+  <% if @is_owner %>
+    <%= button_to 'Edit Deck', edit_deck_path(@deck), :method => :get %>
+    <br/>
+  <% end %>
+
+  <%= button_to 'Export Deck', export_deck_path(@deck) , :method => :get %>
+  <br/>
+  <%= button_to 'Buy Deck', "http://www.tcgplayer.com", :method => :get %>
+  </div>
+</div>
+
+

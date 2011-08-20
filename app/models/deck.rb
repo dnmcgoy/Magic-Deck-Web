@@ -2,6 +2,11 @@ class Deck
   include MongoMapper::Document
 
   key :name, String
+  key :format, String
+
+  # not sure about this...either a mixin or a subclass, probably
+  key :commander_id, BSON::ObjectId
+
   timestamps!
 
   belongs_to :user

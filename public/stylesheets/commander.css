@@ -1,0 +1,39 @@
+#deck_list table {
+    width: 100%;
+    bacground-color: #FFCCFF;
+}
+
+.hrule {
+    border-top: 1px solid black;
+}
+
+.deck_stats {
+}
+
+.deckinfo {
+    position: absolute;
+    left: 200px;
+    top: 65px;
+}
+
+.commander {
+    position: fixed;
+    top: 65px;
+    left: 10px;
+    width: 185px;
+    height: 257px;
+}
+
+.cardinfo {
+    position: fixed;
+    top: 335px;
+    left: 10px;
+    width: 185px;
+    height: 257px;
+}
+
+.deck_links {
+    position: absolute;
+    left: 400px;
+    top: 280px;
+}

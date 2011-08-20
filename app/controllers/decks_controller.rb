@@ -37,7 +37,15 @@ class DecksController < ApplicationController
     @is_owner = @user && @deck.user_id == @user.id
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html {
+        case @deck.format
+        when 'commander'
+          @commander = Card.first({:id => @deck.commander_id})
+          render :commander
+        else
+          render :show
+        end
+      }
       format.xml
       format.json { render :json => @deck.to_json }
     end

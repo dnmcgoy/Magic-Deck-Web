@@ -1,15 +1,8 @@
 <% content_for :head do %>
     <title>Deck Editor</title>
-    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'jquery.hoverIntent.minified', 'jquery.flip.min', 'editor/chris'%>
-    <%= stylesheet_link_tag 'chris_editor', 'segmented-control' %>
-
-	<script>
-	$(function() {
-	});
-	</script>
+    <%= javascript_include_tag 'ba-debug.min', 'command_parser', 'jquery.hoverIntent.minified', 'editor/chris'%>
+    <%= stylesheet_link_tag 'editor', 'segmented-control' %>
 <% end %>
-
-<% cols = 5 %>
 
 <div id="new_pile_form" title="Create new pile">
   <form>
@@ -42,9 +35,7 @@
   <%= render :partial => "pile", :collection => [Pile.new] %>
   <%= render :partial => "run" %>
   <div class="card_search_result">
-    <div class="result_name">
-    </div>
-    <div class="result_detail">
-    </div>
+    <div class="result_name"></div>
+    <div class="result_detail"></div>
   </div>
 </div>

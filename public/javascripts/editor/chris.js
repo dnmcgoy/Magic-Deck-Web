@@ -3,41 +3,15 @@ var deckNameEditable = false;
 var activePile = null;
 var pileTemplate = null;
 var runTemplate = null;
+var resultTemplate = null;
+var tooltipTemplate = null;
 
 $(document).ready(
     function() {
-	$('.column').droppable({
-            accept: ".card_search_result",
-	    drop: function(event, ui) {
-                var thePile = $(event.target).closest('.pile');
-                sendCreateRun("1",
-                             $(ui.draggable.context).find('.result_name').text(),
-                             thePile.context.id,
-                             onCardAdded);
-            }
-        }).sortable({
-	    connectWith: ".column",
-	    receive: onRunReceive,
-            start:onRunSortStart,
-            items: ".run",
-            helper: function( event ) {
-                var mtg_id = $(event.target).closest('.run').attr('mtg_id');
-                return  "<div class='draggable-card'><img src='http://www.logic-by-design.com/magic_images/low_res/" +
-                              mtg_id + ".jpg'></img></div>";
-	    }
-	});
 
-	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-	    .find( ".portlet-header" )
-	    .addClass( "ui-widget-header ui-corner-all" )
-	    .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
-	    .end()
-	    .find( ".portlet-content" );
+	setupDropTargets();
 
-	$( ".portlet-header .ui-icon" ).click(function() {
-	    $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
-	    $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
-	});
+	$( ".run" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
 
 	pileTemplate = $('#templates .pile').first();
 	runTemplate = $('#templates .run').first();
@@ -202,13 +176,48 @@ $(document).ready(
     }
 );
 
+function setupDropTargets() {
+    setupDropTargetByType(".lands", ".land_search_result");
+    setupDropTargetByType(".creatures", "creature_search_result");
+    setupDropTargetByType(".spells", "spell_search_result");
+}
+
+function setupDropTargetByType(className, resultName) {
+    $(className).droppable({
+        accept: resultName,
+	drop: function(event, ui) {
+            var pileId = $(event.target).closest('.pile')[0].id;
+	    var name = $(ui.draggable.context).find('.result_name').text();
+	    debug.info("Adding " + name + " to pile " + pileId);
+            sendCreateRun("1",
+                          name,
+                          pileId,
+                          onCardAdded);
+        }
+    });
+    $(className).sortable({
+	connectWith: className,
+	receive: onRunReceive,
+        start:onRunSortStart,
+        items: ".run",
+        helper: function( event ) {
+            var mtg_id = $(event.target).closest('.run').attr('mtg_id');
+            return  "<div class='draggable-card'><img src='http://www.logic-by-design.com/magic_images/low_res/" +
+                mtg_id + ".jpg'></img></div>";
+	}
+    });
+}
+
 //Update the advanced search results list
 function updateSearchResults(data) {
     $(".results_list").empty();
+    debug.info(data);
     var names = "";
-    for (i in data) {
+    for (var i in data) {
         var result = resultTemplate.clone();
-        result.find(".result_name").text(data[i].value);
+	
+	result.addClass(data[i].category + "_search_result");
+        result.find(".result_name").text(data[i].name);
         result.find(".result_detail").text(data[i].rules);
         result.attr("mtg_id", data[i].mtg_id);
 
@@ -224,8 +233,8 @@ function updateSearchResults(data) {
             appendTo:'body',
 	    cursorAt: { top: 10, left: 10 },
 	    helper: function( event ) {
-	              return  "<div class='draggable-card'><img src='http://www.logic-by-design.com/magic_images/low_res/" +
-                              $(this).attr('mtg_id') + ".jpg'></img></div>";
+	        return  "<div class='draggable-card'><img src='http://www.logic-by-design.com/magic_images/low_res/" +
+                    $(this).attr('mtg_id') + ".jpg'></img></div>";
 	    }
         });
 
@@ -237,8 +246,8 @@ function updateSearchResults(data) {
 function onRunReceive(event, ui) {
     debug.info("onRunReceive");
 
-    var toPile = event.target.id;
-    var fromPile = ui.sender.context.id;
+    var toPile = $(event.target).closest(".pile").attr('id');
+    var fromPile = $(ui.sender.context).closest(".pile").attr('id');
     var runId = $(ui.item.context).attr("id");
     var noop = function(data) {};
     var mtg_id = $(ui.item.context).attr("mtg_id");
@@ -272,7 +281,7 @@ function onCardsChanged() {
 }
 
 function maindeck() {
-    return $("#pile_title_maindeck").parent().attr("id");
+    return $("#pile_title_maindeck").parents("table").attr("id");
 }
 
 function changePile(pileName) {

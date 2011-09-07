@@ -24,6 +24,17 @@ class Card
   #   sync_with_gatherer
   # end
 
+  def category
+    case cardtype
+    when LAND_REGEX
+      'land'
+    when CREATURE_REGEX
+      'creature'
+    else
+      'spell'
+    end
+  end
+
   def mtg_id
     if(printings.size > 0)
       return printings.first.mtg_id

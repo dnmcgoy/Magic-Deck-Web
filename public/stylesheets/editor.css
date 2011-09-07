@@ -1,3 +1,27 @@
+body {
+    font-family: Verdana, Arial, sans-serif;
+}
+
+.deckEditor {
+    margin-left: 320px;
+}
+
+.pile td {
+    min-width: 230px;
+}
+
+.run {
+    padding: 0 3px 0 3px;
+}
+.run_left {
+    float: left;
+    padding-right: 3px;
+}
+.run_right {
+    float: right;
+    padding-left: 3px;
+}
+
 #deck_entry {
     width: 268px;
     margin: auto;
@@ -7,30 +31,85 @@
     margin-top: 45px;
 }
 
-#input_entry {
-    width: 280px;
-    margin: 15px auto;
+#input_entry, #example_text {
     text-align: left;
     color: #999999;
 }
 
-#deck_list table {
-    width: 100%
-}
-
-#pending_cards {
-    margin-top: 50px;
-}
-
-.center_col {
-    width: 280px;
-    margin: 35px auto;
-}
-
-td {
+#example_text {
+    margin-top: -10px;
+    margin-left: 31%;
     text-align: left;
-    padding: 2px;
-    font-size: 120%;
+    font-size: .7em;
+}
+
+#example_text {
+    width: 300px;
+}
+#example_text p, #example_text ul, #example_text li {
+    margin: 0 0 0 15px;
+    padding: 0;
+}
+#example_text li {
+    list-style-type: none;
+}
+
+#entry_container {
+    float: left;
+    width: 320px;
+    text-align:center;
+}
+
+.tooltip {
+	display:none;
+	font-size:12px;
+	color:#fff;
+}
+
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 20px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+.ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+
+.draggable-card {
+    width : 200px;
+    height : 300px;
+}
+
+.invis {
+    visibility: hidden;
+    display: none;
+}
+
+.pile {
+    border: 1px solid #999999;
+    border-radius: 10px;
+    color: #999999;
+    margin-bottom: 10px;
+    font-size: .8em;
+    width: 100%;
+    
+}
+
+.pile tr {
+    vertical-align: top;
+}
+
+.pile-drag-hover {
+    border: 20px solid #333333;
+    color: #333333;
+}
+
+.pile_title {
+    font-size: 1.5em;
+    padding: 5px;
+    border-bottom: 1px solid #999999;
+    text-align: left;
+}
+
+.active_pile {
+    border: 1px solid #000000;    
+    color: #000000;
+    background-color: #FFFFEA;
 }
 
 .title {
@@ -38,9 +117,13 @@ td {
 }
 .title_block {
     text-align: center;
+    background-color: #333333;
 }
 
-.delete_run {
+.delete_pile {
+    float: right;
+}
+.delete_run, .delete_pile {
     color: #FF0000;
 }
 
@@ -55,3 +138,8 @@ td .delete_run:hover {
 #edit_deck_name {
     cursor: pointer;
 }
+
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 20px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+.searchWidget  {display:inline; background: #333333; height:650px; width:320px; position:relative; float:left;}
+.panes {height: 600px;}

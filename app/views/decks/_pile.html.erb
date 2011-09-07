@@ -1,10 +1,17 @@
-<div id="<%= pile.id %>" class="column pile">
-  <div id="pile_title_<%= pile.name %>" class="pile_title">
-    <%= pile.name.titleize %>
-
-    <div class="delete_pile"><span class="ui-icon ui-icon-closethick"><%= pile.id %></span></div>
-  </div>
-
-  <%= render :partial => "run", :collection => pile.runs %>
-
-</div>
+<table id="<%= pile.id %>" class="pile">
+  <tr>
+    <td><%= pile.count %></td>
+    <td id="pile_title_<%= pile.name %>"><%= pile.name.titleize %></td>
+    <td><span class="ui-icon ui-icon-closethick"><%= pile.id %></span></td>
+  </tr>
+  <tr>
+    <td class="lands"><%= render :partial => "run", :collection => pile.lands %></td>
+    <td class="creatures"><%= render :partial => "run", :collection => pile.creatures %></td>
+    <td class="spells"><%= render :partial => "run", :collection => pile.spells %></td>
+  </tr>
+  <tr>
+    <td>Lands</td>
+    <td>Creatures</td>
+    <td>Spells</td>
+  </tr>
+</table>

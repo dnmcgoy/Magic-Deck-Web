@@ -22,14 +22,18 @@ class CardsController < ApplicationController
   def simple_search
     puts "We are searching: "
     puts params[:name]
-    cardListing = []
-    for card in Card.simple_search(params)
-      cardListing << {:value => card.name, 
-                      :label => card.name,
-                      :mtg_id => card.mtg_id, 
-                      :rules => card.oracle_text }
+
+    listings = Card.simple_search(params).map do |card|
+      { :name => card.name,
+        :cmc => card.cmc,
+        :cc => card.cc,
+        :mtg_id => card.mtg_id,
+        :category => card.category,
+        :cardtype => card.cardtype,
+        :rules => card.oracle_text
+      }
     end
-    render :json => cardListing.to_json()
+    render :json => listings.to_json()
   end
 
   def show

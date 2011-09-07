@@ -2,6 +2,14 @@ body {
     font-family: Verdana, Arial, sans-serif;
 }
 
+.deckEditor {
+    margin-left: 320px;
+}
+
+.pile td {
+    min-width: 230px;
+}
+
 #deck_entry {
     width: 268px;
     margin: auto;
@@ -46,13 +54,6 @@ body {
 	color:#fff;
 }
 
-.column { width: 300px; float: left; padding-bottom: 10px; }
-.portlet { margin: 1px 2px 0 2px !important; }
-.portlet div {
-    display: inline;
-    padding-left: 2px;
-    padding-right: 2px;
-}
 .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 20px !important; }
 .ui-sortable-placeholder * { visibility: hidden; }
 .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
@@ -71,8 +72,14 @@ body {
     border: 1px solid #999999;
     border-radius: 10px;
     color: #999999;
-    margin-left: 5px;
+    margin-bottom: 10px;
     font-size: .8em;
+    width: 100%;
+    
+}
+
+.pile tr {
+    vertical-align: top;
 }
 
 .pile-drag-hover {
@@ -120,14 +127,7 @@ td .delete_run:hover {
     cursor: pointer;
 }
 
-.column { width: 300px; float: left;}
-.portlet { margin: 0 1em 1em 0; }
-.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
-.portlet-header .ui-icon { float: right; }
-.portlet-content { padding: 0.4em; }
-.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 20px !important; }
 .ui-sortable-placeholder * { visibility: hidden; }
-.deckEditor {display:inline; height:620px;}
-.deckWorkspace {display:inline; height:620px; width:880px; position:relative; text-align: center;}
 .searchWidget  {display:inline; background: #333333; height:650px; width:320px; position:relative; float:left;}
 .panes {height: 600px;}

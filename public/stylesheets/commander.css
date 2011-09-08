@@ -1,5 +1,5 @@
-body {
-    background-color: #000000;
+html, body {
+    background: #111111;
 }
 
 h3 {
@@ -8,6 +8,10 @@ h3 {
 
 .deckinfo {
     text-align: center;
+}
+
+.cardgroup {
+    background-color: #222222;
 }
 
 td {

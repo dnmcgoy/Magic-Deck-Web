@@ -1,6 +1,10 @@
+body {
+    background-color: #000000;
+}
+
 #deck_list table {
     width: 100%;
-    bacground-color: #FFCCFF;
+    background-color: #FFCCFF;
 }
 
 .hrule {

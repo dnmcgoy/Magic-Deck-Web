@@ -7,7 +7,9 @@
     border-top: 1px solid black;
 }
 
-.deck_stats {
+.rightbar {
+    position: absolute;
+    right: 0;
 }
 
 .deckinfo {
@@ -30,10 +32,4 @@
     left: 10px;
     width: 185px;
     height: 257px;
-}
-
-.deck_links {
-    position: absolute;
-    left: 400px;
-    top: 280px;
 }

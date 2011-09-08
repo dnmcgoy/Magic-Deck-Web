@@ -223,7 +223,10 @@ function updateSearchResults(data) {
 
 
         result.dblclick(function(){
-            sendCreateRun('1', $(this).find(".result_name").text(), activePile, onCardAdded);
+            sendCreateRun('1',
+			  $(this).find(".result_name").text(),
+			  activePile,
+			  onCardAdded);
         });
 
         result.draggable({
@@ -441,7 +444,7 @@ function onCardAdded(run) {
 }
 
 function createRun(run) {
-    debug.info("In craete run");
+    debug.info("In create run");
     var newRun = runTemplate.clone();
     newRun.attr('id', run.id);
     newRun.find(".run_count").text(run.count);
@@ -449,7 +452,10 @@ function createRun(run) {
     newRun.find(".cc").text(run.cc);
     newRun.find(".cmc").text(run.cmc);
     newRun.attr("mtg_id", run.mtg_id);
-    $("#"+activePile).append(newRun);
+
+    // Uhg, I hate string concatenation
+    $("#"+activePile + " ." + run.category + "s").append(newRun);
+
     var newTooltip = tooltipTemplate.clone();
     newTooltip.attr("mtg_id", run.mtg_id);
     newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/900.jpg');

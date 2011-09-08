@@ -2,9 +2,17 @@ body {
     background-color: #000000;
 }
 
-#deck_list table {
-    width: 100%;
-    background-color: #FFCCFF;
+h3 {
+    font-size: x-large;
+}
+
+.deckinfo {
+    text-align: center;
+}
+
+td {
+    vertical-align: top;
+    text-align: left;
 }
 
 .hrule {

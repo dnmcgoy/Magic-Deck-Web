@@ -2,6 +2,14 @@ class PilesController < ApplicationController
 
   #layout nil
 
+  def counts
+    pile_id = params[:id]
+    deck = Deck.first("piles._id" => BSON::ObjectId(pile_id))
+    pile = deck.piles.detect { |p| p.id == BSON::ObjectId(pile_id) }
+
+    render :json => pile.counts.to_json    
+  end
+
   def show
     pile_id = params[:id]
     deck = Deck.first("piles._id" => BSON::ObjectId(pile_id))

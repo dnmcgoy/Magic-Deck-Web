@@ -7,15 +7,20 @@ Tdb::Application.routes.draw do
     end
   end
 
-  resources :piles, :only => :show
-
   resources :decks do
     collection do
       post :import
       post :addFromDeckList
     end
+
     resources :runs
-    resources :piles
+
+    resources :piles do
+      member do
+        get :counts
+      end
+    end
+
     member do
       get :sample
       get :count

@@ -75,7 +75,9 @@ $(document).ready(
 	$("span.delete_run").live(
 	    "click",
 	    function(e){
-		var runId = $(e.target).closest(".run").attr("id");
+		var run = $(e.target).closest(".run");
+		var runId = run.attr("id");
+		var pileId = run.closest(".pile").attr("id");
 		debug.info("deleting run " + runId);
 		var path = basepath + "runs/" + runId;
 		$.ajax({
@@ -86,7 +88,7 @@ $(document).ready(
                         //FIXME HACK Removing the tooltip.
                         $('#'+ runId).next().remove();
 			$("#" + runId).remove();
-			onCardsChanged();
+			updateCounts(pileId);
 		    }
 		});
 		focusEntry();
@@ -157,8 +159,6 @@ $(document).ready(
             switchPile($(e.target).parent().attr("id"));
         });
 
-	onCardsChanged();
-
         $(".run").tooltip(
             {
              relative:true,
@@ -215,7 +215,7 @@ function updateSearchResults(data) {
     var names = "";
     for (var i in data) {
         var result = resultTemplate.clone();
-	
+
 	result.addClass(data[i].category + "_search_result");
         result.find(".result_name").text(data[i].name);
         result.find(".result_detail").text(data[i].rules);
@@ -277,14 +277,8 @@ function focusEntry() {
     $("#card_entry").focus();
 }
 
-function onCardsChanged() {
-    var visibility = ($(".unknown").size() > 0 ) ? "visible" : "hidden";
-    debug.info("setting unknown header to " + visibility);
-    $("#unknown_header").css("visibility", visibility);
-}
-
 function maindeck() {
-    return $("#pile_title_maindeck").parents("table").attr("id");
+    return $("#pile_title_maindeck").closest(".pile").attr("id");
 }
 
 function changePile(pileName) {
@@ -292,7 +286,7 @@ function changePile(pileName) {
     if ($("#pile_title_" + pileName).length == 0) {
 	addPile(pileName);
     } else {
-	switchPile($("#pile_title_" + pileName).parent().attr("id"));
+	switchPile($("#pile_title_" + pileName).closest(".pile").attr("id"));
     };
 }
 
@@ -410,6 +404,10 @@ function moveRun(runId, fromPile, toPile, callback) {
 	},
 	'json'
     );
+
+    updateCounts(fromPile);
+    updateCounts(toPile);
+
     $("#card_entry").value = "";
     $("#card_entry")[0].value = "";
     $("#card_entry").focus();
@@ -461,18 +459,7 @@ function createRun(run) {
     newTooltip.find('img').attr('src','http://www.logic-by-design.com/magic_images/low_res/900.jpg');
     $("#"+activePile).append(newTooltip);
 
-    newRun.tooltip(
-            {
-             relative:true,
-             predelay:250,
-             position:"center right",
-             offset: [0, 10],
-             events: {def: "mouseenter, mouseleave mousedown"},
-             onBeforeShow: function() {
-                 this.getTip().find('img').attr('src', 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' +
-                                                this.getTrigger().attr("mtg_id") + '&type=card');
-             }
-            }).dynamic();
+    updateCounts(activePile);
 }
 
 function updateRun(run) {
@@ -482,4 +469,27 @@ function updateRun(run) {
     } else {
 	$('#'+run.id).find(".run_count").text(run.count);
     }
+    updateCounts(activePile);
+}
+
+function updateCounts(pile) {
+    var url = basepath + "piles/" + pile + "/counts";
+
+    $.get(
+	url,
+	function(data) {
+	    updatePileCounts(pile, data);
+	},
+	'json'
+    );
+}
+
+function updatePileCounts(pileId, data) {
+    debug.info(data);
+    var pile = $("#"+pileId);
+
+    pile.find(".pile_count").first().text(data.total);
+    pile.find(".land_count").first().text(data.lands);
+    pile.find(".creature_count").first().text(data.creatures);
+    pile.find(".spell_count").first().text(data.spells);
 }

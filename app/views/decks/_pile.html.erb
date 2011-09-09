@@ -1,8 +1,8 @@
 <table id="<%= pile.id %>" class="pile">
   <tr>
-    <td><%= pile.count %></td>
+    <td class="pile_count"><%= pile.count %></td>
     <td id="pile_title_<%= pile.name %>"><%= pile.name.titleize %></td>
-    <td><span class="ui-icon ui-icon-closethick"><%= pile.id %></span></td>
+    <td class="pile_delete"><span class="ui-icon ui-icon-closethick"><%= pile.id %></span></td>
   </tr>
   <tr>
     <td class="lands"><%= render :partial => "run", :collection => pile.lands %></td>
@@ -10,8 +10,8 @@
     <td class="spells"><%= render :partial => "run", :collection => pile.spells %></td>
   </tr>
   <tr>
-    <td>Lands</td>
-    <td>Creatures</td>
-    <td>Spells</td>
+    <td><span class="land_count"><%= pile.land_count %></span> Lands</td>
+    <td><span class="creature_count"><%= pile.creature_count %></span> Creatures</td>
+    <td><span class="spell_count"><%= pile.spell_count %></span> Spells</td>
   </tr>
 </table>

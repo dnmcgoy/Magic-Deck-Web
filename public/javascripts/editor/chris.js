@@ -6,175 +6,171 @@ var runTemplate = null;
 var resultTemplate = null;
 var tooltipTemplate = null;
 
-$(document).ready(
-    function() {
+$(document).ready(function() {
 
-	setupDropTargets();
+    setupDropTargets();
 
-	$( ".run" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
+    $( ".run" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
 
-	pileTemplate = $('#templates .pile').first();
-	runTemplate = $('#templates .run').first();
-        resultTemplate = $('#templates .card_search_result').first();
-        tooltipTemplate = $('#templates .tooltip').first();
+    pileTemplate = $('#templates .pile').first();
+    runTemplate = $('#templates .run').first();
+    resultTemplate = $('#templates .card_search_result').first();
+    tooltipTemplate = $('#templates .tooltip').first();
 
-	var pathname = document.location.pathname;
-	basepath = pathname.substring(0, pathname.lastIndexOf('/')+1);
-	debug.info(basepath + " is base of path " + pathname);
+    var pathname = document.location.pathname;
+    basepath = pathname.substring(0, pathname.lastIndexOf('/')+1);
+    debug.info(basepath + " is base of path " + pathname);
 
-	switchPile( maindeck() );
-	debug.info("Initial pile maindeck, id: " + activePile);
+    switchPile( maindeck() );
+    debug.info("Initial pile maindeck, id: " + activePile);
 
-	focusEntry();
-
-	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" );
-
-        $(".oracle_text").hide();
-
-	$( "#new_pile_form" ).dialog({
-	    autoOpen: false,
-	    height: 300,
-	    width: 350,
-	    modal: true,
-	    buttons: {
-		"Create new pile": function() {
-		    var pileName = $('#name').val();
-		    debug.info("Creating new pile " + pileName);
-		    addPile(pileName);
-		    $( this ).dialog( "close" );
-		},
-		Cancel: function() {
-		    $( this ).dialog( "close" );
-		}
+    $( "#new_pile_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+	buttons: {
+	    "Create new pile": function() {
+		var pileName = $('#name').val();
+		debug.info("Creating new pile " + pileName);
+		addPile(pileName);
+		$( this ).dialog( "close" );
 	    },
-	    close: function() {
+	    Cancel: function() {
+		$( this ).dialog( "close" );
 	    }
+	},
+	close: function() {
+	}
+    });
+
+    $(".delete_pile").live(
+	"click",
+	function(e) {
+	    var pileId = $(e.target).text();
+            debug.info("deleting pile " + pileId);
+            var path = basepath + "piles/" + pileId;
+	    $.ajax({
+		type: "DELETE",
+		url: path,
+		success: function(msg){
+		    debug.info("pile " + pileId + " was deleted");
+		    $("#" + pileId).remove();
+		    if (pileId == activePile) {
+			switchPile( maindeck() );
+		    }
+		}
+	    });
+	    focusEntry();
+	    e.stopImmediatePropagation();
+	}
+    );
+
+    $("span.delete_run").live(
+	"click",
+	function(e){
+	    var run = $(e.target).closest(".run");
+	    var runId = run.attr("id");
+	    var pileId = run.closest(".pile").attr("id");
+	    debug.info("deleting run " + runId);
+	    var path = basepath + "runs/" + runId;
+	    $.ajax({
+		type: "DELETE",
+		url: path,
+		success: function(msg){
+		    debug.info("run " + runId + " was deleted");
+                    //FIXME HACK Removing the tooltip.
+                    $('#'+ runId).next().remove();
+		    $("#" + runId).remove();
+		    updateCounts(pileId);
+		}
+	    });
+	    focusEntry();
+	    e.stopImmediatePropagation();
 	});
 
-	$(".delete_pile").live(
-	    "click",
-	    function(e){
-		var pileId = $(e.target).text();
-                debug.info("deleting pile " + pileId);
-        	var path = basepath + "piles/" + pileId;
-		$.ajax({
-		    type: "DELETE",
-		    url: path,
-		    success: function(msg){
-			debug.info("pile " + pileId + " was deleted");
-			$("#" + pileId).remove();
-			if (pileId == activePile) {
-			    switchPile( maindeck() );
-			}
-		    }
-		});
-		focusEntry();
-		e.stopImmediatePropagation();
-	    });
-
-	$("span.delete_run").live(
-	    "click",
-	    function(e){
-		var run = $(e.target).closest(".run");
-		var runId = run.attr("id");
-		var pileId = run.closest(".pile").attr("id");
-		debug.info("deleting run " + runId);
-		var path = basepath + "runs/" + runId;
-		$.ajax({
-		    type: "DELETE",
-		    url: path,
-		    success: function(msg){
-			debug.info("run " + runId + " was deleted");
-                        //FIXME HACK Removing the tooltip.
-                        $('#'+ runId).next().remove();
-			$("#" + runId).remove();
-			updateCounts(pileId);
-		    }
-		});
-		focusEntry();
-		e.stopImmediatePropagation();
-	    });
-
-	$('#pile_select').change(
-	    function(a, b, c) {
-		var pileName = $('#pile_select').val();
-		debug.info("Pile selected: " + pileName);
-		if (pileName == 'newpile') {
-		    $( "#new_pile_form" ).dialog( "open" );
-		} else if(pileName == 'mergepile') {
-		    // prompt and then have them click?
-		} else {
-		    changePile(pileName);
-		}
+    $('#pile_select').change(
+	function(a, b, c) {
+	    var pileName = $('#pile_select').val();
+	    debug.info("Pile selected: " + pileName);
+	    if (pileName == 'newpile') {
+		$( "#new_pile_form" ).dialog( "open" );
+	    } else if(pileName == 'mergepile') {
+		// prompt and then have them click?
+	    } else {
+		changePile(pileName);
 	    }
-	);
+	}
+    );
 
-	$('#edit_deck_name').click(
-	    function() {
+    $('#edit_deck_name').click(
+	function() {
+	    updateDeckName();
+	}
+    );
+    $("#deck_name_field").keypress(
+	function(e) {
+	    if (e.which == 13) {
 		updateDeckName();
 	    }
-	);
-	$("#deck_name_field").keypress(
-	    function(e) {
-		if (e.which == 13) {
-		    updateDeckName();
-		}
-	    });
+	});
 
-	//tab - 0
-	//enter = 13
-	$("#card_entry").keypress(
-	    function(e) {
-		if (e.which == 13) {
-		    $("#card_entry").autocomplete("close");
-		    addCard();
-		}
-	    });
-
-	$("#add_card_button").click(
-	    function() {
+    //tab - 0
+    //enter = 13
+    $("#card_entry").keypress(
+	function(e) {
+	    if (e.which == 13) {
+		$("#card_entry").autocomplete("close");
 		addCard();
-	    });
-
-	$( "#card_entry" ).autocomplete({
-	    source: "/cards/autocomplete",
-	    minLength: 2,
-	    autoFocus: true,
-	    select: function( event, ui ) {
-		addCard(ui.item.value);
-		return false;
-	    },
-	    focus: function( event, ui ) {
-		var match = $("#card_entry").val().match(/^(-?[0-9]*).*/);
-		if (match) {
-		    var prefixNumber = match[1];
-		    $("card_entry").val(prefixNumber + " " + ui.label);
-		}
-		$("#preview_image").attr("src", "http://www.logic-by-design.com/magic_images/low_res/900.jpg");
-		return false;
 	    }
 	});
 
-        $(".pile_title").live("click", function(e){
-            switchPile($(e.target).parent().attr("id"));
-        });
+    $("#add_card_button").click(
+	function() {
+	    addCard();
+	});
 
-        $(".run").tooltip(
-            {
-             relative:true,
-             predelay:250,
-             position:"center right",
-             offset: [0, 10],
-             events: {def: "mouseenter, mouseleave mousedown"},
-             onBeforeShow: function() {
-                 this.getTip().find('img').attr('src', 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' +
-                                                this.getTrigger().attr("mtg_id") + '&type=card');
-             }
-            }).dynamic();
+    $( "#card_entry" ).autocomplete({
+	source: "/cards/autocomplete",
+	minLength: 2,
+	autoFocus: true,
+	select: function( event, ui ) {
+	    addCard(ui.item.value);
+	    return false;
+	},
+	focus: function( event, ui ) {
+	    var match = $("#card_entry").val().match(/^(-?[0-9]*).*/);
+	    if (match) {
+		var prefixNumber = match[1];
+		$("card_entry").val(prefixNumber + " " + ui.label);
+	    }
+	    $("#preview_image").attr("src", "http://www.logic-by-design.com/magic_images/low_res/900.jpg");
+	    return false;
+	}
+    });
 
-        $( ".column" ).disableSelection();
-    }
-);
+    $(".pile_title").live("click", function(e){
+        switchPile($(e.target).parent().attr("id"));
+    });
+
+    $(".run").tooltip(
+        {
+            relative:true,
+            predelay:250,
+            position:"center right",
+            offset: [0, 10],
+            events: {def: "mouseenter, mouseleave mousedown"},
+            onBeforeShow: function() {
+                this.getTip().find('img').attr('src', 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' +
+                                               this.getTrigger().attr("mtg_id") + '&type=card');
+            }
+        }).dynamic();
+
+    $( ".column" ).disableSelection();
+
+    focusEntry();
+
+});
 
 function setupDropTargets() {
     setupDropTargetByType(".lands", ".land_search_result");

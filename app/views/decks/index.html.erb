@@ -1,136 +1,42 @@
 <% content_for :head do %>
-<script>
-  $(function() {
-  $( "#accordion" ).accordion({autoHeight: false,
-  collapsible: true});
-  });
-  
-  
-  $(document).ready(function() {
-
-  $("tr:nth-child(odd)").addClass("odd");
-  $("tr:nth-child(even)").addClass("even");
-
-  var triggers = $(".modalInput").overlay({
-
-    // some mask tweaks suitable for modal dialogs
-    mask: {
-    color: '#333333',
-    loadSpeed: 200,
-    opacity: 0.9
-    },
-
-    top:'5%',
-    closeOnClick: false
-  });
-  
-  
-  $("#newDeck form").submit(function(e) {
-  
-  // close the overlay
-  triggers.eq(1).overlay().close();
-  
-  // get user input
-  var input = $("input", this).val();
-  
-  // do something with the answer
-  triggers.eq(1).html(input);
-  
-  // do not submit the form
-  return e.preventDefault();
-  });
-  
-  });
-</script>
-
-
-<style>
-  
-  .modal {
-  background-color:#333333;
-  color: #ffffff;
-  display:none;
-  width:350px;
-  padding:15px;
-  text-align:left;
-  border:2px solid #333;
-  opacity:0.95;
-  -moz-border-radius:3px;
-  -webkit-border-radius:3px;
-  -moz-box-shadow: 0 0 20px #888;
-  -webkit-box-shadow: 0 0 20px #888;
-  }
-  
-  .modal h2 {
-  background:url(/img/global/info.png) 0 50% no-repeat;
-  margin:0px;
-  padding:10px 0 10px 45px;
-  border-bottom:1px solid #000000;
-  font-size:20px;
-  color:#ffffff;
-  }
-
-  .odd {
-    background-color:#ffffff;
-    color:#222222;
-  }
-
-  .odd a {
-    color:#222222;
-  }
-
-  .even {
-    background-color:#999999;
-    color:#000000;
-  }
-
-  .even a {
-    color:#000000;
-  }
-</style>
+  <%= javascript_include_tag 'deck_index' %>
+  <%= stylesheet_link_tag 'deck_index' %>
 <% end %>
 
 <!-- user input dialog -->
 <div class="modal" id="newDeck">
-  <h2>Create a New Deck:</h2>
+  <h2>Create a New Deck</h2>
   
-  <p>
-    Enter a new name to start from scratch:
-  </p>
+  <div class="left_side">
+    <p>Enter a new name to start from scratch</p>
   
-  
-  <% form_for :deck do |f| %>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-    <%= f.submit 'Create' %>
-  </p>
-  <% end %>
-  
-  <br/>
-  
-  <p>
-    Or import a .dec file:
-  </p>
-  
-  <%= form_for :dump, :url=>{:action => 'import'}, :html => {:multipart => true} do |f| %>
-    <%= f.file_field :file %>
-    <%= f.submit "Import Deck" %>
-  <% end %>
+    <% form_for :deck do |f| %>
+      <%= f.text_field :name %>
+      <br />
+      <%= f.submit 'Create' %>
+    <% end %>
 
-  <br/>
-  <p>
-    Or copy/paste a decklist
-  </p>
+    <p class="top_space">Or import a .dec file</p>
 
-  <%= form_for :dump, :url=>{:action => 'addFromDeckList'}, :html => {:multipart => true} do |f| %>
-     <%= f.text_area :decklist %>
-     <%= f.submit 'Deck From List' %>
-  <% end %>
-  
-  <br/>
-  
-  <button type="button" class="close"> Cancel </button>
+    <%= form_for :dump, :url=>{:action => 'import'}, :html => {:multipart => true} do |f| %>
+      <%= f.file_field :file %>
+    <br />
+      <%= f.submit "Import Deck" %>
+    <% end %>
+  </div>
+
+  <div class="right_side">
+    <p>Or copy/paste a decklist</p>
+
+    <%= form_for :dump, :url=>{:action => 'addFromDeckList'}, :html => {:multipart => true} do |f| %>
+      <%= f.text_area :decklist %>
+      <%= f.submit 'Deck From List' %>
+    <% end %>
+  </div>
+
+  <div class="model_footer">
+    <button type="button" class="close">Cancel</button>
+  </div>
 </div>
 
 

@@ -1,0 +1,61 @@
+.modal {
+    background-color:#333333;
+    text-align: center;
+    color: #ffffff;
+    display: none;
+    width: 800px;
+    padding: 15px;
+    border: 2px solid #333;
+    opacity: 0.95;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-box-shadow: 0 0 20px #888;
+    -webkit-box-shadow: 0 0 20px #888;
+}
+
+.modal h2 {
+    background: url(/img/global/info.png) 0 50% no-repeat;
+    margin: 0;
+    padding: 10px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.model_footer {
+    clear: both;
+    padding-top: 10px;
+}
+
+.top_space {
+    margin-top: 50px;
+}
+
+.left_side {
+    margin: 0;
+    float: left;
+    width: 400px;
+}
+.right_side {
+    margin: 0;
+    border-left: 1px solid black;
+    float: right;
+    width: 399px;
+}
+
+.odd {
+    background-color:#ffffff;
+    color:#222222;
+}
+
+.odd a {
+    color:#222222;
+}
+
+.even {
+    background-color:#999999;
+    color:#000000;
+}
+
+.even a {
+    color:#000000;
+}

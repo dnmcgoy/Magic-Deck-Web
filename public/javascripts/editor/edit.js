@@ -66,6 +66,12 @@ $(document).ready(function() {
 	}
     );
 
+    // $( ".run_count" ).live(
+    // 	'hover',
+    // 	onCountMouseEnter,
+    // 	onCountMouseLeave
+    // );
+
     $("span.delete_run").live(
 	"click",
 	function(e){
@@ -153,6 +159,8 @@ $(document).ready(function() {
         switchPile($(e.target).parent().attr("id"));
     });
 
+    $(".run").live("click", updateRunColor);
+
     $(".run").tooltip(
         {
             relative:true,
@@ -171,6 +179,17 @@ $(document).ready(function() {
     focusEntry();
 
 });
+
+function onCountMouseEnter(event) {
+    debug.info("mouse is hovering over a count");
+    debug.info($(event.currentTarget).offset());
+    debug.info($(event.currentTarget).position());
+}
+
+function onCountMouseLeave(event) {
+
+}
+
 
 function setupDropTargets() {
     setupDropTargetByType(".lands", ".land_search_result");
@@ -488,4 +507,26 @@ function updatePileCounts(pileId, data) {
     pile.find(".land_count").first().text(data.lands);
     pile.find(".creature_count").first().text(data.creatures);
     pile.find(".spell_count").first().text(data.spells);
+}
+
+function updateRunColor(e) {
+    var run = $(e.currentTarget);
+    debug.info(run);
+    debug.info(run.attr('id'));
+    debug.info(run.css("background-color"));
+}
+
+function hexFromCSS(color) {
+    if (color.match(/#[0-9abcdef]+/)) {
+	return color.slice(1);
+    } else {
+	var parts = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+	var newColor = '';
+
+	for (var i = 3; i >= 1; i--) {
+	    newColor = parseInt(parts[i]).toString(16) + newColor;
+	    if (newColor%2 == 1) newColor = '0' + newColor;
+	}
+	return newColor;
+    }
 }

@@ -5,6 +5,8 @@ class Pile
   SIDEBOARD = 'sideboard'
 
   key :name, String, :default => ''
+
+  one :edit_props
   many :runs
 
   def <<(run)

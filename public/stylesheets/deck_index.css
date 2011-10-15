@@ -1,5 +1,13 @@
-.modal {
+.decks {
     background-color:#333333;
+    height: 644px; 
+    width: 33%; 
+    border: 3px solid #ffffff; 
+    float: left;
+}
+
+.modal {
+    background-color:#ffffff;
     text-align: center;
     color: #ffffff;
     display: none;
@@ -45,6 +53,7 @@
 .odd {
     background-color:#ffffff;
     color:#222222;
+    text-align:center;
 }
 
 .odd a {
@@ -52,8 +61,9 @@
 }
 
 .even {
-    background-color:#999999;
+    background-color:#ddddff;
     color:#000000;
+    text-align:center;
 }
 
 .even a {

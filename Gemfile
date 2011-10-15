@@ -26,6 +26,7 @@ group :test do
   gem 'mocha'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'jasmine'
   # gem 'autotest'
 end
 

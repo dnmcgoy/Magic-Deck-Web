@@ -4,6 +4,8 @@ class Run
   key :count, Integer
   key :card_id, BSON::ObjectId
 
+  one :edit_props
+
   belongs_to :card
 
   delegate :cardtype, :name, :cmc, :cc, :mtg_id, :oracle_text, :to => :card

@@ -1,9 +1,24 @@
 .decks {
-    background-color:#333333;
+    background-color:#555566;
     height: 644px; 
-    width: 33%; 
-    border: 3px solid #ffffff; 
-    float: left;
+    width: 66%;
+    max-width: 800px;
+    min-width: 600px; 
+    border: 3px solid #ffffff;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px; 
+    text-align: center;
+    margin: auto;
+}
+
+.decksTitle {
+    background-color:#555566;
+    color:#ffffff;
+    font-family:"Times New Roman";
+}
+
+.buttonTo {
+    width: 100%;
 }
 
 .modal {

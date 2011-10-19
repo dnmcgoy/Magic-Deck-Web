@@ -1,6 +1,11 @@
-$(function() {
-    $( "#accordion" ).accordion({autoHeight: false,
-				 collapsible: true});
+$(function() 
+{
+    $("#accordion").accordion(
+    {
+	autoHeight: false,
+	collapsible: true,
+	active: false
+    });
 });
 
 

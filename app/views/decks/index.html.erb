@@ -39,44 +39,54 @@
   </div>
 </div>
 
-
-
-<div class="decks">
-  <h3>My Decks</h3>
-  
-  <table width="100%">
-    <tr>
-      <th>Name</th>
-      <th>Count</th>
-      <th>Colors</th>
-      <th></th> <!-- edit -->
-      <th></th> <!-- delete -->
-      <th></th>
-    </tr>
-    
-    <% @decks.each do |deck| %>
-    <tr>
-      <td><%= link_to deck.name, deck %></td>
-      <td><%=h deck.maindeck.count %></td>
-      <td><%=h deck.colors %></td>
-      <td><%= button_to 'Edit', edit_deck_path(deck) , :method => :get %></td>
-      <td><%= button_to 'Delete', deck, :confirm => 'Are you sure?', :method => :delete %></td>
-      <td><%= button_to 'Export', export_deck_path(deck) , :method => :get %></td>
-    </tr>
-    <% end %>
-  </table>
-  <br/>
-  
-  <button class="modalInput" rel="#newDeck">Create a new deck</button>
-</div>
-
-<div class="deck_listing" style='height: 644px; width: 33%; border: 3px solid #111111; float: left;'>
-  <h3>Friends' Decks</h3>
+<div style="width:100%;">
+<div class="decks" >
+  <h3>
+    <table width=100%>
+      <tr>
+        <td width=33% style="background-color:#555566">
+        </td>
+        <td width=34% class="decksTitle">
+          Decks
+        </td>
+        <td width=33% align="right" style="background-color:#555566">
+          <button class="modalInput" rel="#newDeck">New Deck</button> 
+        </td>
+      </tr>
+    </table>
+  </h3>
   <div id="accordion">
+    
+    <h3><a href="#">My Decks</a></h3>
+    <div width=100%>
+      <table width=100%>
+        <tr>
+          <th>Name</th>
+          <th>Count</th>
+          <th>Colors</th>
+          <th></th> <!-- edit -->
+          <th></th> <!-- delete -->
+          <th></th>
+        </tr>
+
+        <% @decks.each do |deck| %>
+        <tr>
+          <td><%= link_to deck.name, deck %></td>
+          <td><%=h deck.maindeck.count %></td>
+          <td><%=h deck.colors %></td>
+          <td><%= button_to 'Modify', edit_deck_path(deck) , :method => :get, :class => "buttonTo" %></td>
+          <td><%= button_to 'Delete', deck, :confirm => 'Are you sure?', :method => :delete, :class => "buttonTo" %></td>
+          <td><%= button_to 'Export', export_deck_path(deck) , :method => :get, :class => "buttonTo" %></td>
+        </tr>
+        <% end %>
+
+      </table>
+    </div>
+
     <% @user_friends.each do |user| %>
     <h3><a href="#"><%= user.nick %>'s Decks</a></h3>
-    <div>
-      <table>
+    <div width=100%>
+      <table width=100%>
         <tr>
           <th>Name</th>
           <th>Count</th>
@@ -99,6 +109,7 @@
     <% end %>
   </div>  
 </div>
-<div style='height: 644px; width: 32%; border: 4px solid #111111; float: left;'>
-  <h3>Followed Decks</h3>
 </div>
+<!--div class="decks">
+  <h3>Followed Decks</h3>
+</div-->

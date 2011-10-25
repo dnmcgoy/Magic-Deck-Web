@@ -14,35 +14,34 @@
 .decksTitle {
     background-color:#555566;
     color:#ffffff;
-    font-family:"Times New Roman";
+    font-family:"Serif";
+    text-shadow: #ccc 0px 1px 2px, #000 -1px -1px 2px;
+    font-size: 150%;
 }
 
 .buttonTo {
     width: 100%;
 }
 
+@-webkit-keyframes greenPulse 
+{
+    from { background-color: #749a02; -webkit-box-shadow:: 0 0 9px #333; }
+    50% { background-color: #91bd09; -webkit-box-shadow:: 0 0 18px #91bd09; }
+    to { background-color: #749a02; -webkit-box-shadow:: 0 0 9px #333; }
+}
+
 .newDeckButton
 {
     display: inline-block;
-    outline: none;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
     font: 14px/100% Arial, Helvetica, sans-serif;
     padding: .5em 1em .5em;
-    text-shadow: 0 1px 1px rgba(0,0,0,.3);
-    -webkit-border-radius: .5em; 
-    -moz-border-radius: .5em;
-    border-radius: .5em;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    box-shadow: 0 1px 2px rgba(0,0,0,.2);
     color: #fef4e9;
-    border: solid 1px #da7c0c;
-    background: #f78d1d;
-    background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
-    background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+    -webkit-animation: greenPulse 3s infinite;
+    -moz-animation: greenPulse 3s infinite;
+    -ms-animation: greenPulse 3s infinite;
 }
 
 .modal {
@@ -89,22 +88,41 @@
     width: 399px;
 }
 
-.odd {
-    background-color:#ffffff;
-    color:#222222;
+.deckTable
+{
+    font-family:courier;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    line-height: 1.7em;
     text-align:center;
+    border-collapse:collapse;
 }
 
-.odd a {
-    color:#222222;
+.deckTable thead th
+{
+    padding:6px 10px;
+    text-transform:uppercase;
+    color:#444;
+    font-weight:bold;
+    text-shadow:1px 1px 1px #fff;
+    border-bottom:1px solid #000;
 }
 
-.even {
-    background-color:#ddddff;
-    color:#000000;
-    text-align:center;
+.deckTable tbody tr:nth-child(even)
+{
+    
+    background-color:#dde;
+    color:#000;
+    border-bottom:1px solid #444;
+    text-shadow:1px 1px 1px #fff;
 }
 
-.even a {
-    color:#000000;
+.deckTable tbody tr:nth-child(odd)
+{
+    background-color:#eee;
+    color:#f0f0f0;
+    border-bottom:1px solid #444;
 }

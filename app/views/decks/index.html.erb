@@ -59,15 +59,15 @@
     
     <h3><a href="#">My Decks</a></h3>
     <div width=100%>
-      <table width=100%>
-        <tr>
+      <table class="deckTable" width=100%>
+        <thead>
           <th>Name</th>
           <th>Count</th>
           <th>Colors</th>
           <th></th> <!-- edit -->
           <th></th> <!-- delete -->
           <th></th>
-        </tr>
+        </thead>
 
         <% @decks.each do |deck| %>
         <tr>
@@ -86,14 +86,14 @@
     <% @user_friends.each do |user| %>
     <h3><a href="#"><%= user.nick %>'s Decks</a></h3>
     <div width=100%>
-      <table width=100%>
-        <tr>
+      <table class="deckTable" width=100%>
+        <thead>
           <th>Name</th>
           <th>Count</th>
           <th>Colors</th>
           <th></th> <!-- edit -->
           <th></th> <!-- delete -->
-        </tr>
+        </thead>
         
         <% user.decks.all.each do |deck| %>
         <tr>

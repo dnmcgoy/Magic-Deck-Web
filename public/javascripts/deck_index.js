@@ -14,7 +14,7 @@ $(document).ready(function() {
     $("tr:nth-child(odd)").addClass("odd");
     $("tr:nth-child(even)").addClass("even");
 
-    var triggers = $(".modalInput").overlay({
+    var triggers = $(".newDeckButton").overlay({
 
 	// some mask tweaks suitable for modal dialogs
 	mask: {

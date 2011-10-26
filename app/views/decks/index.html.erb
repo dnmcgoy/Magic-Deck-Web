@@ -74,9 +74,9 @@
           <td><%= link_to deck.name, deck %></td>
           <td><%=h deck.maindeck.count %></td>
           <td><%=h deck.colors %></td>
-          <td><%= button_to 'Modify', edit_deck_path(deck) , :method => :get, :class => "buttonTo" %></td>
-          <td><%= button_to 'Delete', deck, :confirm => 'Are you sure?', :method => :delete, :class => "buttonTo" %></td>
-          <td><%= button_to 'Export', export_deck_path(deck) , :method => :get, :class => "buttonTo" %></td>
+          <td><%= link_to 'Modify', edit_deck_path(deck) , :method => :get %></td>
+          <td><%= link_to 'Delete', deck, :confirm => 'Are you sure?', :method => :delete %></td>
+          <td><%= link_to 'Export', export_deck_path(deck) , :method => :get %></td>
         </tr>
         <% end %>
 

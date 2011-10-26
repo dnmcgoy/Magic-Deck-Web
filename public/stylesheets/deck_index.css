@@ -14,7 +14,7 @@
 .decksTitle {
     background-color:#555566;
     color:#ffffff;
-    font-family:"Serif";
+    font-family:"Helvetica";
     text-shadow: #ccc 0px 1px 2px, #000 -1px -1px 2px;
     font-size: 120%;
 }
@@ -30,6 +30,20 @@
     to { background-color: #749a02; -webkit-box-shadow:: 0 0 9px #333; }
 }
 
+@-moz-keyframes greenPulse
+{
+    from { background-color: #749a02; -webkit-box-shadow:: 0 0 9px #333; }
+    50% { background-color: #91bd09; -webkit-box-shadow:: 0 0 18px #91bd09; }
+    to { background-color: #749a02; -webkit-box-shadow:: 0 0 9px #333; }
+}
+
+@-ms-keyframes greenPulse
+{
+    from { background-color: #749a02; -webkit-box-shadow:: 0 0 9px #333; }
+    50% { background-color: #91bd09; -webkit-box-shadow:: 0 0 18px #91bd09; }
+    to { background-color: #749a02; -webkit-box-shadow:: 0 0 9px #333; }
+}
+
 .newDeckButton
 {
     display: inline-block;
@@ -39,6 +53,9 @@
     font: 14px/100% Arial, Helvetica, sans-serif;
     padding: .5em 1em .5em;
     color: #fef4e9;
+    border: 2px solid #ddd;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
     -webkit-animation: greenPulse 3s infinite;
     -moz-animation: greenPulse 3s infinite;
     -ms-animation: greenPulse 3s infinite;
